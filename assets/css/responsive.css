@@ -1,0 +1,835 @@
+@media (min-width:1368px) and (max-width: 1600px) {
+    .main-screen .main-text {
+        margin-top: 18rem;
+    }
+}
+
+@media (min-width:992px) and (max-width: 1199px) {
+    .tab-sections .nav-tab {
+        width: 220px;
+    }
+    .second-sec p {
+        margin-top: 2.5rem;
+    }
+    .community-sec .community .col-md-6 {
+        width: 50%;
+    }
+    /* booknow page*/
+    .book-service .main-content .booking-tabs .nav-link {
+        height: auto;
+        display: block;
+    }
+    .book-service .main-content .booking-tabs .nav-item a img {
+        display: block;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width:993px) {
+    .navbar {
+        padding-top: 0px !important;
+    }
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+    .logo {
+        width: 110px;
+        height: 54px;
+    }
+    .navbar .navbar-toggler:focus {
+        color: white;
+    }
+    .main-screen .navbar-collapse {
+        background-color: rgba(0, 0, 0);
+        margin-top: 5px;
+        padding-bottom: 5px;
+    }
+    .navbar-collapse .rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .rounded-btn {
+        margin-top: 10px;
+    }
+    .second-sec {
+        margin-left: 1rem !important;
+    }
+    .navbar-toggler-icon {
+        color: white;
+        font-size: 28px;
+    }
+    .login-rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+    .faq-nav .navbar-collapse {
+        background-color: #525252;
+        padding: 0.5rem 0;
+        margin-top: -5px;
+    }
+    .faq-banner-img .faq-navbar .navbar-collapse .rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+    .booknow-rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+    .faqs-main .tabs {
+        width: auto;
+    }
+    .faqs-main .tabs .nav-item a {
+        font-size: 16px;
+        height: 60px;
+    }
+    /* become a pro */
+    .graphics .left-bg img,
+    .graphics .right-bg img {
+        width: 100px;
+    }
+    /*upcoming service */
+    .tab-sections .container .v-tabs {
+        display: none;
+        height: auto;
+    }
+    .tab-sections .col-sm-5 {
+        width: 0;
+    }
+    .service-datetime-icons #service-info-modal2 .modal-content,
+    .service-datetime-icons #service-info-modal .modal-content,
+    #service-info-modal3 .modal-content {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .total-records .shown-records {
+        text-align: center;
+    }
+    .modal-content .googleMap {
+        margin-left: 0;
+    }
+    .my-rating .shown-records {
+        text-align: left;
+    }
+    /* for navbar-notification icon*/
+    .upcoming-service-banner .notification-icon-smallscreen,
+    .customer-screen-banner .notification-icon-smallscreen {
+        display: block;
+        border-left: 1px solid #dee2e6;
+        border-right: 1px solid #dee2e6;
+    }
+    .upcoming-service-banner .navbar-brand {
+        padding-top: 0;
+    }
+    .upcoming-service-banner .faq-nav .navbar-nav .notification-icon span,
+    .customer-screen-banner .faq-nav .navbar-nav .notification-icon span {
+        position: absolute;
+        right: 7.5%;
+        top: 3%;
+        color: white;
+        height: 23px;
+        width: 20px;
+        text-align: center;
+        background-color: red;
+        border-radius: 50%;
+    }
+    /*customer dashboard pages */
+    .tab-sections .main-content .cust-dashboard,
+    .tab-sections .main-content .sp-dashboard {
+        width: 100%;
+        margin-left: 4%;
+    }
+    /*customers service history modal */
+    .cust-service-history-table #cust-service-history-modal2 .modal-body {
+        display: block;
+    }
+    .cust-service-history-table #cust-service-history-modal2 .modal-sp-details,
+    .current-service-req-table #current-service-modal2 .modal-sp-details {
+        border-top: 1px solid #dee2e6;
+        border-left: none;
+        margin: 1rem 0;
+        padding-top: 10px;
+    }
+    .current-service-req-table #current-service-modal2 .modal-body {
+        display: block;
+    }
+    .book-service-banner .navbar-collapse,
+    .customer-screen-banner .navbar-collapse,
+    .upcoming-service-banner .navbar-collapse,
+    .customer-reg-banner .navbar-collapse {
+        display: none;
+    }
+    /* booknow page*/
+    .main-content .payment-summary {
+        display: none;
+    }
+    .main-content .booking-tabs .btn-sm-payment-summary {
+        position: fixed;
+        bottom: 0;
+        display: block;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 97.5%;
+    }
+    .main-content .booking-tabs .btn-sm-payment-summary button {
+        outline: none;
+        border: none;
+        background-color: #67b644;
+        color: white;
+        padding: 0 1rem;
+        height: 35px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .upcoming-service-banner .navbar-expand-lg .navbar-nav .dropdown-menu,
+    .customer-screen-banner .navbar-expand-lg .navbar-nav .dropdown-menu {
+        position: absolute;
+        top: 140%;
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* for pagination */
+    .total-records .shown-records {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .service-history .payment-and-export {
+        display: block;
+        text-align: center;
+    }
+    .service-history .payment-and-export button {
+        margin-top: 1rem;
+    }
+    .dashboard .tab-label,
+    .service-history .tab-label,
+    .upcoming-service .tab-label,
+    .new-service .tab-label,
+    .my-rating .tab-label,
+    .block-customer .tab-label {
+        display: flex;
+        align-items: center;
+    }
+    .my-rating .shown-records,
+    .my-rating .rating-sorting {
+        margin-top: 0.5rem;
+    }
+    .dashboard .tab-label a,
+    .service-history .tab-label a,
+    .upcoming-service .tab-label a,
+    .new-service .tab-label a {
+        margin-left: auto;
+    }
+    .navigate-page .pagination {
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    /*for display tables for upcoming and new service*/
+    .tab-sections .tab-content .table-header {
+        height: 0;
+        display: none;
+    }
+    .upcoming-service-table tbody tr,
+    .tab-sections .new-service tr,
+    .tab-sections .current-service-req-table tr,
+    .tab-sections .cust-service-history-table tr {
+        margin-bottom: 40px;
+    }
+    .tab-sections table {
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+        margin-top: 1rem;
+    }
+    .tab-sections .upcoming-service-table tr td,
+    .tab-sections .new-service tr td,
+    .tab-sections .service-history-table tr td,
+    .tab-sections .current-service-req-table tr td,
+    .tab-sections .cust-service-history-table tr td {
+        display: block;
+        padding: 15px;
+    }
+    .new-service .shown-records {
+        justify-content: center;
+    }
+    .tab-sections .upcoming-service-table tr,
+    .tab-sections .new-service tr,
+    .tab-sections .service-history-table tr,
+    .tab-sections .current-service-req-table tr,
+    .tab-sections .cust-service-history-table tr {
+        box-shadow: 0 0 6px rgb(0 0 0 / 25%);
+    }
+    .block-customer {
+        display: block;
+    }
+    .block-customer .card {
+        margin: 1rem auto;
+        width: 50%;
+    }
+    .tab-sections .current-service-req-table .service-info,
+    .current-service-req-table .sp-content,
+    .tab-sections .cust-service-history-table .service-info,
+    .tab-sections .cust-service-history-table .sp-content {
+        align-items: center;
+    }
+    .cust-service-history-table #cust-service-history-modal2 .modal-body {
+        display: block;
+    }
+    .cust-service-history-table #cust-service-history-modal2 .modal-content,
+    .current-service-req-table #current-service-modal2 .modal-content {
+        text-align: left;
+    }
+    .tab-sections .dashboard .current-service-req-table tbody {
+        text-align: left;
+    }
+    .current-service-req-table #current-service-modal2 .modal-sp-details {
+        border-top: 1px solid #dee2e6;
+        border-left: none;
+        margin: 1rem 0;
+        padding-top: 10px;
+    }
+    .cust-service-history-table .sp-content .sp-name-rating b,
+    .current-service-req-table .sp-content .sp-name-rating b {
+        margin-left: 10px;
+    }
+    .my-rating .favourite-sp {
+        display: block;
+    }
+    .my-rating .favourite-sp .card {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+    /* customer registration*/
+    .create-account-cust .reg-form,
+    .create-account-cust .reg-form .input-group-prepend {
+        width: 100%;
+    }
+    /*booknow page */
+    .book-service .booking-tabs {
+        width: 100%;
+        padding: 0 1rem;
+    }
+    .book-service .booking-tabs .nav-tabs .nav-item {
+        width: 25%;
+    }
+    .book-service .booking-tabs .nav-tabs .nav-link img {
+        margin-left: auto;
+        margin-right: auto;
+        width: 32px;
+    }
+    .book-service .booking-tabs .nav-tabs .nav-link .tab-name {
+        display: none;
+    }
+    .tab-content .setup-service-content .form-group {
+        display: block;
+    }
+    .tab-content .setup-service-content .form-group input {
+        width: 100%;
+    }
+    .tab-content .setup-service-content .form-group .btn-availability {
+        text-align: right;
+        margin-top: 0.8rem;
+    }
+    .tab-content .service-schedule-content .service-duration {
+        display: block;
+    }
+    .tab-content .service-duration .cleaner-to-stay {
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+    .tab-content .service-schedule-content .extra-services .services .outer {
+        flex: 50%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media screen and (max-width:600px) {
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+    }
+    .logo {
+        width: 110px;
+        height: 54px;
+    }
+    .navbar {
+        padding-top: 0px !important;
+    }
+    .navbar .navbar-toggler:focus {
+        color: white;
+    }
+    .navbar-collapse .rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .rounded-btn {
+        margin-top: 10px;
+    }
+    .navbar-toggler-icon {
+        color: white;
+        font-size: 28px;
+    }
+    .login-rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+    .mainscreen-btn {
+        height: 45px;
+        width: 190px;
+        font-size: 16px;
+    }
+    .main-text {
+        margin-left: 1rem;
+    }
+    .banner-btn {
+        margin-top: 1.5rem;
+    }
+    .main-text h1 {
+        font-size: 30px;
+    }
+    .sub-text {
+        font-size: 10px;
+    }
+    .sub-text img {
+        margin-right: 4px;
+        height: 10px;
+        width: 13px;
+    }
+    .curvearrow {
+        display: none;
+    }
+    .down-arrow img {
+        padding-bottom: 10px;
+    }
+    .svgs {
+        margin-top: 3rem !important;
+    }
+    .svgs .sub-text {
+        font-size: 14px;
+    }
+    .helperland-txt {
+        font-size: 32px;
+    }
+    .img-textsection img {
+        height: 240px;
+        width: 240px;
+    }
+    .img-textsection h3 {
+        font-size: 22px;
+    }
+    .img-textsection p {
+        font-size: 13px;
+    }
+    .img-textsection h3,
+    .img-textsection p {
+        margin-top: 0.8rem;
+    }
+    .curve {
+        display: none;
+    }
+    .second-sec p {
+        margin-top: 2.5rem;
+    }
+    .main-text p {
+        font-size: 0.8rem;
+    }
+    .left-bg img,
+    .right-bg img {
+        width: 50px;
+    }
+    .blog-texts h3 {
+        font-size: 25px;
+    }
+    .blog-texts p {
+        font-size: 14px;
+    }
+    .our-blog-txt {
+        font-size: 32px;
+    }
+    .blog-sec1 {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .blog-img {
+        margin-top: -20px;
+    }
+    .blog-img img {
+        width: 250px;
+    }
+    .blog-texts {
+        margin-top: 2rem;
+    }
+    .community-title {
+        padding-bottom: 2%;
+        font-size: 30px;
+    }
+    .sec4-card {
+        margin-top: 1%;
+        width: 18rem !important;
+    }
+    .blog .card {
+        width: 18rem !important;
+        margin: 2% auto;
+    }
+    .blog .form-group {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .btn-submit {
+        /* margin-left: -20px; */
+        margin-top: 10px;
+    }
+    .newsletter-input .form-group .form-control {
+        width: 17rem;
+        /* margin-left: -20px; */
+    }
+    .up-arrow {
+        margin-left: 6%;
+        width: 40px;
+        height: 40px;
+    }
+    .timer-icon img {
+        right: 0;
+        width: 45px;
+        height: 45px;
+        margin: -30px 15px 0px;
+    }
+    .footer-section {
+        height: max-content;
+    }
+    .footer-content {
+        display: inline;
+    }
+    .footer-content img {
+        display: block;
+        margin: 0 auto;
+        padding-top: 10px;
+    }
+    .footer-content i {
+        margin-top: 10px;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .footer-content .footer-icon {
+        justify-content: center;
+    }
+    .footer-nav {
+        margin-top: 10px;
+    }
+    .fb-icon,
+    .insta-icon {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .privacy-policy-sec {
+        display: inline-block;
+        text-align: center;
+    }
+    .btn-ok {
+        width: 70px;
+        height: 30px;
+        margin-top: 10px;
+    }
+    /*---------- for FAQ Section ------------*/
+    .faq-banner-img img {
+        max-width: 100%;
+        margin-top: 4rem;
+    }
+    .tabs {
+        width: 300px;
+    }
+    .tabs .nav-item {
+        width: 50%;
+    }
+    .tabs .nav-item a {
+        font-size: 18px;
+    }
+    .faq-tab-content .btn::before {
+        content: url("../images/down-arrow(1).png");
+        float: left;
+        margin-right: 10px;
+    }
+    .faq-tab-content .btn.collapsed::before {
+        content: url("../images/right-arrow.png");
+        margin-right: 10px;
+    }
+    .faq-navbar .navbar-collapse .rounded-btn {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+    }
+    .faq-newsletter .newsletter-input .form-group {
+        flex-direction: column;
+    }
+    .faq-footer .footer-content img {
+        display: block;
+        margin: 0 auto;
+        padding-top: 10px;
+    }
+    .faq-footer .footer-content .footer-icon {
+        border-bottom: 1px solid #424242;
+    }
+    .faq-heading {
+        font-size: 30px;
+    }
+    /* prices section */
+    .prices-banner-img img {
+        max-width: 100%;
+        margin-top: 3.7rem;
+    }
+    .price-card {
+        width: 320px;
+    }
+    .check-items {
+        margin-left: 40px;
+    }
+    .center-img {
+        display: none;
+    }
+    .cleaning-section {
+        padding-top: 10px;
+    }
+    .cleaning-card .sample-photo {
+        width: 300px;
+        height: 210px;
+        margin-top: 2rem;
+    }
+    .cleaning-section h3 {
+        font-size: 28px;
+    }
+    .cleaning-card {
+        text-align: center;
+    }
+    .cleaning-card-info {
+        margin-left: 1.8rem;
+    }
+    .why-this {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+    }
+    .left-text h5,
+    .left-text p,
+    .right-text h5,
+    .right-text p {
+        text-align: center;
+        margin-left: 0px;
+    }
+    .left-text h5,
+    .right-text h5 {
+        font-size: 22px;
+        margin-top: 15px;
+    }
+    .prices-timer-icon {
+        margin-right: 0.5rem;
+    }
+    /*---------------- Contact page ---------------------*/
+    .contact-info img {
+        margin-top: 2.5rem;
+    }
+    .contact-form .form-group {
+        margin-bottom: 0 !important;
+    }
+    .contact-form form {
+        width: 315px;
+    }
+    .input-group-text {
+        margin-left: 5px;
+    }
+    .contact-form .form-control {
+        width: 303px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .contact-form .names {
+        margin-top: 15px;
+    }
+    .username {
+        width: 249px !important;
+        margin-left: -0.5px !important;
+    }
+    .phone-email .input-group {
+        margin-top: 0px;
+    }
+    .subject-selection {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .subject-select {
+        width: 303px !important;
+    }
+    .msg-area {
+        width: 303px !important;
+        margin-top: 15px;
+    }
+    .red-mark {
+        width: 30px;
+        height: 50px;
+        top: 22%;
+    }
+    /*----------------- about section -----------------*/
+    .paragraphs {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .paragraphs p {
+        text-align: justify;
+    }
+    /* ---------- become a pro ---------*/
+    .sp-reg {
+        max-width: 360px;
+    }
+    .sp1,
+    .readmore {
+        margin-top: 1rem;
+    }
+    .sp-content .content1,
+    .sp-content .content3 {
+        flex-direction: column-reverse;
+        justify-content: center;
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .sp-content .content2 {
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+    .sp-content .sp-img img,
+    .sp-content2 .sp-img img,
+    .sp-content3 .sp-img img {
+        width: 200px;
+        height: 200px;
+    }
+    /* upcoming service start */
+    .tab-sections .container .v-tabs {
+        display: none;
+    }
+    .tab-sections .col-sm-5 {
+        width: 0;
+    }
+    .service-datetime-icons .modal-content {
+        flex-direction: column;
+    }
+    /* customer dashboard */
+    .tab-sections .dashboard .current-service-req {
+        display: block;
+        text-align: center;
+    }
+    .tab-sections .dashboard .current-service-req button {
+        margin: 0.5rem 0;
+    }
+    .book-service .booking-tabs .nav-tabs {
+        width: 100%;
+    }
+    .booking-tabs .nav-tabs .nav-link.active::after {
+        left: 38%;
+    }
+    .main-content .booking-tabs .form-group {
+        flex-wrap: nowrap;
+    }
+    .main-content .your-details-content .fav-sp-info {
+        width: 100% !important;
+    }
+    .main-content .your-details-content .fav-sp-info button {
+        width: 40% !important;
+    }
+    .main-content .your-details-content .add-new-address-content .outer {
+        padding: 0.5rem 1rem;
+    }
+    .main-content .your-details-content .add-new-address-content .input-group-text {
+        margin-left: 0;
+    }
+    .main-content .your-details-content .add-new-address-content .address-fields,
+    .main-content .your-details-content .add-new-address-content .postalcode-city {
+        display: block;
+    }
+}
+
+@media screen and (max-width:541px) {
+    .tab-sections .tab-content .table-header {
+        height: 0;
+        display: none;
+        height: 0;
+    }
+    .upcoming-service-table tbody tr,
+    .tab-sections .new-service tr {
+        margin-bottom: 35px;
+    }
+    .tab-sections table {
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+    }
+    .tab-sections .upcoming-service-table tr td,
+    .tab-sections .new-service tr td {
+        display: block;
+    }
+    .tab-sections .upcoming-service-table tr,
+    .tab-sections .new-service tr {
+        box-shadow: 0 0 6px rgb(0 0 0 / 25%);
+    }
+    /* my rating tab */
+    .my-rating .rating-card-content {
+        display: block;
+    }
+    .my-rating .rating-card-content .id-name {
+        text-align: center;
+    }
+    .my-rating .rating-card-content .service-info,
+    .my-rating .rating-card-content .rating-star {
+        margin-top: 1rem;
+        margin-left: 0;
+        text-align: center;
+    }
+    /* booking tabs */
+    .service-schedule-content .select-room-bath {
+        flex-wrap: nowrap;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .service-schedule-content .select-room-bath select,
+    .service-schedule-content .service-duration .service-datetime-input input,
+    .service-schedule-content .service-duration .service-datetime-input select,
+    .service-schedule-content .service-duration .cleaner-to-stay select {
+        width: 50% !important;
+    }
+    .service-schedule-content .service-duration .service-datetime-input {
+        width: 100%;
+        display: flex;
+    }
+    .main-content .payment-tab-content .promo-code {
+        text-align: center;
+    }
+    .main-content .payment-tab-content .promo-code input {
+        width: 100%;
+    }
+    .main-content .payment-tab-content .promo-code button {
+        margin-top: 1rem;
+    }
+}
