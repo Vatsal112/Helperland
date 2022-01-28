@@ -72,7 +72,7 @@
                                 <input type="tel" class="form-control phone" name="phone" id="inlineFormInputGroup" placeholder="Mobile number" >
                                
                             </div>
-                        </div> -->
+                        </div> 
                          <div class="col-md-6 col-sm-12">
                             <div class="form-group">
                                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
