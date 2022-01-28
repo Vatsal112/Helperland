@@ -1,0 +1,551 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto' sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+.row {
+    --bs-gutter-x: 0 !important;
+}
+
+.panel-header .navbar {
+    background-color: #1FB6FF;
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+}
+
+.panel-header .navbar-brand {
+    text-decoration: none;
+    color: white;
+    font-size: 28px;
+}
+
+.panel-header .navbar .nav-item a {
+    text-decoration: none;
+    color: white;
+    padding: 0 5px;
+}
+
+.panel-header .navbar .nav-item .nav-link img {
+    padding: 0 5px;
+}
+
+.sidebar {
+    background-color: white;
+    width: 18rem;
+    height: 100vh;
+    box-shadow: 2px 0px 6px #0000001A;
+}
+
+.admin-sidemenu .container-fluid {
+    padding: 0;
+    display: flex;
+}
+
+.admin-sidemenu .nav-tab a {
+    text-decoration: none;
+    color: #646464;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.admin-sidemenu .sidebar-content {
+    padding-left: 1.5rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    background-color: #e3e5e6;
+    width: 100%;
+    color: #646464;
+}
+
+.sidebar-content .add-new-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar .nav .nav-link.active {
+    color: #1FB6FF;
+}
+
+.sidebar-content .add-new-user .add-user-btn button {
+    outline: none;
+    border: none;
+    background-color: #1FB6FF;
+    color: white;
+    width: 132px;
+    height: 45px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-new-user .add-user-btn button img {
+    margin-right: 3px;
+}
+
+.filters .inputs .form-control {
+    margin-top: 0.5rem;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filters .inputs .form-control select {
+    width: 205px;
+    height: 45px;
+    border: 1px solid #dee2e6;
+    margin: 5px 10px;
+    border-radius: 0.3rem;
+    color: #646464;
+}
+
+.filters .inputs .form-control input {
+    margin: 5px 10px;
+}
+
+.sp-reg-form input {
+    height: 45px;
+}
+
+.sp-reg-form .input-group-prepend {
+    display: flex;
+    align-items: center;
+}
+
+.sp-reg-form .input-group-prepend input {
+    margin: 0px !important;
+}
+
+.sp-reg-form .input-group-prepend .input-group-text {
+    height: 45px;
+    /* margin-top: 10px; */
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.sp-reg-form .input-group-prepend .phone-no {
+    border-top-left-radius: none;
+    border-bottom-left-radius: none;
+    margin-top: 0;
+}
+
+.filters .inputs .form-control .zipcode,
+.filters .inputs .form-control .email {
+    width: 160px;
+    height: 45px;
+    border: 1px solid #dee2e6;
+    padding: 0 5px;
+    border-radius: 0.3rem;
+    padding: 0 5px;
+}
+
+.filters .inputs .form-control .filter-btns {
+    display: flex;
+    align-items: center;
+}
+
+.filters .inputs .filter-btns .search-btn button {
+    width: 80px;
+    height: 45px;
+    margin-right: 15px;
+    background-color: #1FB6FF;
+    color: white;
+    outline: none;
+    border: none;
+    border-radius: 0.3rem;
+}
+
+.logout-modal .modal-body .logout-modal-content .logout-green-circle {
+    height: 50px;
+    width: 50px;
+    background-color: #67b644;
+    text-align: center;
+    margin: 20px auto;
+    border-radius: 50%;
+}
+
+.logout-modal .modal-body .logout-modal-content .logout-green-circle img {
+    height: 20px;
+    width: 25px;
+    margin-top: 15px;
+}
+
+.logout-modal .modal-body .logout-modal-content h5 {
+    text-align: center;
+    color: #4F4F4F;
+    margin-top: 1.5rem;
+}
+
+.logout-modal .modal-content .modal-footer {
+    justify-content: center;
+    border-top: 0;
+}
+
+.logout-modal .modal-content .modal-footer .btn-logout-ok {
+    outline: none;
+    border: 1px solid #1D7A8C;
+    background-color: #1D7A8C;
+    height: 46px;
+    width: 80px;
+    border-radius: 46px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.filters .inputs .filter-btns .clear-btn button {
+    width: 70px;
+    height: 45px;
+    outline: none;
+    border: 1px solid #DEDDDD;
+    border-radius: 0.3rem;
+    background-color: white;
+    color: #646464;
+}
+
+.users-table .table,
+.service-req-table .table {
+    margin-top: 1rem;
+    color: #646464;
+}
+
+.btn-export {
+    display: flex;
+    justify-content: end;
+    margin-top: 1rem;
+}
+
+.btn-export button {
+    outline: none;
+    border: none;
+    background-color: #1FB6FF;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.table thead>tr>th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #E1E1E1 !important;
+}
+
+.users-table .table .table-header,
+.service-req-table .table .table-header {
+    background-color: #F9F9F9;
+    border: 1px solid #E1E1E1;
+}
+
+.users-table .table tbody,
+.service-req-table .table tbody {
+    background-color: white;
+}
+
+.users-table .table>:not(caption)>*>* {
+    padding: 1rem 0.5rem;
+    text-align: center;
+}
+
+.users-table .table tbody .status-active span,
+.users-table .table tbody .status-inactive span {
+    background-color: #67B644;
+    color: white;
+    padding: 0 10px;
+    font-size: 14px;
+}
+
+.users-table .table tbody .status-inactive span {
+    background: #FF6B6B;
+}
+
+.users-table .table tbody .action-btn img,
+.service-req-table .users-table .table tbody .action-btn img {
+    margin-left: 1rem;
+}
+
+.users-table .table tbody .dropdown-toggle::after,
+.service-req-table .table tbody .dropdown-toggle::after {
+    content: none;
+}
+
+.users-table .table tbody .action-btn .dropdown-menu {
+    position: absolute !important;
+    left: -10px !important;
+    top: 15px !important;
+}
+
+.users-table .shown-records {
+    background-color: white;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.shown-records select {
+    width: 60px;
+    height: 35px;
+    border: 1px solid #dee2e6;
+}
+
+.pagination .page-item .next-icon img {
+    transform: rotate(180deg);
+}
+
+.pagination .page-item .page-link.active {
+    background-color: #565656;
+    color: white;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.service-req .filters .form-control .s_id {
+    width: 10%;
+    margin-top: 0;
+}
+
+.filters .dates input {
+    width: 160px;
+    height: 45px;
+    border-radius: 0.3rem;
+    border: 1px solid #dee2e6;
+    color: #646464;
+    padding: 0 5px;
+}
+
+.service-req .filters .dates .from-date {
+    margin-right: 5px;
+}
+
+.service-req .filters .inputs .filter-btns .search-btn button {
+    margin-right: 10px;
+}
+
+.service-req-table .table>:not(caption)>*>* {
+    padding: 1rem 0.5rem;
+}
+
+.service-req-table tbody tr {
+    vertical-align: middle;
+}
+
+.service-req-table .service-info {
+    display: flex;
+    color: #646464;
+}
+
+.service-req-table .service-info .service-datetime-icons a {
+    display: block;
+}
+
+
+/* */
+
+.dates input[type="date"] {
+    position: relative;
+    padding-left: 15px;
+    text-align: center;
+}
+
+.dates input[type="date"]::-webkit-calendar-picker-indicator {
+    background-image: url(../images/admin-calendar-blue.png);
+    position: absolute;
+    left: -15px;
+}
+
+
+/* */
+
+.service-req-table .service-datetime-texts a,
+.service-req-table .td-address a {
+    text-decoration: none;
+    color: #646464;
+}
+
+.service-req-table .sp-content {
+    display: flex;
+}
+
+.service-req-table .sp-content .sp-avatar img {
+    width: 60px;
+    border-radius: 50%;
+    border: 1px solid #646464;
+    margin-right: 8px;
+}
+
+.service-req-table .payment-content {
+    font-size: 16px;
+}
+
+.service-req-table .service-status span {
+    background-color: orange;
+    color: white;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.service-req-table .payment-status span,
+.service-status-cancel span,
+.service-status-pending span,
+.service-status-change-sp span {
+    background-color: #FF6B6B;
+    color: white;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.service-status-pending span {
+    background-color: #1FB6FF;
+}
+
+.service-status-change-sp span {
+    background-color: gray;
+}
+
+.service-req-table .action-btn img {
+    margin-left: 1rem;
+}
+
+.service-datetime-icons .modal-body .body-text {
+    display: block;
+    font-size: 16px;
+}
+
+.service-datetime-icons .modal-content {
+    padding: 10px;
+}
+
+.service-req-table .modal-content .payment {
+    margin-left: 25%;
+    font-size: 26px;
+    color: #1D7A8C;
+    font-weight: 700;
+}
+
+.service-datetime-icons .modal-body .customer-details {
+    margin-top: 10px;
+    border-top: 1px solid #dee2e6;
+    padding-top: 10px;
+}
+
+.service-datetime-icons .modal-body .customer-details .pets {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.service-datetime-icons .modal-header button,
+#edit-reschedule-modal .modal-header button {
+    font-size: 28px;
+    font-weight: 500;
+    position: absolute;
+    border: none;
+    outline: none;
+    background: transparent;
+    right: 3%;
+    top: 3%;
+}
+
+.service-req-table #current-service-modal .modal-body {
+    display: flex;
+}
+
+.service-req-table #current-service-modal .modal-sp-details {
+    border-left: 1px solid #dee2e6;
+    padding: 0px 1.5rem;
+    margin-left: 18%;
+}
+
+#edit-reschedule-modal .modal-header {
+    border-bottom: 0;
+}
+
+#edit-reschedule-modal .modal-body .date-time-fields,
+#edit-reschedule-modal .modal-body .service-address .address-fields,
+#edit-reschedule-modal .modal-body .service-address .postalcode-city {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#edit-reschedule-modal .modal-body {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#edit-reschedule-modal .modal-body .input-time select,
+#edit-reschedule-modal .modal-body .city select {
+    display: block;
+    height: 39px;
+    width: 220px;
+    border: 1px solid #dee2e6;
+    border-radius: 0.3rem;
+}
+
+#edit-reschedule-modal .modal-body .input-date input {
+    width: 220px;
+}
+
+#edit-reschedule-modal .modal-body .service-address input,
+#edit-reschedule-modal .modal-body .service-address .postalcode-city input {
+    width: 220px;
+}
+
+#edit-reschedule-modal .modal-body .service-address,
+#edit-reschedule-modal .modal-body .reschedule-reason {
+    margin-top: 10px;
+}
+
+#edit-reschedule-modal .modal-body label {
+    margin-top: 5px;
+}
+
+#edit-reschedule-modal .modal-body .reschedule-reason textarea {
+    height: 90px;
+    resize: none;
+    margin-top: 5px;
+}
+
+#edit-reschedule-modal .modal-footer {
+    border-top: 0;
+    justify-content: center;
+}
+
+#edit-reschedule-modal .modal-footer .btn-update {
+    border: none;
+    outline: none;
+    background-color: #1FB6FF;
+    color: white;
+    width: 100%;
+    text-align: center;
+    height: 45px;
+    border-radius: 5px;
+}
+
+#edit-reschedule-modal .modal-header button {
+    top: 1%;
+}
+
+.service-req-table .service-req-pagination {
+    padding-bottom: 1rem;
+}
