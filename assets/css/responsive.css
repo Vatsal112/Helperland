@@ -43,8 +43,9 @@
     .navbar .navbar-toggler:focus {
         color: white;
     }
-    .main-screen .navbar-collapse {
-        background-color: rgba(0, 0, 0);
+    .main-screen .navbar-collapse,
+    .sp-banner .navbar-collapse {
+        background-color: rgba(0, 0, 0, 0.8);
         margin-top: 5px;
         padding-bottom: 5px;
     }
@@ -204,6 +205,59 @@
 }
 
 @media screen and (max-width: 768px) {
+    /* for price page*/
+    .cleaning-section .container .row {
+        justify-content: center;
+    }
+    .cleaning-section .cleaning-card {
+        text-align: center;
+        margin-top: 1rem;
+    }
+    .center-img {
+        display: none;
+    }
+    .why-this {
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+    }
+    .left-text h5,
+    .left-text p,
+    .right-text h5,
+    .right-text p {
+        text-align: center;
+        margin-left: 0px;
+    }
+    .left-text h5,
+    .right-text h5 {
+        font-size: 22px;
+        margin-top: 15px;
+    }
+    .cleaning-card .cleaning-card-info {
+        margin-left: 15%;
+    }
+    /* contact page */
+    .contact-form form,
+    .contact-form input,
+    .contact-form .subject-select,
+    .contact-form .msg-textarea {
+        width: 100% !important;
+    }
+    .contact .contact-info {
+        display: block;
+    }
+    .contact-form input[type="text"],
+    .contact-form .subject-select,
+    .contact-form .msg-textarea {
+        margin-top: 0.8rem;
+    }
+    .contact-form .form-row .form-group {
+        margin: 0;
+    }
+    .contact-info img {
+        margin-top: 2rem;
+    }
     /* for pagination */
     .total-records .shown-records {
         text-align: center;
@@ -486,10 +540,8 @@
     }
     .sec4-card {
         margin-top: 1%;
-        width: 18rem !important;
     }
     .blog .card {
-        width: 18rem !important;
         margin: 2% auto;
     }
     .blog .form-group {
@@ -607,86 +659,32 @@
     .check-items {
         margin-left: 40px;
     }
-    .center-img {
-        display: none;
-    }
     .cleaning-section {
         padding-top: 10px;
-    }
-    .cleaning-card .sample-photo {
-        width: 300px;
-        height: 210px;
-        margin-top: 2rem;
     }
     .cleaning-section h3 {
         font-size: 28px;
     }
-    .cleaning-card {
-        text-align: center;
-    }
     .cleaning-card-info {
         margin-left: 1.8rem;
-    }
-    .why-this {
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin-top: 2rem;
-    }
-    .left-text h5,
-    .left-text p,
-    .right-text h5,
-    .right-text p {
-        text-align: center;
-        margin-left: 0px;
-    }
-    .left-text h5,
-    .right-text h5 {
-        font-size: 22px;
-        margin-top: 15px;
     }
     .prices-timer-icon {
         margin-right: 0.5rem;
     }
     /*---------------- Contact page ---------------------*/
-    .contact-info img {
-        margin-top: 2.5rem;
-    }
-    .contact-form .form-group {
-        margin-bottom: 0 !important;
-    }
-    .contact-form form {
-        width: 315px;
-    }
     .input-group-text {
         margin-left: 5px;
-    }
-    .contact-form .form-control {
-        width: 303px;
-        margin-left: auto;
-        margin-right: auto;
     }
     .contact-form .names {
         margin-top: 15px;
     }
-    .username {
-        width: 249px !important;
-        margin-left: -0.5px !important;
-    }
     .phone-email .input-group {
         margin-top: 0px;
     }
-    .subject-selection {
+    /* .subject-selection {
         text-align: center;
         margin-top: 15px;
-    }
-    .subject-select {
-        width: 303px !important;
-    }
-    .msg-area {
-        width: 303px !important;
-        margin-top: 15px;
-    }
+    } */
     .red-mark {
         width: 30px;
         height: 50px;
@@ -773,6 +771,12 @@
 }
 
 @media screen and (max-width:541px) {
+    .cleaning-card .cleaning-card-info {
+        text-align: center;
+    }
+    .cleaning-card-info p {
+        margin: 5px 5px;
+    }
     .tab-sections .tab-content .table-header {
         height: 0;
         display: none;

@@ -6,8 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <style>
+    <?php
+        include 'assets/css/style.css';
+        include 'assets/css/responsive.css';
+        
+    ?>
+    </style>
+    
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -23,32 +30,32 @@
     <section class="main-screen" id="main-screen">
         <header>
             <nav class="navbar navbar-expand-lg fixed-top " id="navbar">
-                <a class="navbar-brand" href="index.html" target="blank"><img src="assets/images/white-logo-transparent-background.png" alt="" class="logo" id="logo"></a>
+                <a class="navbar-brand" href="index.php" target="blank"><img src="assets/images/white-logo-transparent-background.png" alt="" class="logo" id="logo"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"> <i class="fa fa-navicon" style="color:#fff; font-size:28px;"></i></span>
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class=" nav-item rounded-btn">
-                            <a class="nav-link active " aria-current="page " href="book-service.html" target="blank">Book a Cleaner</a>
+                            <a class="nav-link active " aria-current="page " href="book-service.php" target="_blank">Book a Cleaner</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="Prices.html" target="blank">Prices</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="_blank">Prices</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="# ">Our Guarantee</a>
+                            <a class="nav-link " href="#">Our Guarantee</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="# ">Blog</a>
+                            <a class="nav-link " href="#">Blog</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="contact.html" target="blank">Contact us</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="_blank">Contact us</a>
                         </li>
                         <li class="nav-item login-rounded-btn">
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
                         <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="sp-reg.html" target="blank">Become a Helper</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=sp-reg'?>" target="_blank">Become a Helper</a>
                         </li>
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,7 +82,7 @@
                 <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
         </div>
         <div class="banner-btn">
-            <button type="button " class="mainscreen-btn" onclick='window.location.href="book-service.html"'>Let's Book a Cleaner</button>
+            <button type="button " class="mainscreen-btn" onclick='window.location.href="book-service.php"'>Let's Book a Cleaner</button>
         </div>
 
 
@@ -117,74 +124,9 @@
         </div>
 
         <!--  Homepage modal for login start -->
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Login to your account</h4>
-                        <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <div class="form-group">
-                                <div class="login-email">
-                                    <input type="email" name="" id="" placeholder="Email" required>
-                                    <img src="assets/images/user-login-icon.png" alt="">
-                                </div>
-
-                                <div class="login-password">
-                                    <input type="password" name="" id="" placeholder="Password" required>
-                                    <img src="assets/images/password-icon.png" alt="">
-                                </div>
-
-                                <div class="remember-me">
-                                    <input type="checkbox" name="" id="remember-me" class="form-check-input">
-                                    <label for="form-check-label">Remember Me</label>
-                                </div>
-                            </div>
-
-                            <div class="btn-login">
-                                <button type="button">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="forget-pass">
-                            <a href="" data-target="#forget-pass-modal" data-toggle="modal" data-dismiss="modal">Forget password?</a>
-                        </div>
-                        <div class="create-account">
-                            <span>Don't have an account? </span><a href="./customer-reg.html">Create an account</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--  Homepage modal for login end -->
-
-
-        <!--  Homepage modal for forget-pass start -->
-        <div class="modal fade" id="forget-pass-modal" tabindex="-1" role="dialog" aria-labelledby="forget-pass-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Forget password</h5>
-
-                        <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="email" name="" id="" class="form-control" placeholder="Email">
-                        </div>
-                        <div class="btn-send">
-                            <button type="button">Send</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="" data-target="#login-modal" data-toggle="modal" data-dismiss="modal">Login now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+            include 'views/popup-modal/login-modal.php'
+        ?>
         <!--  Homepage modal for forget-pass end -->
     </section>
     <!--********* Main Screen Banner Section end************-->
@@ -408,12 +350,12 @@
     <div class="container-fluid footer-section ">
         <footer>
             <div class="footer-content">
-                <a href="index.html" target="blank"><img src="assets/images/footer-logo.png " alt=" "></a>
+                <a href="index.php" target="blank"><img src="assets/images/footer-logo.png " alt=" "></a>
                 <nav class="nav footer-nav justify-content-center">
-                    <a class="nav-link" href="index.html" target="blank">Home</a>
-                    <a class="nav-link " href="about.html" target="blank">About</a>
+                    <a class="nav-link" href="index.php" target="blank">Home</a>
+                    <a class="nav-link " href="about.php" target="blank">About</a>
                     <a class="nav-link " href="#" target="blank">Testimonials</a>
-                    <a class="nav-link " href="FAQ's.html" target="blank">faqs</a>
+                    <a class="nav-link " href="faq.php" target="blank">faqs</a>
                     <a class="nav-link " href="# ">Insurance Policy</a>
                     <a class="nav-link " href="# ">Impressum</a>
                 </nav>
@@ -433,7 +375,7 @@
 
     <!--********* Footer Section end************-->
 
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/main.js" type ="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
