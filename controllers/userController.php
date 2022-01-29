@@ -7,32 +7,24 @@ class userController{
     }
 
     function submit_contactForm(){
+       // die (print_r( $_POST));
         $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=about';
-
+        //print_r($_POST);
+        
         if(isset($_POST)){
-
-            
-            
-            $array = [
+           
+            $arr = [
                 'firstname' => $_POST['firstname'],
                 'lastname' => $_POST['lastname'],
-                // 'email' => $_POST['email'],
-                // 'subject' =>$_POST['subject'],
-                // 'msg' => $_POST['msg']
             ];
+            print_r($arr);
+            $ins = $this->model->insert('user',$arr);
 
-            print_r($array);
-
-            $ins = $this->model->insert('user',$array);
-
-            if($ins){
-                header('Location:'.$arr['base_url']);
-            }else{
-                echo "erro";
-            }
-            
-        
-              
+            // if($ins){
+            //     header('Location:'.$arr['base_url']);
+            // }else{
+            //     echo "erro";
+            // }
         }else{
             echo 'error occured!! try again';
         }

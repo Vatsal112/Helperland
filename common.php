@@ -1,5 +1,5 @@
 <?php
 
 $arr = [
-    'base_url'=>'http://localhost/Helperland',
+    'base_url'=>'http://localhost/Helperland/',
 ];
