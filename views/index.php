@@ -1,3 +1,18 @@
+<?php
+    if(isset($_POST['submit-cookie'])){
+        setcookie("siteCookie","Helperland",time()+60*60*24*30);
+
+        if(isset($_COOKIE['siteCookie'])){
+            echo "<style>
+                .privacy-policy-sec{
+                    display:none !important;
+                }
+            </style>";
+        }
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -370,7 +385,10 @@
 
     <div class="container-fluid privacy-policy-sec">
         <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea iste pariatur cumque. <span style="color:#6EABEF; ">Privacy Policy</span></p>
-        <button type="button" class="btn-ok" id="privacy-policy-accept" onclick="privacy_policy_btn()">OK!</button>
+        <form action="" method="post">
+            <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie">OK!</button>
+        </form>
+        
     </div>
 
     <!--********* Footer Section end************-->

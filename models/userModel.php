@@ -22,9 +22,9 @@ class userModel{
     }
     
     function insert($table,$array){
-        $sql = "INSERT INTO $table(firstname, lastname) VALUES (:firstname,:lastname)";
+        $sql = "INSERT INTO $table(Name,Email,Subject,PhoneNumber,Message,CreatedOn) VALUES (:name,:email,:subject,:phone,:message,:createdOn)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($array);
-        // return $this->conn->lastInsertId();
+        return $this->conn->lastInsertId();
     }
 }

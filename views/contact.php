@@ -51,47 +51,60 @@
         <div class="contact-form">
         
             <form action="<?php echo $arr['base_url'].'?controller=user&function=submit_contactForm';?>" method="POST">
+
+                <?php
+                    echo "<div class='status-message'>";
+                    if(isset($_GET['status'])==1){
+                        echo "<p class='text-success'>Your reposne is successfully submitted! We will get back to you soon.</p>";
+                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
+                    }
+                    echo "</div>"
+                ?>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <input type="text" class="form-control names" name="firstname" placeholder="First name" id="fname" required>
-
+                        <input type="text" class="form-control names" name="firstname" placeholder="First name" onfocusout="showMessage(this.id)" id="fname" required>
+                        <p class="text-danger msg-text mb-0"></p>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <input type="text" class="form-control names" name="lastname" placeholder="Last name" id="lname" required>
+                        <input type="text" class="form-control names" name="lastname" onfocusout="showMessage(this.id)" placeholder="Last name" id="lname" required>
+                        <p class="text-danger msg-text mb-0"></p>
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" onfocusout="showMessage(this.id)"  aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+                            <p class="text-danger msg-text mb-0"></p>
+                        </div>
+                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group d-flex">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">+91</div>
                             </div>
-                            <input type="tel" class="form-control phone" name="phone" id="inlineFormInputGroup" placeholder="Mobile number">
+                            <input type="number" maxlength="10" class="form-control phone" onfocusout="showMessage(this.id)"  name="phone" id="phone" placeholder="Mobile number">
 
                         </div>
+                        <p class="text-danger msg-text mb-0"></p>
                     </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
-
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 subject-selection">
-                        <select name="subject-select" class="subject-select" name="subject">
-                            <option value="value1">General</option>
-                            <option value="value2">Inquiry</option>
-                            <option value="value3">renewal</option>
-                            <option value="value4">revocation</option>
+                        <select name="subject-select" class="subject-select">
+                            <option value="General">General</option>
+                            <option value="Inquiry">Inquiry</option>
+                            <option value="Renewal">renewal</option>
+                            <option value="Revocation">revocation</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 form-group">
-                        <textarea name="msg-area" name="msg" class="msg-textarea form-control" placeholder="Message" required></textarea>
+                        <textarea name="msg-area" id="contact-msg" onfocusout="showMessage(this.id)" class="msg-textarea form-control" placeholder="Message" required></textarea>
+                        <p class="text-danger mb-0" id="textarea-msg"></p>
                     </div>
                 </div>
 
@@ -114,6 +127,12 @@
 </section>
 <!--********* contact get-in-touch section end************-->
 
+<script>
+
+    <?php
+        include 'assets/js/main.js'
+    ?>
+</script>
 
 <?php
 include 'footer.php';

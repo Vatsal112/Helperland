@@ -1,3 +1,5 @@
+
+
 <div class="container-fluid footer-section faq-footer ">
         <footer>
             <div class="footer-content ">
@@ -19,7 +21,7 @@
             <p class="text-center copyrights ">©2018 Helperland. All rights reserved. &nbsp;&nbsp;&nbsp;<a href="">Terms and Conditions</a> <span>&nbsp;|&nbsp;</span> <a href="">Privacy Policy</a> </p>
         </footer>
 </div>
-    <script src="assets/js/main.js "></script>
+    <script src="assets/js/main.js"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>

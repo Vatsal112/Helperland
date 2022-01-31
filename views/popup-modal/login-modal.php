@@ -36,7 +36,7 @@
                             <a href="" data-target="#forget-pass-modal" data-toggle="modal" data-dismiss="modal">Forget password?</a>
                         </div>
                         <div class="create-account">
-                            <span>Don't have an account? </span><a href="./customer-reg.php">Create an account</a>
+                            <span>Don't have an account? </span><a href="<?php echo $arr['base_url'].'?controller=home&function=customerReg';?>">Create an account</a>
                         </div>
                     </div>
                 </div>

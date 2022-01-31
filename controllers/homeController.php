@@ -32,5 +32,11 @@ class homeController {
         include 'views/header.php';
         include 'views/prices.php';
     }
+
+    function customerReg(){
+        include 'common.php';
+        include 'views/Registration/customer-reg.php';
+        include 'views/footer.php';
+    }
     
 }

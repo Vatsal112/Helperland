@@ -10,9 +10,9 @@ document.addEventListener("scroll", () => {
     }
 })
 
-function privacy_policy_btn() {
-    $(".privacy-policy-sec").css("display", "none");
-}
+// function privacy_policy_btn() {
+//     $(".privacy-policy-sec").css("display", "none");
+// }
 
 var open = false;
 let openSideBar = () => {
@@ -155,4 +155,86 @@ let closeAddressDialog = () => {
     const btnNewAddress = document.getElementById("btn-new-address");
     closeDialog.style.display = "none";
     btnNewAddress.style.display = "block";
+}
+
+function showMessage(id) {
+    var t = document.getElementById(id);
+    let message = document.getElementsByClassName("msg-text");
+    let contact_msg = document.getElementById('textarea-msg');
+
+    if (t.id == 'fname') {
+        if (t.value == '') {
+            message[0].innerHTML = "Please enter a firstname";
+        } else {
+            message[0].innerHTML = "";
+            message[0].style.marginBottom = "0";
+        }
+    } else if (t.id == 'lname') {
+        if (t.value == '') {
+            message[1].innerHTML = "Please enter a Lastname";
+        } else {
+            message[1].innerHTML = "";
+            message[1].style.marginBottom = "0";
+        }
+    } else if (t.id == 'email') {
+        if (t.value == '') {
+            message[2].innerHTML = "Please enter a valid email address";
+        } else {
+            message[2].innerHTML = "";
+            message[2].style.marginBottom = "0";
+        }
+    } else if (t.id == 'phone') {
+        if (t.value == '') {
+            message[3].innerHTML = "Please enter a mobile number";
+        } else {
+            message[3].innerHTML = "";
+            message[3].style.marginBottom = "0";
+        }
+    } else if (t.id == 'pass') {
+        if (t.value == '') {
+            message[4].innerHTML = "Please enter a password";
+        }
+    } else if (t.id == 'c-pass') {
+        if (t.value == '') {
+            message[5].innerHTML = "Please enter a confirm password";
+        } else {
+            message[5].innerHTML = "";
+            message[5].style.marginBottom = "0";
+        }
+    } else if (t.id == 'contact-msg') {
+        if (t.value == '') {
+            contact_msg.innerHTML = "Please enter a message";
+        } else {
+            contact_msg.innerHTML = "";
+            contact_msg.style.marginBottom = "0";
+        }
+    }
+}
+
+function checkPass(id) {
+    let p = document.getElementById(id);
+    let password = document.getElementById('pass').value;
+    var pass = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    let message = document.getElementsByClassName("msg-text");
+
+    if (p.id == 'pass') {
+        if (pass.test(p.value)) {
+            message[4].innerHTML = "";
+        } else {
+            message[4].innerHTML = "You must enter At least one upper case, one lower case, one digit and Minimum eight in length";
+        }
+    }
+
+    if (p.id == 'c-pass') {
+        if (p.value == password.value) {
+            message[5].innerHTML = ""
+        } else {
+            message[5].innerHTML = "Password does not match the confirm password!";
+        }
+    }
+
+}
+
+function hideMessage() {
+    document.getElementsByClassName('status-message')[0].style.display = "none";
 }
