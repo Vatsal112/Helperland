@@ -237,4 +237,5 @@ function checkPass(id) {
 
 function hideMessage() {
     document.getElementsByClassName('status-message')[0].style.display = "none";
+    window.location.href = "http://localhost/helperland/?controller=home&function=contact";
 }

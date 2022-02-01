@@ -21,8 +21,14 @@ class userModel{
        }
     }
     
-    function insert($table,$array){
-        $sql = "INSERT INTO $table(Name,Email,Subject,PhoneNumber,Message,CreatedOn) VALUES (:name,:email,:subject,:phone,:message,:createdOn)";
+    function insert_Contactus($table,$array){
+        $sql = "INSERT INTO $table(FirstName,LastName,Email,Subject,PhoneNumber,Message,CreatedOn) VALUES (:firstname,:lastname,:email,:subject,:phone,:message,:createdOn)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute($array);
+        return $this->conn->lastInsertId();
+    }
+    function insert_Customer($table,$array){
+        $sql = "INSERT INTO $table(FirstName,LastName,Email,Password,Mobile,UserTypeId,WorksWithPets,CreatedDate,ModifiedDate,ModifiedBy,IsApproved,IsActive,IsDeleted,Status) VALUES (:firstname,:lastname,:email,:password,:phone,:userTypeId,:workWithPets,:createdDate,:modifiedDate,:modifiedBy,:isApproved,:isActive,:isDeleted,:status)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($array);
         return $this->conn->lastInsertId();

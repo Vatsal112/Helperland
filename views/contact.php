@@ -49,21 +49,34 @@
         <h2 class="faq-heading ">Get in touch with us</h2>
 
         <div class="contact-form">
-        
+ 
             <form action="<?php echo $arr['base_url'].'?controller=user&function=submit_contactForm';?>" method="POST">
 
                 <?php
-                    echo "<div class='status-message'>";
+                    
+                   
                     if(isset($_GET['status'])==1){
+                        echo "<div class='status-message'>";
                         echo "<p class='text-success'>Your reposne is successfully submitted! We will get back to you soon.</p>";
                         echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
+                        echo "</div>";
                     }
-                    echo "</div>"
+
+                    if(isset($_GET['message']) && $_GET['message']!=''){
+                        foreach(explode(",",$_GET['message'])as $e){
+                            echo "<p class='text-danger'>";
+                            echo $e;
+                            echo "</p>";
+                        }
+                    }
                 ?>
+                    
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <input type="text" class="form-control names" name="firstname" placeholder="First name" onfocusout="showMessage(this.id)" id="fname" required>
+                        <input type="text" class="form-control names" value="" name="firstname" placeholder="First name" onfocusout="showMessage(this.id)" id="fname" required>
+                        
                         <p class="text-danger msg-text mb-0"></p>
+                      
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <input type="text" class="form-control names" name="lastname" onfocusout="showMessage(this.id)" placeholder="Last name" id="lname" required>
@@ -82,7 +95,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">+91</div>
                             </div>
-                            <input type="number" maxlength="10" class="form-control phone" onfocusout="showMessage(this.id)"  name="phone" id="phone" placeholder="Mobile number">
+                            <input type="number" maxlength="10" class="form-control phone" onfocusout="showMessage(this.id)"  name="phone" id="phone" placeholder="Mobile number" required>
 
                         </div>
                         <p class="text-danger msg-text mb-0"></p>
@@ -127,13 +140,6 @@
 </section>
 <!--********* contact get-in-touch section end************-->
 
-<script>
-
-    <?php
-        include 'assets/js/main.js'
-    ?>
-</script>
-
 <?php
-include 'footer.php';
+    include 'footer.php';
 ?>

@@ -1,15 +1,15 @@
 <?php
-    if(isset($_POST['submit-cookie'])){
-        setcookie("siteCookie","Helperland",time()+60*60*24*30);
 
-        if(isset($_COOKIE['siteCookie'])){
-            echo "<style>
-                .privacy-policy-sec{
-                    display:none !important;
-                }
-            </style>";
+if (isset($_COOKIE['siteCookie'])) {
+    echo "<style>
+        .privacy-policy-sec{
+            display:none !important;
         }
-    }
+    </style>";
+}else if (isset($_POST['submit-cookie'])) {
+    setcookie("siteCookie", "Helperland", time() + 60 * 60 * 24 * 30);
+}
+
 ?>
 
 
@@ -22,14 +22,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <style>
-    <?php
+        <?php
         include 'assets/css/style.css';
         include 'assets/css/responsive.css';
-        
-    ?>
+
+        ?>
     </style>
-    
-    
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -55,7 +55,7 @@
                             <a class="nav-link active " aria-current="page " href="book-service.php" target="_blank">Book a Cleaner</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="_blank">Prices</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="_blank">Prices</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link " href="#">Our Guarantee</a>
@@ -64,13 +64,13 @@
                             <a class="nav-link " href="#">Blog</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="_blank">Contact us</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="_blank">Contact us</a>
                         </li>
                         <li class="nav-item login-rounded-btn">
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
                         <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=sp-reg'?>" target="_blank">Become a Helper</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=sp-reg' ?>" target="_blank">Become a Helper</a>
                         </li>
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -94,7 +94,8 @@
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 ">
-                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing
+            </p>
         </div>
         <div class="banner-btn">
             <button type="button " class="mainscreen-btn" onclick='window.location.href="book-service.php"'>Let's Book a Cleaner</button>
@@ -140,7 +141,7 @@
 
         <!--  Homepage modal for login start -->
         <?php
-            include 'views/popup-modal/login-modal.php'
+        include 'views/popup-modal/login-modal.php'
         ?>
         <!--  Homepage modal for forget-pass end -->
     </section>
@@ -388,12 +389,12 @@
         <form action="" method="post">
             <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie">OK!</button>
         </form>
-        
+
     </div>
 
     <!--********* Footer Section end************-->
 
-    <script src="assets/js/main.js" type ="text/javascript"></script>
+    <script src="assets/js/main.js" type="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>

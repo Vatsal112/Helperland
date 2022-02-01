@@ -111,27 +111,45 @@
             </div>
 
             <div class="reg-form">
-                <form action="" method="post">
+                <form action="<?php echo $arr['base_url'].'?controller=user&function=register_Customer'; ?>" method="POST">
+
+                <?php
+                    
+                    if(isset($_GET['status'])==1){
+                        echo "<div class='status-message'>";
+                        echo "<p class='text-success'>We have send an account activation link for your account kindly check your mail.</p>";
+                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
+                        echo "</div>";
+                    }
+
+                    if(isset($_GET['message']) && $_GET['message']!=''){
+                        foreach(explode(",",$_GET['message'])as $e){
+                            echo "<p class='text-danger mb-0'>";
+                            echo $e;
+                            echo "</p>";
+                        }
+                    }
+                ?>
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="text" class="form-control" placeholder="First name" id="fname" onfocusout="showMessage(this.id)" required>
+                            <input type="text" class="form-control" name ="firstname" placeholder="First name" id="fname" onfocusout="showMessage(this.id)" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="text" class="form-control" placeholder="Last name" id="lname" onfocusout="showMessage(this.id)" required>
+                            <input type="text" class="form-control" placeholder="Last name" name="lastname" id="lname" onfocusout="showMessage(this.id)" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="email" name="" id="email" placeholder="E-mail address" onfocusout="showMessage(this.id)" class="form-control" required>
+                            <input type="email" name="email" id="email" placeholder="E-mail address" onfocusout="showMessage(this.id)" class="form-control" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
                             <div class="input-group-prepend ">
                                 <div class="input-group-text">+91</div>
-                                <input type="tel" class="form-control phone-no" id="phone" onfocusout="showMessage(this.id)" placeholder="Phone number" required>
+                                <input type="number" class="form-control phone-no" id="phone" name="phone" onfocusout="showMessage(this.id)" placeholder="Phone number" required>
                             </div>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
@@ -139,22 +157,22 @@
 
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="password" class="form-control" id="pass" placeholder="Password" onkeydown="checkPass(this.id)"  onfocusout="showMessage(this.id)" required>
+                            <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" onkeydown="checkPass(this.id)"  onfocusout="showMessage(this.id)" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="password" class="form-control" id="c-pass" onkeydown="checkPass(this.id)" onfocusout="showMessage(this.id)" placeholder="Confirm Password" required>
+                            <input type="password" class="form-control" id="c-pass" name="c-pass" onkeydown="checkPass(this.id)" onfocusout="showMessage(this.id)" placeholder="Confirm Password"  required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                     </div>
 
                     <div class="form-group form-check d-flex align-items-center">
-                        <input type="checkbox" class="form-check-input" id="terms-check">
+                        <input type="checkbox" class="form-check-input" id="terms-check" name="reg-check" required>
                         <label class="form-check-label" for="terms-check">I have read the <a href="">Privacy & Policy</a></label>
                     </div>
 
                     <div class="btn-reg">
-                        <button type="submit">Register</button>
+                        <button type="submit" name="submit">Register</button>
                     </div>
                 </form>
 
