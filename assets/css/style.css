@@ -919,7 +919,7 @@ body {
     margin-top: 10px;
 }
 
-.submit input {
+.form-submit {
     height: 46px;
     width: 163px;
     background-color: #1D7A8C;

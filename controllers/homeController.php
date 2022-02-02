@@ -38,5 +38,10 @@ class homeController {
         include 'views/Registration/customer-reg.php';
         include 'views/footer.php';
     }
+
+    function spReg(){
+        include 'common.php';
+        include 'views/Registration/sp-reg.php';
+    }
     
 }

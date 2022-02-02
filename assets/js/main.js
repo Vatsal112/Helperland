@@ -10,9 +10,9 @@ document.addEventListener("scroll", () => {
     }
 })
 
-// function privacy_policy_btn() {
-//     $(".privacy-policy-sec").css("display", "none");
-// }
+function privacy_policy_btn() {
+    $(".privacy-policy-sec").css("display", "none");
+}
 
 var open = false;
 let openSideBar = () => {
@@ -237,5 +237,4 @@ function checkPass(id) {
 
 function hideMessage() {
     document.getElementsByClassName('status-message')[0].style.display = "none";
-    window.location.href = "http://localhost/helperland/?controller=home&function=contact";
 }

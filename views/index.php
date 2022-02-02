@@ -70,7 +70,7 @@ if (isset($_COOKIE['siteCookie'])) {
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
                         <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=sp-reg' ?>" target="_blank">Become a Helper</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg' ?>" target="_blank">Become a Helper</a>
                         </li>
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -387,13 +387,13 @@ if (isset($_COOKIE['siteCookie'])) {
     <div class="container-fluid privacy-policy-sec">
         <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea iste pariatur cumque. <span style="color:#6EABEF; ">Privacy Policy</span></p>
         <form action="" method="post">
-            <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie">OK!</button>
+            <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie" onclick="privacy_policy_btn()">OK!</button>
         </form>
 
     </div>
 
-    <!--********* Footer Section end************-->
-
+    <!--********* Footer Section end ************-->
+    
     <script src="assets/js/main.js" type="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>

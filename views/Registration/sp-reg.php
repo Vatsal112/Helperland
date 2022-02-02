@@ -6,9 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Become a Pro</title>
+    <style>
+        <?php
+        include 'assets/css/style.css';
+        include 'assets/css/responsive.css';
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+        ?>
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -62,27 +66,44 @@
                 <p>Register Now!</p>
             </div>
             <div class="sp-reg-form">
-                <form action="" method="">
-                    <input type="text" placeholder="First name" class="form-control" required>
-                    <input type="text" placeholder="Last name" class="form-control" required>
-                    <input type="email" name="" id="" placeholder="Email" class="form-control" required>
+                <form action="<?php echo $arr['base_url'] . '?controller=user&function=spRegister'; ?>" method="POST">
+
+                <?php
+                    if(isset($_GET['status'])==1){
+                        echo "<div class='status-message'>";
+                        echo "<p class='text-success'>We have send an account activation link for your account kindly check your mail.</p>";
+                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
+                        echo "</div>";
+                    }
+
+                    if(isset($_GET['message']) && $_GET['message']!=''){
+                        foreach(explode(",",$_GET['message'])as $e){
+                            echo "<p class='text-danger mb-0'>";
+                            echo $e;
+                            echo "</p>";
+                        }
+                    }
+                ?>
+                    <input type="text" placeholder="First name" class="form-control" name="firstname" required>
+                    <input type="text" placeholder="Last name" class="form-control" name="lastname" required>
+                    <input type="email"  id="" placeholder="Email" class="form-control" name="email" required autocomplete="TRUE"> 
                     <div class="input-group-prepend ">
                         <div class="input-group-text">+91</div>
-                        <input type="tel" class="form-control phone-no" id="inlineFormInputGroup" placeholder="Phone number" required>
+                        <input type="number" class="form-control phone-no" name="phone" id="inlineFormInputGroup" placeholder="Phone number" required>
                     </div>
-                    <input type="password" name="psw" id="" class="form-control" placeholder="Password" required>
-                    <input type="password" name="cpsw" id="" class="form-control" placeholder="Confirm Password" required>
+                    <input type="password" name="pass" id="" class="form-control" placeholder="Password" required>
+                    <input type="password" name="c-pass" id="" class="form-control" placeholder="Confirm Password" required>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="newsletter-check">
+                        <input type="checkbox" class="form-check-input" name="newsletter" id="newsletter-check" required>
                         <label class="form-check-label" for="newsletter-check">Send me newsletters from helperland</label>
                     </div>
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="terms-check">
+                        <input type="checkbox" class="form-check-input" name="terms" id="terms-check" required>
                         <label class="form-check-label" for="terms-check">I accept <span class="sp-terms-text">terms and conditions</span> & <span class="sp-terms-text">privacy policy</span></label>
                     </div>
-                    <div class="g-recaptcha" data-sitekey="6Lf0nsEdAAAAAKsRo81aQlkhP92FPXbgDi3HMP-4"></div>
+                    <div class="g-recaptcha" data-sitekey="6Lf0nsEdAAAAAKsRo81aQlkhP92FPXbgDi3HMP-4" aria-required="true"></div>
                     <div class="btn-getstarted">
-                        <button type="button" class="form-submit">Get Started <img src="assets/images/arrow-white.png" alt=""></button>
+                        <button type="submit" class="form-submit sp-reg-btn">Get Started <img src="assets/images/arrow-white.png" alt=""></button>
                     </div>
                 </form>
             </div>
@@ -93,71 +114,9 @@
             </div>
         </div>
 
-        <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="exampleModalLongTitle">Login to your account</h4>
-                        <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <div class="form-group">
-                                <div class="login-email">
-                                    <input type="email" name="" id="" placeholder="Email" required>
-                                    <img src="assets/images/user-login-icon.png" alt="">
-                                </div>
-
-                                <div class="login-password">
-                                    <input type="password" name="" id="" placeholder="Password" required>
-                                    <img src="assets/images/password-icon.png" alt="">
-                                </div>
-
-                                <div class="remember-me">
-                                    <input type="checkbox" name="" id="remember-me" class="form-check-input">
-                                    <label for="form-check-label">Remember Me</label>
-                                </div>
-                            </div>
-
-                            <div class="btn-login">
-                                <button type="button">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="forget-pass">
-                            <a href="" data-target="#forget-pass-modal" data-toggle="modal" data-dismiss="modal">Forget password?</a>
-                        </div>
-                        <div class="create-account">
-                            <span>Don't have an account? </span><a href="./customer-reg.html">Create an account</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="forget-pass-modal" tabindex="-1" role="dialog" aria-labelledby="forget-pass-modal" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Forget password</h5>
-
-                        <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="email" name="" id="" class="form-control" placeholder="Email">
-                        </div>
-                        <div class="btn-send">
-                            <button type="button">Send</button>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="" data-target="#login-modal" data-toggle="modal" data-dismiss="modal">Login now</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <?php
+        include 'views/popup-modal/login-modal.php'
+    ?>
     </section>
     <!--********** Sp banner end ************-->
 

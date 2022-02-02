@@ -62,6 +62,10 @@
         </header>
 
     </section>
+
+    <?php
+        include 'views/popup-modal/login-modal.php'
+    ?>
     <!--  Customer Registration banner end -->
 
     <!--  Customer Registration page sidebar for mobile view start -->
