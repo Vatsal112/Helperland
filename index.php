@@ -1,33 +1,34 @@
 <?php
 
-$controller='home';
-$function='index';
-$parameter='';
+$controller = 'home';
+$function = 'index';
+$parameter = '';
 
-if(isset($_GET['controller']) && $_GET['controller'] !=''){
-    $controller= $_GET['controller'];
+if (isset($_GET['controller']) && $_GET['controller'] != '') {
+    $controller = $_GET['controller'];
 }
 
-if(isset($_GET['function']) && $_GET['function'] !=''){
-    $function= $_GET['function'];
+if (isset($_GET['function']) && $_GET['function'] != '') {
+    $function = $_GET['function'];
 }
 
-if(isset($_GET['parameter']) && $_GET['parameter'] !=''){
-    $parameter= $_GET['parameter'];
+if (isset($_GET['parameter']) && $_GET['parameter'] != '') {
+    $parameter = $_GET['parameter'];
 }
-if(file_exists('controllers/'.$controller.'Controller.php')){
-    include('controllers/'.$controller.'Controller.php');
-    $class = $controller.'Controller';
+
+if (file_exists('controllers/' . $controller . 'Controller.php')) {
+    include('controllers/' . $controller . 'Controller.php');
+    $class = $controller . 'Controller';
     $obj = new $class();
-    if(method_exists($class,$function)){
-        if($parameter){
+    if (method_exists($class, $function)) {
+        if ($parameter) {
             $obj->$function($parameter);
-          }else{
-           $obj->$function();
-          }
-    }else{
+        } else {
+            $obj->$function();
+        }
+    } else {
         echo 'Function not found';
     }
-}else{
+} else {
     echo 'Controller Not Found';
 }

@@ -43,5 +43,12 @@ class homeController {
         include 'common.php';
         include 'views/Registration/sp-reg.php';
     }
+
+    function changePassword(){
+        $title='Reset Password';
+        include 'common.php';
+        include 'views/header.php';
+        include 'views/popup-modal/new-password.php';
+    }
     
 }

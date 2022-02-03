@@ -209,24 +209,19 @@ class userController
 
     function userLogin()
     {
-        if (isset($_POST) && isset($_POST['remember'])) {
-            $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=index&status=1';
+        if (isset($_POST)) {
             $records = $this->model->checkIdPass($_POST['email']);
 
-            $pass = password_verify($_POST['pass'], $records['Password']);
+            $password = $_POST['pass'];
 
-            if ($pass == 1 && $records['Status'] == 1) {
-                header('Location: ' . $arr['base_url']);
+            $pass = password_verify($password, $records['Password']);
+
+            if ($pass == 1 && $records['Status'] == 1) { 
+                echo "<script> window.location.href = 'http://localhost/Helperland/?controller=home&function=contact;'</script>";
             } else if ($pass == 1 && $records['Status'] == 0) {
-                $Err =   "You have not confirmed your account yet. Please check you inbox and verify your id.";
-                array_push($this->Err, $Err);
+                echo  "You have not confirmed your account yet. Please check you inbox and verify your id.";
             } else {
-                $Err =   "Email and Password are invalid";
-                array_push($this->Err, $Err);
-            }
-
-            if (sizeof($this->Err) > 0) {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=index&message=' . implode(",", $this->Err));
+                echo "Email and Password are invalid";
             }
         } else {
             echo "error occurred!! try again..";
@@ -236,23 +231,42 @@ class userController
     function forgetPassword()
     {
         if (isset($_POST)) {
-            $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=index&status=1';
             $records = $this->model->checkIdPass($_POST['email']);
-            $id = $records['UserId'];
-            if ($records > 0) {
-                $body = "<p>Click on link to change your password: <a href ='http://localhost/helperland/?controller=home&function=changePassword&id=$id'>http://localhost/helperland/?controller=home&function=changePassword&id=$records[Password]</a></p>";
-                sendmail($_POST['email'], 'Account Activation', $body, '');
-                header('Location: ' . $arr['base_url']);
-            } else {
-                $Err = "Email is not exists";
-                array_push($this->Err, $Err);
-            }
 
-            if (sizeof($this->Err) > 0) {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=index&message=' . implode(",", $this->Err));
+            if ($records > 0) {
+               
+                $body = "<p>Click on link to change your password: <a href ='http://localhost/helperland/?controller=home&function=changePassword&id=$records[UserId]'>http://localhost/helperland/?controller=home&function=changePassword&id=$records[Password]</a></p>";
+                sendmail($_POST['email'], 'Forget Password', $body, '');
+                echo "An email has been sent to your account. Click on the link in received email to reset the password.";
+            } else {
+                echo "email not exits";
+
             }
         } else {
             echo "error occurred!! try again..";
+        }
+    }
+
+    function validateNewPassword($id)
+    {
+
+        if (isset($_POST)) {
+
+            echo $id;
+            echo $_POST['pass'];
+            // $pass = $_POST['pass'];
+            // $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=changePassword&status=1';
+
+            // $hash = $this->checkPasswordStrength($pass);
+
+            // if (sizeof($this->Err) > 0) {
+            //     header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=changePassword&message2=' . implode(",", $this->Err));
+            // }else{
+            //     $updatePass = $this->model->updatePassword('user',$hash,$id);
+            //     header('Location: ' . $arr['base_url']);
+            // }
+
+
         }
     }
 }

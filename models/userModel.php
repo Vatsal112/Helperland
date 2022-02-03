@@ -54,9 +54,15 @@ class userModel{
     }
 
     function checkIdPass($mail){
-        $stmt= $this->conn->prepare("SELECT UserId Email,Password,Status FROM User WHERE Email = ?");
+        $stmt= $this->conn->prepare("SELECT UserId, Email,Password,Status FROM User WHERE Email = ?");
         $stmt->execute([$mail]);
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
+    }
+    function updatePassword($table,$pass,$id){ 
+        $sql = "UPDATE $table SET Password = ? WHERE UserId = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$pass,$id]);  
+
     }
 }

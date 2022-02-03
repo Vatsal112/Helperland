@@ -28,10 +28,9 @@
         $mail->Body    = $body;
         $mail->AltBody = $altbody;
 
-        $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=CustomerReg&status=1';
+
         try {
             $mail->send();
-            header('Location:'.$arr['base_url']);
         } catch (Exception $e) {
             echo "Mailer Error: " . $mail->ErrorInfo;
         }

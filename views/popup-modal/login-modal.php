@@ -6,26 +6,10 @@
                 <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
             </div>
             <div class="modal-body">
-                <form action=" <?php echo $arr['base_url'] . '?controller=user&function=userLogin'; ?>" method="POST">
-
-                    <?php
-
-                    if (isset($_GET['status']) == 1) {
-                        echo "<div class='status-message'>";
-                        echo "<p class='text-success'>Successfull Login.</p>";
-                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
-                        echo "</div>";
-                    }
-
-                    if (isset($_GET['message']) && $_GET['message'] != '') {
-                        foreach (explode(",", $_GET['message']) as $e) {
-                            echo "<p class='text-danger mb-0'>";
-                            echo $e;
-                            echo "</p>";
-                        }
-                    }
-                    ?>
-
+                <form method="POST">
+                  <div class="response-text">
+                        <p id="response" class="text-danger"></p>
+                  </div>
                     <div class="form-group">
                         <div class="login-email">
                             <input type="email" name="email" id="uname" placeholder="Email" required>
@@ -44,8 +28,9 @@
                     </div>
 
                     <div class="btn-login">
-                        <!-- <button type="submit" onclick="submitData()">Login</button> -->
-                        <input type="submit" name="submit" value="Login">
+                        <button type="submit" id="btn-login" name="submit">Login</button>
+                        <!-- <input type="submit" name="submit" value="Login"> -->
+                        <!-- <a id="loginBtn" class="btn btn-primary"></a> -->
                     </div>
                 </form>
             </div>
@@ -60,48 +45,31 @@
         </div>
     </div>
 </div>
+
+<?php
+include 'forget-pass-modal.php';
+?>
 <!--  Homepage modal for login end -->
 
+<script>
 
-<!--  Homepage modal for forget-pass start -->
-<div class="modal fade" id="forget-pass-modal" tabindex="-1" role="dialog" aria-labelledby="forget-pass-modal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Forget password</h5>
 
-                <span aria-hidden="true" data-dismiss="modal" class="close-btn">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form action="<?php echo $arr['base_url'] . '?controller=user&function=forgetPassword'; ?>" method="post">
+    $(document).ready(function() {
+        $('#btn-login').click(function(e) {
+            var email = $('#uname').val();
+            var pass = $('#pass').val();
+            e.preventDefault();
 
-                    <?php
-                    if (isset($_GET['status']) == 1) {
-                        echo "<div class='status-message'>";
-                        echo "<p class='text-success'>Successfull Login.</p>";
-                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
-                        echo "</div>";
-                    }
-
-                    if (isset($_GET['message']) && $_GET['message'] != '') {
-                        foreach (explode(",", $_GET['message']) as $e) {
-                            echo "<p class='text-danger mb-0'>";
-                            echo $e;
-                            echo "</p>";
-                        }
-                    }
-                    ?>
-                    <div class="form-group">
-                        <input type="email" name="email" id="" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="btn-send">
-                        <button type="submit">Send</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a href="" data-target="#login-modal" data-toggle="modal" data-dismiss="modal">Login now</a>
-            </div>
-        </div>
-    </div>
-</div>
+            $.ajax({
+                type: "post",
+                url: "http://localhost/Helperland/?controller=user&function=userLogin",
+                data: {email : email ,pass : pass},
+                success: function(response) {
+                    $('.response-text').css('display','block');
+                    $('#response').html(response);
+                   
+                }
+            });
+        });
+    });
+</script>
