@@ -40,36 +40,36 @@ if (isset($_COOKIE['siteCookie'])) {
 </head>
 
 <body>
-    <!--********* Main Screen Banner Section start************-->
+        <!--********* Main Screen Banner Section start************-->
     <section class="main-screen" id="main-screen">
         <header>
             <nav class="navbar navbar-expand-lg fixed-top " id="navbar">
-                <a class="navbar-brand" href="index.php" target="blank"><img src="assets/images/white-logo-transparent-background.png" alt="" class="logo" id="logo"></a>
+                <a class="navbar-brand" href="index.html" target="blank"><img src="assets/images/white-logo-transparent-background.png" alt="" class="logo" id="logo"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"> <i class="fa fa-navicon" style="color:#fff; font-size:28px;"></i></span>
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class=" nav-item rounded-btn">
-                            <a class="nav-link active " aria-current="page " href="book-service.php" target="_blank">Book a Cleaner</a>
+                            <a class="nav-link active " aria-current="page " href="book-service.html" target="blank">Book a Cleaner</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="_blank">Prices</a>
+                            <a class="nav-link " href="Prices.html" target="blank">Prices</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="#">Our Guarantee</a>
+                            <a class="nav-link " href="# ">Our Guarantee</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="#">Blog</a>
+                            <a class="nav-link " href="# ">Blog</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="_blank">Contact us</a>
+                            <a class="nav-link " href="contact.html" target="blank">Contact us</a>
                         </li>
                         <li class="nav-item login-rounded-btn">
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
                         <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg' ?>" target="_blank">Become a Helper</a>
+                            <a class="nav-link " href="sp-reg.html" target="blank">Become a Helper</a>
                         </li>
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -85,8 +85,7 @@ if (isset($_COOKIE['siteCookie'])) {
                 </div>
             </nav>
         </header>
-
-
+        <!--********* Main Screen Banner Section start************-->
         <div class="main-text ">
             <h1>Lorem ipsum text</h1>
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
@@ -138,9 +137,7 @@ if (isset($_COOKIE['siteCookie'])) {
         </div>
 
         <!--  Homepage modal for login start -->
-        <?php
-        include 'views/popup-modal/login-modal.php'
-        ?>
+
         <!--  Homepage modal for forget-pass end -->
     </section>
     <!--********* Main Screen Banner Section end************-->
