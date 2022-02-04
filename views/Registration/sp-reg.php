@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
 </head>
 
@@ -66,33 +67,26 @@
                 <p>Register Now!</p>
             </div>
             <div class="sp-reg-form">
-                <form action="<?php echo $arr['base_url'] . '?controller=user&function=spRegister'; ?>" method="POST">
+                <form method="POST">
 
-                <?php
-                    if(isset($_GET['status'])==1){
-                        echo "<div class='status-message'>";
-                        echo "<p class='text-success'>We have send an account activation link for your account kindly check your mail.</p>";
-                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
-                        echo "</div>";
-                    }
+                    <div class='status-message'>
+                        <p class='text-success' id="text-ok3"></p>
+                        <a onclick='hideMessage()'><i class='fa fa-close'></i></a>
+                    </div>
+                    <div class="response-text">
+                        <p id="response3" class="text-danger mb-0"></p>
+                      
+                    </div>
 
-                    if(isset($_GET['message']) && $_GET['message']!=''){
-                        foreach(explode(",",$_GET['message'])as $e){
-                            echo "<p class='text-danger mb-0'>";
-                            echo $e;
-                            echo "</p>";
-                        }
-                    }
-                ?>
-                    <input type="text" placeholder="First name" class="form-control" name="firstname" required>
-                    <input type="text" placeholder="Last name" class="form-control" name="lastname" required>
-                    <input type="email"  id="" placeholder="Email" class="form-control" name="email" required autocomplete="TRUE"> 
+                    <input type="text" placeholder="First name" class="form-control" id="fname" name="firstname" required>
+                    <input type="text" placeholder="Last name" class="form-control" id="lname" name="lastname" required>
+                    <input type="email" id="emailIdSp" placeholder="Email" class="form-control" name="email" required autocomplete="TRUE">
                     <div class="input-group-prepend ">
                         <div class="input-group-text">+91</div>
-                        <input type="number" class="form-control phone-no" name="phone" id="inlineFormInputGroup" placeholder="Phone number" required>
+                        <input type="number" class="form-control phone-no" name="phone" id="phone" placeholder="Phone number" required>
                     </div>
-                    <input type="password" name="pass" id="" class="form-control" placeholder="Password" required>
-                    <input type="password" name="c-pass" id="" class="form-control" placeholder="Confirm Password" required>
+                    <input type="password" name="pass" id="sp-pass" class="form-control" placeholder="Password" required>
+                    <input type="password" name="cpass" id="sp-cpass" class="form-control" placeholder="Confirm Password" required>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" name="newsletter" id="newsletter-check" required>
                         <label class="form-check-label" for="newsletter-check">Send me newsletters from helperland</label>
@@ -103,7 +97,7 @@
                     </div>
                     <div class="g-recaptcha" data-sitekey="6Lf0nsEdAAAAAKsRo81aQlkhP92FPXbgDi3HMP-4" aria-required="true"></div>
                     <div class="btn-getstarted">
-                        <button type="submit" class="form-submit sp-reg-btn">Get Started <img src="assets/images/arrow-white.png" alt=""></button>
+                        <button type="submit" class="form-submit sp-reg-btn" id="sp-submit">Get Started <img src="assets/images/arrow-white.png" alt=""></button>
                     </div>
                 </form>
             </div>
@@ -114,9 +108,9 @@
             </div>
         </div>
 
-    <?php
+        <?php
         include 'views/popup-modal/login-modal.php'
-    ?>
+        ?>
     </section>
     <!--********** Sp banner end ************-->
 
@@ -230,11 +224,63 @@
 
     <script src="assets/js/main.js"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
 
 </body>
+
+
+<script>
+    $(document).ready(function() {
+        $('#sp-submit').click(function(e) {
+            var fname = $('#fname').val();
+            var lname = $('#lname').val();
+            var email = $('#emailIdSp').val();
+            var phone = $('#phone').val();
+            var pass = $('#sp-pass').val();
+            var cpass = $('#sp-cpass').val();
+
+            e.preventDefault();
+
+            if ($('.status-message').css('display', 'flex')) {
+                $('.status-message').css('display', 'none')
+            }
+
+            if ($('.response-text').css('display', 'block')) {
+                $('.response-text').css('display', 'none')
+            }
+
+            $.ajax({
+                type: "post",
+                url: "http://localhost/Helperland/?controller=user&function=spRegister",
+                data: {
+                    firstname: fname,
+                    lastname: lname,
+                    emailId: email,
+                    phone: phone,
+                    password: pass,
+                    cpass: cpass
+                },
+                dataType: 'JSON',
+                success: function(response) {
+                    res = JSON.parse(JSON.stringify(response));
+
+                    if (res == "We have send an account activation link for your account kindly check your mail.") {
+                        $('#text-ok3').html(res);
+                        $('.status-message').css('display', 'flex');
+                        console.log(res);
+                    } else {
+                        $('.response-text').css('display', 'block');
+                        $('.text-danger').html(res);
+
+                        console.log(res);
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </html>

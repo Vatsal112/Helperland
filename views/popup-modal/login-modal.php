@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -7,6 +8,10 @@
             </div>
             <div class="modal-body">
                 <form method="POST">
+                <div class='status-message'>
+                        <p class='text-success' id="text-ok2"></p>
+                        <a onclick='hideMessage()'><i class='fa fa-close'></i></a>
+                    </div>
                   <div class="response-text">
                         <p id="response" class="text-danger"></p>
                   </div>
@@ -60,14 +65,32 @@ include 'forget-pass-modal.php';
             var pass = $('#pass').val();
             e.preventDefault();
 
+            if ($('.status-message').css('display', 'flex')) {
+                $('.status-message').css('display', 'none')
+            }
+
+            if ($('.response-text').css('display', 'block')) {
+                $('.response-text').css('display', 'none')
+            }
+
             $.ajax({
                 type: "post",
                 url: "http://localhost/Helperland/?controller=user&function=userLogin",
                 data: {email : email ,pass : pass},
+                dataType:'JSON',
                 success: function(response) {
-                    $('.response-text').css('display','block');
-                    $('#response').html(response);
-                   
+                    res = JSON.parse(JSON.stringify(response));
+
+                    if (res == "Successfully Login.") {
+                        $('.text-success').html(res);
+                        $('.status-message').css('display', 'flex');
+                        console.log(res);
+                        alert(res);
+                    } else {
+                        $('.response-text').css('display', 'block');
+                        $('.text-danger').html(res);
+                        console.log(res);
+                    }
                 }
             });
         });

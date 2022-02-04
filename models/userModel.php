@@ -63,6 +63,6 @@ class userModel{
         $sql = "UPDATE $table SET Password = ? WHERE UserId = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$pass,$id]);  
-
+        return true;
     }
 }

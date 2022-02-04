@@ -20,6 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -64,7 +65,7 @@
     </section>
 
     <?php
-        include 'views/popup-modal/login-modal.php'
+    include 'views/popup-modal/login-modal.php'
     ?>
     <!--  Customer Registration banner end -->
 
@@ -115,28 +116,18 @@
             </div>
 
             <div class="reg-form">
-                <form action="<?php echo $arr['base_url'].'?controller=user&function=register_Customer'; ?>" method="POST">
-
-                <?php
-                    
-                    if(isset($_GET['status'])==1){
-                        echo "<div class='status-message'>";
-                        echo "<p class='text-success'>We have send an account activation link for your account kindly check your mail.</p>";
-                        echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
-                        echo "</div>";
-                    }
-
-                    if(isset($_GET['message']) && $_GET['message']!=''){
-                        foreach(explode(",",$_GET['message'])as $e){
-                            echo "<p class='text-danger mb-0'>";
-                            echo $e;
-                            echo "</p>";
-                        }
-                    }
-                ?>
+                <form method="POST">
+                    <div class='status-message'>
+                        <p class='text-success' id="text-ok2"></p>
+                        <a onclick='hideMessage()'><i class='fa fa-close'></i></a>
+                    </div>
+                    <div class="response-text">
+                        <p id="response3" class="text-danger mb-0"></p>
+                        <p id="res" class="text-danger mb-0"></p>
+                    </div>
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="text" class="form-control" name ="firstname" placeholder="First name" id="fname" onfocusout="showMessage(this.id)" required>
+                            <input type="text" class="form-control" name="firstname" placeholder="First name" id="fname" onfocusout="showMessage(this.id)" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
@@ -147,7 +138,7 @@
 
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="email" name="email" id="email" placeholder="E-mail address" onfocusout="showMessage(this.id)" class="form-control" required>
+                            <input type="email" name="email" id="emailId" placeholder="E-mail address" onfocusout="showMessage(this.id)" class="form-control" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
@@ -161,11 +152,11 @@
 
                     <div class="row">
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" onkeydown="checkPass(this.id)"  onfocusout="showMessage(this.id)" required>
+                            <input type="password" class="form-control" id="password" name="pass" placeholder="Password" onkeydown="checkPass(this.id)" onfocusout="showMessage(this.id)" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
-                            <input type="password" class="form-control" id="c-pass" name="c-pass" onkeydown="checkPass(this.id)" onfocusout="showMessage(this.id)" placeholder="Confirm Password"  required>
+                            <input type="password" class="form-control" id="c-pass" name="cpass" onkeydown="checkPass(this.id)" onfocusout="showMessage(this.id)" placeholder="Confirm Password" required>
                             <p class="text-danger msg-text mb-0"></p>
                         </div>
                     </div>
@@ -176,7 +167,7 @@
                     </div>
 
                     <div class="btn-reg">
-                        <button type="submit" name="submit">Register</button>
+                        <button type="submit" name="submit" id="register">Register</button>
                     </div>
                 </form>
 
@@ -196,7 +187,59 @@
 
     <!--  Customer Registration page footer start -->
     <script>
-        <?php
-        include 'assets/js/main.js';
-        ?>
+        // <?php
+            // include 'assets/js/main.js';
+            // 
+            ?>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#register').click(function(e) {
+                var fname = $('#fname').val();
+                var lname = $('#lname').val();
+                var email = $('#emailId').val();
+                var phone = $('#phone').val();
+                var pass = $('#password').val();
+                var cpass = $('#c-pass').val();
+
+                e.preventDefault();
+
+                if ($('.status-message').css('display', 'flex')) {
+                    $('.status-message').css('display', 'none')
+                }
+
+                if ($('.response-text').css('display', 'block')) {
+                    $('.response-text').css('display', 'none')
+                }
+
+                $.ajax({
+                    type: "post",
+                    url: "http://localhost/Helperland/?controller=user&function=register_Customer",
+                    data: {
+                        firstname: fname,
+                        lastname: lname,
+                        emailId: email,
+                        phone: phone,
+                        password: pass,
+                        cpass: cpass
+                    },
+                    dataType: 'JSON',
+                    success: function(response) {
+                        res = JSON.parse(JSON.stringify(response));
+
+                        if (res == "We have send an account activation link for your account kindly check your mail.") {
+                            $('#text-ok2').html(res);
+                            $('.status-message').css('display', 'flex');
+                            console.log(res);
+                        } else {
+                            $('.response-text').css('display', 'block');
+                            $('#res').html(res);
+
+                            console.log(res);
+                        }
+                    }
+                });
+            });
+        });
     </script>

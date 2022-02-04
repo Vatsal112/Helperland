@@ -49,20 +49,24 @@
             $.ajax({
                 type: "post",
                 url: "http://localhost/Helperland/?controller=user&function=forgetPassword",
+                dataType:'JSON',
                 data: {
                     email: email
                 },
                 success: function(response) {
-                    if (response == "An email has been sent to your account. Click on the link in received email to reset the password.") {
-                        $('#text-ok').html(response);
+                    res = JSON.parse(JSON.stringify(response));
+
+                    if (res == "An email has been sent to your account. Click on the link in received email to reset the password.") {
+                        $('.text-success').html(res);
                         $('.status-message').css('display', 'flex');
-                        console.log(response);
+                        alert(res);
+                        console.log(res);
                     } else {
                         $('.response-text').css('display', 'block');
-                        $('#response2').html(response);
-                        console.log(response);
+                        $('.text-danger').html(res);
+                        console.log(res);
+                        alert(res);
                     }
-
                 }
             });
         });
