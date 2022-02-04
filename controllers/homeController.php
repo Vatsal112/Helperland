@@ -32,5 +32,23 @@ class homeController {
         include 'views/header.php';
         include 'views/prices.php';
     }
+
+    function customerReg(){
+        include 'common.php';
+        include 'views/Registration/customer-reg.php';
+        include 'views/footer.php';
+    }
+
+    function spReg(){
+        include 'common.php';
+        include 'views/Registration/sp-reg.php';
+    }
+
+    function changePassword(){
+        $title='Reset Password';
+        include 'common.php';
+        include 'views/header.php';
+        include 'views/popup-modal/new-password.php';
+    }
     
 }

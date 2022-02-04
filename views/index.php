@@ -1,3 +1,16 @@
+<?php
+if (isset($_COOKIE['siteCookie'])) {
+    echo "<style>
+        .privacy-policy-sec{
+            display:none !important;
+        }
+    </style>";
+} else if (isset($_POST['submit-cookie'])) {
+    setcookie("siteCookie", "Helperland", time() + 60 * 60 * 24 * 30);
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,20 +20,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
     <style>
-    <?php
+        <?php
         include 'assets/css/style.css';
         include 'assets/css/responsive.css';
-        
-    ?>
+
+        ?>
     </style>
-    
-    
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
 
 </head>
@@ -40,7 +54,7 @@
                             <a class="nav-link active " aria-current="page " href="book-service.php" target="_blank">Book a Cleaner</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="_blank">Prices</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="_blank">Prices</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link " href="#">Our Guarantee</a>
@@ -49,13 +63,13 @@
                             <a class="nav-link " href="#">Blog</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="_blank">Contact us</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="_blank">Contact us</a>
                         </li>
                         <li class="nav-item login-rounded-btn">
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
                         <li class="nav-item rounded-btn">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=sp-reg'?>" target="_blank">Become a Helper</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg' ?>" target="_blank">Become a Helper</a>
                         </li>
                         <li class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,7 +81,6 @@
                                 <a class="dropdown-item" href="#">France</a>
                             </div>
                         </li>
-
                     </ul>
                 </div>
             </nav>
@@ -79,7 +92,8 @@
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 "><img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
             <p class="sub-text mb-0 ">
-                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing</p>
+                <img src="assets/images/forma-1-copy-10.svg " alt=" "></i>Lorem ipsum dolor sit amet consectetur adipisicing
+            </p>
         </div>
         <div class="banner-btn">
             <button type="button " class="mainscreen-btn" onclick='window.location.href="book-service.php"'>Let's Book a Cleaner</button>
@@ -125,7 +139,7 @@
 
         <!--  Homepage modal for login start -->
         <?php
-            include 'views/popup-modal/login-modal.php'
+        include 'views/popup-modal/login-modal.php'
         ?>
         <!--  Homepage modal for forget-pass end -->
     </section>
@@ -370,14 +384,17 @@
 
     <div class="container-fluid privacy-policy-sec">
         <p class="text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea iste pariatur cumque. <span style="color:#6EABEF; ">Privacy Policy</span></p>
-        <button type="button" class="btn-ok" id="privacy-policy-accept" onclick="privacy_policy_btn()">OK!</button>
+        <form action="" method="post">
+            <button type="submit" class="btn-ok" id="privacy-policy-accept" name="submit-cookie" onclick="privacy_policy_btn()">OK!</button>
+        </form>
+
     </div>
 
-    <!--********* Footer Section end************-->
+    <!--********* Footer Section end ************-->
 
-    <script src="assets/js/main.js" type ="text/javascript"></script>
+    <script src="assets/js/main.js" type="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js "></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
