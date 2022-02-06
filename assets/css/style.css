@@ -858,9 +858,9 @@ body {
 /*----------- Contact Page ---------------*/
 
 .contact-banner .prices-banner-img img,
-.book-service-banner .banner-img img {
-    margin-top: 3.7rem;
-    max-width: 100%;
+.service-banner-img img {
+    margin-top: 3.7rem !important;
+    max-width: 100% !important;
 }
 
 .contact-info {
@@ -2705,6 +2705,7 @@ body {
     text-align: center;
     font-size: 18px;
     position: relative;
+    pointer-events: none;
 }
 
 .booking-tabs .nav-tabs .nav-link img {
@@ -2740,6 +2741,10 @@ body {
 .tab-content .payment-tab-content span {
     color: #4f4f4f;
     font-weight: 600;
+}
+
+.btn-sm-payment-summary button {
+    display: none;
 }
 
 .tab-content .setup-service-content .form-group {

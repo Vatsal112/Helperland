@@ -402,6 +402,9 @@
     .tab-content .service-schedule-content .service-duration {
         display: block;
     }
+    .btn-sm-payment-summary button {
+        display: block;
+    }
     .tab-content .service-duration .cleaner-to-stay {
         margin-left: 0;
         margin-top: 0.5rem;

@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class=" nav-item booknow-rounded-btn">
-                            <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'].'?controller=home&function=book-now';?>" target="blank">Book Now</a>
+                            <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'].'?controller=home&function=bookService';?>" target="blank">Book Now</a>
                         </li>
                         <li class="nav-item rounded-btn">
                             <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="blank">Prices & Services</a>
