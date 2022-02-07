@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'phpmailer/mail.php';
 
 class userController
@@ -195,10 +196,14 @@ class userController
             $password = $_POST['pass'];
 
             $pass = password_verify($password, $records['Password']);
-
+  
             if ($pass == 1 && $records['Status'] == 1) {
-                echo json_encode("Successfully Login.");
-                // echo "<script>window.location.href = 'http://localhost/Helperland';</script>";
+    
+                
+                $res["status"] = true;
+                $res["message"] = "Successfully Login.";
+                $res["loginToken"] = session_id();
+                echo json_encode($res); 
             } else if ($pass == 1 && $records['Status'] == 0) {
                 $this->Err = $this->Err .  "You have not confirmed your account yet. Please check you inbox and verify your id.";
                 echo json_encode($this->Err);
@@ -245,5 +250,10 @@ class userController
                 echo "Password Changed Successfully";
             }
         }
+    }
+
+    function userLogout(){
+        unset($_SESSION['islogin']);
+        echo 'success';
     }
 }

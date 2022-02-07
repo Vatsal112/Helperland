@@ -161,6 +161,14 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.main-screen .noti-user-icons .user-icon button {
+    background-color: transparent;
+}
+
+.main-screen .noti-user-icons .dropdown-toggle::after {
+    display: none;
+}
+
 .banner-svgs .svgs {
     height: 105px !important;
     width: 150px !important;
@@ -857,8 +865,7 @@ body {
 
 /*----------- Contact Page ---------------*/
 
-.contact-banner .prices-banner-img img,
-.service-banner-img img {
+.contact-banner .prices-banner-img img {
     margin-top: 3.7rem !important;
     max-width: 100% !important;
 }
@@ -1155,6 +1162,11 @@ body {
 
 /* --------------sp-dashboard---------------- */
 
+.service-banner-img img {
+    max-width: 100%;
+    margin-top: 2.2rem;
+}
+
 .upcoming-service-banner .navbar,
 .customer-screen-banner .navbar {
     z-index: 11;
@@ -1216,7 +1228,7 @@ body {
 .customer-screen-banner .faq-nav .navbar-nav .notification-icon span {
     position: absolute;
     right: 7%;
-    top: 3.5%;
+    top: 5.5%;
     color: white;
     height: 23px;
     width: 20px;

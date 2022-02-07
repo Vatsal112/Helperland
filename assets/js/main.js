@@ -1,3 +1,46 @@
+// $(document).ready(function() {
+//     if (getCookie('isLogin')) {
+//         document.getElementById('dropdown').style.display = 'none';
+//         var hideNav = document.getElementsByClassName('btn-hide');
+//         document.getElementById('user-icon').style.display = 'flex';
+//         document.getElementsByClassName('dropdown-toggle')[0].style.display = 'none';
+
+//         for (let i = 0; i < hideNav.length; i++) {
+//             hideNav[i].style.display = 'none';
+//         }
+
+//     }
+// });
+
+// function setCookie(cname, cvalue, minutes) {
+//     const d = new Date();
+//     d.setTime(d.getTime() + (minutes * 60 * 1000));
+//     let expires = "expires=" + d.toUTCString();
+//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+// }
+
+// function logoutUser() {
+//     setCookie('isLogin', false, 0);
+//     setTimeout(function() {
+//         window.location.href = 'http://localhost/Helperland';
+//     }, 2000);
+// }
+
+// function getCookie(cname) {
+//     let name = cname + "=";
+//     let ca = document.cookie.split(';');
+//     for (let i = 0; i < ca.length; i++) {
+//         let c = ca[i];
+//         while (c.charAt(0) == ' ') {
+//             c = c.substring(1);
+//         }
+//         if (c.indexOf(name) == 0) {
+//             return c.substring(name.length, c.length);
+//         }
+//     }
+//     return "";
+// }
+
 document.addEventListener("scroll", () => {
     var logo = document.getElementById("logo");
     if (window.scrollY > 10 || window.screen.width < 600) {
@@ -251,7 +294,7 @@ function validateFirstTab(id) {
     if (pCode == "") {
         alert("Please Enter Postal Code");
     } else {
-        alert(pCode);
+
         changeTabs(
             schedule_tab,
             schedule_tab_content,
@@ -271,35 +314,132 @@ function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {
     prevTab.style.color = "white";
     prevTab.style.pointerEvents = "all";
 }
+let hour = 3.0;
+let amount = 54
 
 function addToCard(checkId, lableId) {
     let check = document.getElementById(checkId);
     let extra = document.getElementById("extra-services");
+    let serviceHour = document.getElementById('s-hours');
+    let optionHour = serviceHour[serviceHour.selectedIndex];
+    let perCleaning = document.getElementById('per-cleaning');
+    let totalAmount = document.getElementById('total-amt');
+
+    // min = 30 + hour * 60;
+    // h = min / 60;
+    // alert(h);
+
+    function checkSelectoption(val) {
+        if (val == 3.0) {
+            serviceHour.options[0].selected = true;
+        } else if (val == 3.5) {
+            serviceHour.options[1].selected = true;
+        } else if (val == 4.0) {
+            serviceHour.options[2].selected = true;
+        } else if (val == 4.5) {
+            serviceHour.options[3].selected = true;
+        } else if (val == 5.0) {
+            serviceHour.options[4].selected = true;
+        } else if (val == 5.5) {
+            serviceHour.options[5].selected = true;
+        }
+    }
 
     if (check.checked) {
         switch (lableId) {
             case "labelCabinet":
                 extra.innerHTML +=
                     "<div class='service-info labelCabinet'><span>Inside Cabinets (extra)</span><span class='service-duration'>30 min</span></div>";
+                hour = hour + 0.5;
+                amount = amount + 9;
+                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                checkSelectoption(hour);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelFridge":
                 extra.innerHTML +=
                     "<div class = 'service-info labelFridge'><span>Inside Fridge (extra)</span><span class='service-duration'>30 min</span></div>";
+                hour = hour + 0.5;
+                amount = amount + 9;
+                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                checkSelectoption(hour);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelOven":
                 extra.innerHTML +=
                     "<div class = 'service-info labelOven'><span>Inside Oven (extra)</span><span class='service-duration'>30 min</span></div>";
+                hour = hour + 0.5;
+                amount = amount + 9;
+                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                checkSelectoption(hour);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelWash":
                 extra.innerHTML +=
                     "<div class = 'service-info labelWash'><span>Inside Wash (extra)</span><span class='service-duration'>30 min</span></div>";
+                hour = hour + 0.5;
+                amount = amount + 9;
+                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                checkSelectoption(hour);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelWindow":
                 extra.innerHTML +=
                     "<div class = 'service-info labelWindow'><span>Inside Window (extra)</span><span class='service-duration'>30 min</span></div>";
+                hour = hour + 0.5;
+                amount = amount + 9;
+                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                checkSelectoption(hour);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
                 break;
         }
     } else {
         document.getElementsByClassName(lableId)[1].remove();
+        hour = hour - 0.5;
+        amount = amount - 9;
+        document.getElementById('total-duration').innerHTML = hour + " Hrs";
+        perCleaning.innerHTML = "$" + amount;
+        totalAmount.innerHTML = "$" + amount;
+        checkSelectoption(hour);
     }
+}
+
+function cardInfo() {
+    let bed = document.getElementById('infoBed');
+    let bath = document.getElementById('infoBath');
+    let sTime = document.getElementById('s-time');
+    let serviceDate = document.getElementById("service-date").value;
+    let serviceHour = document.getElementById('s-hours');
+    let perCleaning = document.getElementById('per-cleaning');
+    let totalAmount = document.getElementById('total-amt');
+    let cardHour = document.getElementById('s-card-hours');
+    let totalDuration = document.getElementById('total-duration');
+
+    let optionBed = bed.options[bed.selectedIndex];
+    let optionBath = bath.options[bath.selectedIndex];
+    let optionTime = sTime.options[sTime.selectedIndex];
+    let optionHour = serviceHour[serviceHour.selectedIndex];
+
+    document.getElementById('bed').innerHTML = optionBed.text;
+    document.getElementById('bath').innerHTML = optionBath.text;
+    document.getElementById('s-card-time').innerHTML = optionTime.text;
+    document.getElementById('s-date').innerHTML = serviceDate;
+    cardHour.innerHTML = optionHour.text;
+    totalDuration.innerHTML = optionHour.text;
+
+    for (let i = 0; i <= serviceHour.length; i++) {
+        amount = 54;
+        if (serviceHour.options[i].selected == true) {
+            amount = amount + (9 * i);
+            perCleaning.innerHTML = "$" + amount;
+            totalAmount.innerHTML = "$" + amount;
+        }
+    }
+
+
 }

@@ -80,12 +80,17 @@ include 'forget-pass-modal.php';
                 dataType:'JSON',
                 success: function(response) {
                     res = JSON.parse(JSON.stringify(response));
-
-                    if (res == "Successfully Login.") {
-                        $('.text-success').html(res);
-                        $('.status-message').css('display', 'flex');
-                        console.log(res);
-                        alert(res);
+                    console.log(res);
+                    if (response.status) {
+                        <?php
+                            $_SESSION['islogin'] = true;    
+                        ?>
+                        console.log(response);
+                        // setCookie("isLogin", true,15)
+                        // localStorage.setItem("isLogin", true);
+                        // localStorage.setItem("loginToken", response.loginToken);
+                       window.location.href = 'http://localhost/Helperland';
+                    
                     } else {
                         $('.response-text').css('display', 'block');
                         $('.text-danger').html(res);

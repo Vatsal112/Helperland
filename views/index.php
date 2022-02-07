@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_COOKIE['siteCookie'])) {
     echo "<style>
         .privacy-policy-sec{
@@ -65,14 +66,41 @@ if (isset($_COOKIE['siteCookie'])) {
                         <li class="nav-item ">
                             <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="blank">Contact us</a>
                         </li>
-                        <li class="nav-item login-rounded-btn">
+
+
+                        <?php if(isset($_SESSION['islogin'])) {?>
+
+                            <div class="noti-user-icons" id="user-icon">
+                            <li class="nav-item notification-icon d-flex">
+                                <span>2</span>
+                                <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
+                            </li>
+                            <div class="dropdown user-icon d-flex align-items-center">
+                                <button class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="nav-link" href="#"><img src="assets/images/user.png" alt=""></a>
+                                        <a class="nav-link" href="#"><img src="assets/images/sp-arrow-down.png" alt="" class="sp-down-arrow"></a>
+                                    </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="username">
+                                        <p>Welcome, <b>First Customer</b></p>
+                                    </div>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+
+                                    <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                    <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } else {?>
+                        <li class="nav-item login-rounded-btn btn-hide">
                             <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
                         </li>
-                        <li class="nav-item rounded-btn">
+                        <li class="nav-item rounded-btn btn-hide">
                             <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=spReg';?>" target="blank">Become a Helper</a>
                         </li>
-                        <li class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink " role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li class="dropdown" id="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="assets/images/flag.png" alt="">
                             </a>
                             <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdownMenuLink ">
@@ -81,9 +109,30 @@ if (isset($_COOKIE['siteCookie'])) {
                                 <a class="dropdown-item" href="#">France</a>
                             </div>
                         </li>
+
+                    <?php } ?>
+
                     </ul>
                 </div>
             </nav>
+
+            <div class="modal fade logout-modal" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="logout-modal-content">
+                            <div class="logout-green-circle">
+                                <img src="assets/images/ic-check.png" alt="">
+                            </div>
+                            <h5>You have successfully logged out</h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-logout-ok" data-dismiss="modal" id="btn-logout">Ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </header>
         <!--********* Main Screen Banner Section start************-->
         <div class="main-text ">
@@ -399,5 +448,19 @@ if (isset($_COOKIE['siteCookie'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
 
 </body>
-
+<script>
+    $(document).ready(function() {
+        $('#btn-logout').click(function(e) {
+            $.ajax({
+                type: "post",
+                url: "http://localhost/Helperland/?controller=user&function=userLogout",
+                success: function(response) {
+                   alert(response);
+                //    Window.location.href = 'http://localhost/Helperland';
+                location.reload();
+                }
+            });
+        });
+    });
+</script>
 </html>

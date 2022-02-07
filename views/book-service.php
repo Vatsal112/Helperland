@@ -1,3 +1,4 @@
+
 <div class="service-banner-img">
     <img src="assets/images/book-service-banner.jpg" alt="">
 </div>
@@ -6,7 +7,7 @@
 <?php
 include 'popup-modal/login-modal.php';
 ?>
-</section>
+
 <!-- Book service page banner end -->
 
 <!-- Book service page sidebar for mobile screen start -->
@@ -101,18 +102,18 @@ include 'popup-modal/login-modal.php';
                             <span>Select number of rooms and bath</span>
 
                             <div class="select-room-bath form-group">
-                                <select name="" id="">
-                                    <option value="">1 bed</option>
-                                    <option value="">2 bed</option>
-                                    <option value="">3 bed</option>
-                                    <option value="">4 bed</option>
+                                <select name="" id="infoBed" onchange="cardInfo()">
+                                    <option value="1 bed">1 bed</option>
+                                    <option value="2 bed">2 bed</option>
+                                    <option value="3 bed">3 bed</option>
+                                    <option value="4 bed">4 bed</option>
                                 </select>
 
-                                <select name="" id="">
-                                    <option value="">1 bath</option>
-                                    <option value="">2 bath</option>
-                                    <option value="">3 bath</option>
-                                    <option value="">4 bath</option>
+                                <select name="" id="infoBath" onchange="cardInfo()">
+                                    <option value="1 bath">1 bath</option>
+                                    <option value="2 bath">2 bath</option>
+                                    <option value="3 bath">3 bath</option>
+                                    <option value="4 bath">4 bath</option>
                                 </select>
                             </div>
 
@@ -120,19 +121,19 @@ include 'popup-modal/login-modal.php';
                                 <div class="service-date-time">
                                     <span>When do you need the cleaner?</span>
                                     <div class="service-datetime-input">
-                                        <input type="date" name="" id="service-date" value="01/01/2018">
-                                        <select name="" id="">
-                                            <option value="">08:00 AM</option>
-                                            <option value="">08:30 AM</option>
-                                            <option value="">09:00 AM</option>
-                                            <option value="">09:30 AM</option>
-                                            <option value="">10:00 AM</option>
-                                            <option value="">10:30 AM</option>
-                                            <option value="">11:00 AM</option>
-                                            <option value="">11:30 AM</option>
-                                            <option value="">12:00 PM</option>
-                                            <option value="">12:30 PM</option>
-                                            <option value="">01:00 PM</option>
+                                        <input type="date" name="" id="service-date" onchange="cardInfo()">
+                                        <select name="" id="s-time" onchange="cardInfo()">
+                                            <option value="08:00 AM">08:00 AM</option>
+                                            <option value="08:30 AM">08:30 AM</option>
+                                            <option value="09:00 AM">09:00 AM</option>
+                                            <option value="09:30 AM">09:30 AM</option>
+                                            <option value="10:00 AM">10:00 AM</option>
+                                            <option value="10:30 AM">10:30 AM</option>
+                                            <option value="11:00 AM">11:00 AM</option>
+                                            <option value="11:30 AM">11:30 AM</option>
+                                            <option value="12:00 PM">12:00 PM</option>
+                                            <option value="12:30 PM">12:30 PM</option>
+                                            <option value="01:00 PM">01:00 PM</option>
                                         </select>
                                     </div>
                                 </div>
@@ -141,14 +142,26 @@ include 'popup-modal/login-modal.php';
                                     <span>How long do you need your cleaner to stay?</span>
 
                                     <div class="cleaner-hrs">
-                                        <select name="" id="">
-                                            <option value="">3.0 Hrs</option>
-                                            <option value="">3.5 Hrs</option>
-                                            <option value="">4.0 Hrs</option>
-                                            <option value="">4.5 Hrs</option>
-                                            <option value="">5.0 Hrs</option>
-                                            <option value="">5.5 Hrs</option>
-                                            <option value="">6.0 Hrs</option>
+                                        <select name="" id="s-hours" onchange="cardInfo()">
+                                            <option value="3.0">3.0 Hrs</option>
+                                            <option value="3.5">3.5 Hrs</option>
+                                            <option value="4.0">4.0 Hrs</option>
+                                            <option value="4.5">4.5 Hrs</option>
+                                            <option value="5.0">5.0 Hrs</option>
+                                            <option value="5.5">5.5 Hrs</option>
+                                            <option value="6.0">6.0 Hrs</option>
+                                            <option value="6.5">6.5 Hrs</option>
+                                            <option value="7.0">7.0 Hrs</option>
+                                            <option value="7.5">7.5 Hrs</option>
+                                            <option value="8.0">8.0 Hrs</option>
+                                            <option value="8.5">8.5 Hrs</option>
+                                            <option value="9.0">9.0 Hrs</option>
+                                            <option value="9.5">9.5 Hrs</option>
+                                            <option value="10.0">10.0 Hrs</option>
+                                            <option value="10.5">10.5 Hrs</option>
+                                            <option value="11.0">11.0 Hrs</option>
+                                            <option value="11.5">11.5 Hrs</option>
+                                            <option value="12.0">12.0 Hrs</option>
                                         </select>
                                     </div>
                                 </div>
@@ -488,16 +501,19 @@ include 'popup-modal/login-modal.php';
                 <div class="payment-card">
                     <div class="card">
                         <div class="card-body">
-                            <span class="service-date">01/01/2018 @ </span>
-                            <span class="service-time">04:00 pm</span><br>
-                            <span class="bed">1 bed, </span>
-                            <span class="bed">1 bath</span>
+                            <span class="service-date" id="s-date">01/01/2018</span><span> @</span>
+                            <script>
+                                document.getElementById('s-date').innerHTML = new Date().toISOString().slice(0, 10);
+                            </script>
+                            <span class="service-time" id="s-card-time">08:00 AM</span><br>
+                            <span class="bed" id="bed">1 bed, </span>
+                            <span class="bed bath" id="bath">1 bath</span>
 
                             <div class="card-service-duration">
                                 <b>Duration</b>
                                 <div class="service-info">
                                     <span>Basic</span>
-                                    <span class="service-duration">3 hrs</span>
+                                    <span class="service-duration" id="s-card-hours">3 hrs</span>
                                 </div>
                                 <div id="extra-services">
 
@@ -508,14 +524,14 @@ include 'popup-modal/login-modal.php';
                                 </div>
                                 <div class="service-info total-required-time">
                                     <b class="total-time">Total Service Time</b>
-                                    <b class="total-duration">3.5 hrs</b>
+                                    <b class="total-duration" id="total-duration">3.0 hrs</b>
                                 </div>
                             </div>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <span>Per Cleaning</span>
-                                <b>$87</b>
+                                <b id="per-cleaning">$54</b>
                             </li>
                             <li class="list-group-item discount">
                                 <span>Discount</span>
@@ -525,7 +541,7 @@ include 'popup-modal/login-modal.php';
                         <ul class="list-group list-group-flush list-2">
                             <li class="list-group-item">
                                 <span class="payment-txt">Total Payment</span>
-                                <b class="payment-amt">$63</b>
+                                <b class="payment-amt" id="total-amt">$54</b>
                             </li>
                             <li class="list-group-item effective-price">
                                 <span>Effective Price</span>
