@@ -37,7 +37,14 @@ session_start();
     ?>
 
     <!--********* prices banner section start************-->
-    <?php if(isset($_SESSION['islogin'])){?>
+    <?php if(isset($_SESSION['islogin']) && isset($_SESSION['expire'])){
+        $now= time(); 
+        if($now > $_SESSION['expire']){
+            echo "<script>alert('Session is expired');</script>";
+            unset($_SESSION['islogin']);
+            echo "<script>window.location.href='$arr[base_url]';</script>";
+        }       
+    ?>
     <section class="customer-screen-banner">
        
         <header>
@@ -140,20 +147,6 @@ session_start();
     </section>
         <?php }?>
         <!--logout modal start-->
-        <div class="modal fade logout-modal" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="logout-modal-content">
-                            <div class="logout-green-circle">
-                                <img src="assets/images/ic-check.png" alt="">
-                            </div>
-                            <h5>You have successfully logged out</h5>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-logout-ok" data-dismiss="modal">Ok</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+<?php
+    include 'popup-modal/logout-modal.php';
+?>

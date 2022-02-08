@@ -80,11 +80,7 @@ include 'forget-pass-modal.php';
                 dataType:'JSON',
                 success: function(response) {
                     res = JSON.parse(JSON.stringify(response));
-                    console.log(res);
                     if (response.status) {
-                        <?php
-                            $_SESSION['islogin'] = true;    
-                        ?>
                         console.log(response);
                         // setCookie("isLogin", true,15)
                         // localStorage.setItem("isLogin", true);

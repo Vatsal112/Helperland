@@ -174,23 +174,23 @@ include 'popup-modal/login-modal.php';
                                 <div class="services">
 
                                     <div class="outer">
-                                        <input type="checkbox" name="" id="check1" onche onclick="addToCard(this.id,'labelCabinet')">
+                                        <input type="checkbox" name="" id="check1" class="check" onclick="addToCard(this.id,'labelCabinet')">
                                         <label for="check1" class="labelCabinet">Inside cabinet</label>
                                     </div>
                                     <div class="outer">
-                                        <input type="checkbox" name="" id="check2" onclick="addToCard(this.id,'labelFridge')">
+                                        <input type="checkbox" name="" id="check2" class="check" onclick="addToCard(this.id,'labelFridge')">
                                         <label for="check2" class="labelFridge">Inside fridge</label>
                                     </div>
                                     <div class="outer">
-                                        <input type="checkbox" name="" id="check3" onclick="addToCard(this.id,'labelOven')">
+                                        <input type="checkbox" name="" id="check3" class="check" onclick="addToCard(this.id,'labelOven')">
                                         <label for="check3" class="labelOven">Inside oven</label>
                                     </div>
                                     <div class="outer">
-                                        <input type="checkbox" name="" id="check4" onclick="addToCard(this.id,'labelWash')">
+                                        <input type="checkbox" name="" id="check4" class="check" onclick="addToCard(this.id,'labelWash')">
                                         <label for="check4" class="labelWash">Laundry wash & dry</label>
                                     </div>
                                     <div class="outer">
-                                        <input type="checkbox" name="" id="check5" onclick="addToCard(this.id,'labelWindow')">
+                                        <input type="checkbox" name="" id="check5" class="check" onclick="addToCard(this.id,'labelWindow')">
                                         <label for="check5" class="labelWindow">Interior windows</label>
                                     </div>
 
@@ -209,9 +209,17 @@ include 'popup-modal/login-modal.php';
                                 <label for="pets-label">I have pets at home</label>
                             </div>
 
+                           <?php
+                            if(isset($_SESSION['islogin'])){
+                           ?>
                             <div class="btn-continue">
-                                <button type="button">Continue</button>
+                                <button type="button" onclick="validateSecondTab()">Continue</button>
                             </div>
+                            <?php }else {?>
+                                <div class="btn-continue">
+                                <button type="button" data-toggle="modal" data-target="#login-modal">Continue</button>
+                            </div>
+                            <?php }?>
 
                             <div class="btn-sm-payment-summary">
                                 <button type="button" data-toggle="modal" data-target="#payment-summary-modal">Payment Summary</button>
@@ -493,7 +501,7 @@ include 'popup-modal/login-modal.php';
                 <!-- Book service page payment summary modal for mobile view end -->
             </div>
             <!-- Book service page payment summary side card start -->
-            <div class="payment-summary">
+            <div class="payment-summary" id="payment-summary">
                 <div class="payment-text">
                     <span>Payment Summary</span>
                 </div>

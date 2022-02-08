@@ -68,11 +68,18 @@ if (isset($_COOKIE['siteCookie'])) {
                         </li>
 
 
-                        <?php if(isset($_SESSION['islogin'])) {?>
+                        <?php if(isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+                            $now= time(); 
+                            if($now > $_SESSION['expire']){
+                                echo "<script>alert('Session is expired');</script>";
+                                unset($_SESSION['islogin']);
+                                echo "<script>window.location.href='$arr[base_url]';</script>";
+                            }    
+                        ?>
 
                             <div class="noti-user-icons" id="user-icon">
                             <li class="nav-item notification-icon d-flex">
-                                <span>2</span>
+                                <span id="notification-count">2</span>
                                 <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                             </li>
                             <div class="dropdown user-icon d-flex align-items-center">
@@ -188,6 +195,7 @@ if (isset($_COOKIE['siteCookie'])) {
         <!--  Homepage modal for login start -->
         <?php
             include 'popup-modal/login-modal.php';
+            include 'popup-modal/logout-modal.php';
         ?>
         <!--  Homepage modal for forget-pass end -->
     </section>
@@ -448,19 +456,4 @@ if (isset($_COOKIE['siteCookie'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
 
 </body>
-<script>
-    $(document).ready(function() {
-        $('#btn-logout').click(function(e) {
-            $.ajax({
-                type: "post",
-                url: "http://localhost/Helperland/?controller=user&function=userLogout",
-                success: function(response) {
-                   alert(response);
-                //    Window.location.href = 'http://localhost/Helperland';
-                location.reload();
-                }
-            });
-        });
-    });
-</script>
 </html>

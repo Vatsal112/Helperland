@@ -1,54 +1,13 @@
-// $(document).ready(function() {
-//     if (getCookie('isLogin')) {
-//         document.getElementById('dropdown').style.display = 'none';
-//         var hideNav = document.getElementsByClassName('btn-hide');
-//         document.getElementById('user-icon').style.display = 'flex';
-//         document.getElementsByClassName('dropdown-toggle')[0].style.display = 'none';
-
-//         for (let i = 0; i < hideNav.length; i++) {
-//             hideNav[i].style.display = 'none';
-//         }
-
-//     }
-// });
-
-// function setCookie(cname, cvalue, minutes) {
-//     const d = new Date();
-//     d.setTime(d.getTime() + (minutes * 60 * 1000));
-//     let expires = "expires=" + d.toUTCString();
-//     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-// }
-
-// function logoutUser() {
-//     setCookie('isLogin', false, 0);
-//     setTimeout(function() {
-//         window.location.href = 'http://localhost/Helperland';
-//     }, 2000);
-// }
-
-// function getCookie(cname) {
-//     let name = cname + "=";
-//     let ca = document.cookie.split(';');
-//     for (let i = 0; i < ca.length; i++) {
-//         let c = ca[i];
-//         while (c.charAt(0) == ' ') {
-//             c = c.substring(1);
-//         }
-//         if (c.indexOf(name) == 0) {
-//             return c.substring(name.length, c.length);
-//         }
-//     }
-//     return "";
-// }
-
 document.addEventListener("scroll", () => {
     var logo = document.getElementById("logo");
     if (window.scrollY > 10 || window.screen.width < 600) {
         logo.src = "assets/images/logo-small.png";
         document.getElementById("navbar").style.background = "rgba(0,0,0,0.8)";
+        document.getElementById('notification-count').style.top = "10px";
     } else {
         logo.src = "assets/images/white-logo-transparent-background.png";
         document.getElementById("navbar").style.background = "none";
+        document.getElementById('notification-count').style.top = "30%";
     }
 });
 
@@ -115,44 +74,44 @@ function initMap() {
 }
 
 //Change Icon for Booking services
-const setup = document.getElementById("setup-service");
-const your_detail = document.getElementById("your-details");
-const schedule = document.getElementById("schedule");
-const payment = document.getElementById("payment");
+// const setup = document.getElementById("setup-service");
+// const your_detail = document.getElementById("your-details");
+// const schedule = document.getElementById("schedule");
+// const payment = document.getElementById("payment");
 
-// images
-const setup_img = document.getElementById("setup-img");
-const schedule_img = document.getElementById("schedule-img");
-const your_details_img = document.getElementById("detail-img");
-const payment_img = document.getElementById("payment-img");
+// // images
+// const setup_img = document.getElementById("setup-img");
+// const schedule_img = document.getElementById("schedule-img");
+// const your_details_img = document.getElementById("detail-img");
+// const payment_img = document.getElementById("payment-img");
 
-setup.addEventListener("click", () => {
-    setup_img.setAttribute("src", "assets/images/setup-service-white.png");
-    schedule_img.setAttribute("src", "assets/images/schedule.png");
-    your_details_img.setAttribute("src", "assets/images/details.png");
-    payment_img.setAttribute("src", "assets/images/payment.png");
-});
+// setup.addEventListener("click", () => {
+//     setup_img.setAttribute("src", "assets/images/setup-service-white.png");
+//     schedule_img.setAttribute("src", "assets/images/schedule.png");
+//     your_details_img.setAttribute("src", "assets/images/details.png");
+//     payment_img.setAttribute("src", "assets/images/payment.png");
+// });
 
-your_detail.addEventListener("click", () => {
-    your_details_img.setAttribute("src", "assets/images/details-white.png");
-    setup_img.setAttribute("src", "assets/images/setup-service.png");
-    schedule_img.setAttribute("src", "assets/images/schedule.png");
-    payment_img.setAttribute("src", "assets/images/payment.png");
-});
+// your_detail.addEventListener("click", () => {
+//     your_details_img.setAttribute("src", "assets/images/details-white.png");
+//     setup_img.setAttribute("src", "assets/images/setup-service.png");
+//     schedule_img.setAttribute("src", "assets/images/schedule.png");
+//     payment_img.setAttribute("src", "assets/images/payment.png");
+// });
 
-schedule.addEventListener("click", () => {
-    schedule_img.setAttribute("src", "assets/images/schedule-white.png");
-    setup_img.setAttribute("src", "assets/images/setup-service.png");
-    your_details_img.setAttribute("src", "assets/images/details.png");
-    payment_img.setAttribute("src", "assets/images/payment.png");
-});
+// schedule.addEventListener("click", () => {
+//     schedule_img.setAttribute("src", "assets/images/schedule-white.png");
+//     setup_img.setAttribute("src", "assets/images/setup-service.png");
+//     your_details_img.setAttribute("src", "assets/images/details.png");
+//     payment_img.setAttribute("src", "assets/images/payment.png");
+// });
 
-payment.addEventListener("click", () => {
-    payment_img.setAttribute("src", "assets/images/payment-white.png");
-    setup_img.setAttribute("src", "assets/images/setup-service.png");
-    your_details_img.setAttribute("src", "assets/images/details.png");
-    schedule_img.setAttribute("src", "assets/images/schedule.png");
-});
+// payment.addEventListener("click", () => {
+//     payment_img.setAttribute("src", "assets/images/payment-white.png");
+//     setup_img.setAttribute("src", "assets/images/setup-service.png");
+//     your_details_img.setAttribute("src", "assets/images/details.png");
+//     schedule_img.setAttribute("src", "assets/images/schedule.png");
+// });
 
 // function onlyNumberKey(evt) {
 //     // Only ASCII character in that range allowed
@@ -285,8 +244,8 @@ function validateFirstTab(id) {
     let setup_service_content = document.getElementById("setup-service-tab");
     let setup_service = document.getElementById("setup-service");
     const schedule_img = document.getElementById("schedule-img");
-    let schedule_tab = document.getElementById("schedule");
     let serviceDate = document.getElementById("service-date");
+    let schedule_tab = document.getElementById("schedule");
     let schedule_tab_content = document.getElementById("schedule-tab");
 
     serviceDate.value = new Date().toISOString().slice(0, 10);
@@ -314,97 +273,87 @@ function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {
     prevTab.style.color = "white";
     prevTab.style.pointerEvents = "all";
 }
+
 let hour = 3.0;
-let amount = 54
+let amount = 54;
+let temp = 0;
+
 
 function addToCard(checkId, lableId) {
     let check = document.getElementById(checkId);
     let extra = document.getElementById("extra-services");
     let serviceHour = document.getElementById('s-hours');
-    let optionHour = serviceHour[serviceHour.selectedIndex];
     let perCleaning = document.getElementById('per-cleaning');
     let totalAmount = document.getElementById('total-amt');
 
-    // min = 30 + hour * 60;
-    // h = min / 60;
-    // alert(h);
-
     function checkSelectoption(val) {
-        if (val == 3.0) {
-            serviceHour.options[0].selected = true;
-        } else if (val == 3.5) {
-            serviceHour.options[1].selected = true;
-        } else if (val == 4.0) {
-            serviceHour.options[2].selected = true;
-        } else if (val == 4.5) {
-            serviceHour.options[3].selected = true;
-        } else if (val == 5.0) {
-            serviceHour.options[4].selected = true;
-        } else if (val == 5.5) {
-            serviceHour.options[5].selected = true;
+        for (let i = 0; i <= serviceHour.length; i++) {
+            if (val == serviceHour[i].value) {
+                hour = val;
+                serviceHour.options[i].selected = true;
+            }
         }
     }
-
     if (check.checked) {
         switch (lableId) {
             case "labelCabinet":
                 extra.innerHTML +=
                     "<div class='service-info labelCabinet'><span>Inside Cabinets (extra)</span><span class='service-duration'>30 min</span></div>";
                 hour = hour + 0.5;
-                amount = amount + 9;
+                temp = temp + 9;
+                perCleaning.innerHTML = "$" + temp;
+                totalAmount.innerHTML = "$" + temp;
                 document.getElementById('total-duration').innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelFridge":
                 extra.innerHTML +=
                     "<div class = 'service-info labelFridge'><span>Inside Fridge (extra)</span><span class='service-duration'>30 min</span></div>";
                 hour = hour + 0.5;
-                amount = amount + 9;
+                temp = temp + 9;
+                perCleaning.innerHTML = "$" + temp;
+                totalAmount.innerHTML = "$" + temp;
                 document.getElementById('total-duration').innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelOven":
                 extra.innerHTML +=
                     "<div class = 'service-info labelOven'><span>Inside Oven (extra)</span><span class='service-duration'>30 min</span></div>";
                 hour = hour + 0.5;
-                amount = amount + 9;
+                temp = temp + 9;
+                perCleaning.innerHTML = "$" + temp;
+                totalAmount.innerHTML = "$" + temp;
                 document.getElementById('total-duration').innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelWash":
                 extra.innerHTML +=
                     "<div class = 'service-info labelWash'><span>Inside Wash (extra)</span><span class='service-duration'>30 min</span></div>";
                 hour = hour + 0.5;
-                amount = amount + 9;
+                temp = temp + 9;
+                perCleaning.innerHTML = "$" + temp;
+                totalAmount.innerHTML = "$" + temp;
                 document.getElementById('total-duration').innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
                 break;
             case "labelWindow":
                 extra.innerHTML +=
                     "<div class = 'service-info labelWindow'><span>Inside Window (extra)</span><span class='service-duration'>30 min</span></div>";
                 hour = hour + 0.5;
-                amount = amount + 9;
+                temp = temp + 9;
+                perCleaning.innerHTML = "$" + temp;
+                totalAmount.innerHTML = "$" + temp;
                 document.getElementById('total-duration').innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
                 break;
         }
     } else {
         document.getElementsByClassName(lableId)[1].remove();
         hour = hour - 0.5;
-        amount = amount - 9;
+        temp = temp - 9;
+        perCleaning.innerHTML = "$" + temp;
+        totalAmount.innerHTML = "$" + temp;
         document.getElementById('total-duration').innerHTML = hour + " Hrs";
-        perCleaning.innerHTML = "$" + amount;
-        totalAmount.innerHTML = "$" + amount;
         checkSelectoption(hour);
     }
 }
@@ -425,21 +374,40 @@ function cardInfo() {
     let optionTime = sTime.options[sTime.selectedIndex];
     let optionHour = serviceHour[serviceHour.selectedIndex];
 
-    document.getElementById('bed').innerHTML = optionBed.text;
-    document.getElementById('bath').innerHTML = optionBath.text;
-    document.getElementById('s-card-time').innerHTML = optionTime.text;
-    document.getElementById('s-date').innerHTML = serviceDate;
-    cardHour.innerHTML = optionHour.text;
-    totalDuration.innerHTML = optionHour.text;
+    alert(totalDuration.textContent);
+    if (optionHour.value >= hour) {
+        hour = parseFloat(optionHour.value);
+        document.getElementById('bed').innerHTML = optionBed.text;
+        document.getElementById('bath').innerHTML = optionBath.text;
+        document.getElementById('s-card-time').innerHTML = optionTime.text;
+        document.getElementById('s-date').innerHTML = serviceDate;
+        cardHour.innerHTML = optionHour.text;
+        totalDuration.innerHTML = optionHour.text;
 
-    for (let i = 0; i <= serviceHour.length; i++) {
-        amount = 54;
-        if (serviceHour.options[i].selected == true) {
-            amount = amount + (9 * i);
-            perCleaning.innerHTML = "$" + amount;
-            totalAmount.innerHTML = "$" + amount;
+        for (let i = 0; i <= serviceHour.length; i++) {
+            amount = 54;
+            if (serviceHour.options[i].selected == true) {
+                amount = amount + (9 * i);
+                perCleaning.innerHTML = "$" + amount;
+                totalAmount.innerHTML = "$" + amount;
+                temp = amount;
+            }
         }
+
+    } else {
+        alert("Booking time is less than recommended, we may not be able to finish the job. Please confirm if you wish to proceed with your booking?");
+        window.location.href = "http://localhost/Helperland/?controller=home&function=bookService";
     }
 
+}
+
+function validateSecondTab() {
+    let schedule_tab = document.getElementById("schedule");
+    let schedule_tab_content = document.getElementById("schedule-tab");
+    let yourDetails = document.getElementById('your-details');
+    let yourDetailsTabContent = document.getElementById('your-details-tab');
+    let yourDetailsImage = document.getElementById('detail-img');
+    changeTabs(yourDetails, yourDetailsTabContent, schedule_tab, schedule_tab_content);
+    yourDetailsImage.setAttribute('src', 'assets/images/details-white.png')
 
 }
