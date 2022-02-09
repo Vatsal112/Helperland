@@ -67,10 +67,10 @@ session_start();
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item text-link book-now">
-                            <a class="nav-link" href="#">Book Now</a>
+                            <a class="nav-link" href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>">Book Now</a>
                         </li>
                         <li class="nav-item text-link">
-                            <a class="nav-link" href="#">Prices & Services</a>
+                            <a class="nav-link" href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>">Prices & Services</a>
                         </li>
                         <li class="nav-item text-link">
                             <a class="nav-link" href="#">Warranty</a>
@@ -79,7 +79,7 @@ session_start();
                             <a class="nav-link" href="#">Blog</a>
                         </li>
                         <li class="nav-item text-link">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>">Contact</a>
                         </li>
                         <div class="noti-user-icons">
                             <li class="nav-item notification-icon d-flex">

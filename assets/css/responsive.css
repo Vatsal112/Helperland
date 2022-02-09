@@ -175,17 +175,15 @@
     .main-content .payment-summary {
         display: none;
     }
-    .main-content .booking-tabs .btn-sm-payment-summary {
+    .btn-sm-payment-summary button {
+        outline: none;
         position: fixed;
         bottom: 0;
-        display: block;
         left: 50%;
         transform: translate(-50%, -50%);
-        top: 97.5%;
-    }
-    .main-content .booking-tabs .btn-sm-payment-summary button {
-        outline: none;
+        top: 98%;
         border: none;
+        display: block;
         background-color: #67b644;
         color: white;
         padding: 0 1rem;
@@ -400,9 +398,6 @@
         margin-top: 0.8rem;
     }
     .tab-content .service-schedule-content .service-duration {
-        display: block;
-    }
-    .btn-sm-payment-summary button {
         display: block;
     }
     .tab-content .service-duration .cleaner-to-stay {

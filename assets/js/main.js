@@ -73,45 +73,100 @@ function initMap() {
     });
 }
 
-//Change Icon for Booking services
-// const setup = document.getElementById("setup-service");
-// const your_detail = document.getElementById("your-details");
-// const schedule = document.getElementById("schedule");
-// const payment = document.getElementById("payment");
+// Change Icon for Booking services
+const setup = document.getElementById("setup-service");
+const your_detail = document.getElementById("your-details");
+const schedule = document.getElementById("schedule");
+const payment = document.getElementById("payment");
 
-// // images
-// const setup_img = document.getElementById("setup-img");
-// const schedule_img = document.getElementById("schedule-img");
-// const your_details_img = document.getElementById("detail-img");
-// const payment_img = document.getElementById("payment-img");
+//tabs and its content
+const setup_service_content = document.getElementById("setup-service-tab");
+// const setup_service = document.getElementById("setup-service");
+// const schedule_tab = document.getElementById("schedule");
+const schedule_tab_content = document.getElementById("schedule-tab");
+// const your_details = document.getElementById('your-details');
+const yourDetailsTabContent = document.getElementById('your-details-tab');
+// const payment = document.getElementById('payment');
+const paymentTabContent = document.getElementById('payment-tab');
 
-// setup.addEventListener("click", () => {
-//     setup_img.setAttribute("src", "assets/images/setup-service-white.png");
-//     schedule_img.setAttribute("src", "assets/images/schedule.png");
-//     your_details_img.setAttribute("src", "assets/images/details.png");
-//     payment_img.setAttribute("src", "assets/images/payment.png");
-// });
+// images
+const setup_img = document.getElementById("setup-img");
+const schedule_img = document.getElementById("schedule-img");
+const your_details_img = document.getElementById("detail-img");
+const payment_img = document.getElementById("payment-img");
 
-// your_detail.addEventListener("click", () => {
-//     your_details_img.setAttribute("src", "assets/images/details-white.png");
-//     setup_img.setAttribute("src", "assets/images/setup-service.png");
-//     schedule_img.setAttribute("src", "assets/images/schedule.png");
-//     payment_img.setAttribute("src", "assets/images/payment.png");
-// });
+setup.addEventListener("click", () => {
+    setup_img.setAttribute("src", "assets/images/setup-service-white.png");
+    schedule_img.setAttribute("src", "assets/images/schedule.png");
+    your_details_img.setAttribute("src", "assets/images/details.png");
+    payment_img.setAttribute("src", "assets/images/payment.png");
 
-// schedule.addEventListener("click", () => {
-//     schedule_img.setAttribute("src", "assets/images/schedule-white.png");
-//     setup_img.setAttribute("src", "assets/images/setup-service.png");
-//     your_details_img.setAttribute("src", "assets/images/details.png");
-//     payment_img.setAttribute("src", "assets/images/payment.png");
-// });
+    //for moving to setup
+    setup.classList.add("active");
+    setup_service_content.classList.add("show", "active");
 
-// payment.addEventListener("click", () => {
-//     payment_img.setAttribute("src", "assets/images/payment-white.png");
-//     setup_img.setAttribute("src", "assets/images/setup-service.png");
-//     your_details_img.setAttribute("src", "assets/images/details.png");
-//     schedule_img.setAttribute("src", "assets/images/schedule.png");
-// });
+    //disable all tabs other than setup
+    schedule.classList.remove('active');
+    schedule_tab_content.classList.remove("show", "active");
+    schedule.style.background = '#f3f3f3';
+    schedule.style.color = '#646464';
+    schedule.style.pointerEvents = 'none';
+
+    your_detail.classList.remove('active');
+    yourDetailsTabContent.classList.remove("show", "active");
+    your_detail.style.background = '#f3f3f3';
+    your_detail.style.color = '#646464';
+    your_detail.style.pointerEvents = 'none';
+
+    payment.classList.remove("show", "active");
+    paymentTabContent.classList.remove("show", "active");
+    payment.style.background = '#f3f3f3';
+    payment.style.color = '#646464';
+    payment.style.pointerEvents = 'none';
+
+});
+
+schedule.addEventListener("click", () => {
+    schedule_img.setAttribute("src", "assets/images/schedule-white.png");
+    setup_img.setAttribute("src", "assets/images/setup-service-white.png");
+    your_details_img.setAttribute("src", "assets/images/details.png");
+    payment_img.setAttribute("src", "assets/images/payment.png");
+
+    schedule.classList.add("active");
+    schedule_tab_content.classList.add("show", "active");
+
+    your_detail.classList.remove('active');
+    yourDetailsTabContent.classList.remove("show", "active");
+    schedule.style.background = '#f3f3f3';
+    schedule.style.color = '#646464';
+    your_detail.style.pointerEvents = 'none';
+
+    payment.classList.remove("show", "active");
+    paymentTabContent.classList.remove("show", "active");
+    payment.style.pointerEvents = 'none';
+});
+
+your_detail.addEventListener("click", () => {
+    your_details_img.setAttribute("src", "assets/images/details-white.png");
+    setup_img.setAttribute("src", "assets/images/setup-service.png");
+    schedule_img.setAttribute("src", "assets/images/schedule.png");
+    payment_img.setAttribute("src", "assets/images/payment.png");
+
+    your_detail.classList.add("active");
+    yourDetailsTabContent.classList.add("show", "active");
+
+    payment.classList.remove("show", "active");
+    paymentTabContent.classList.remove("show", "active");
+    payment.style.pointerEvents = 'none';
+});
+
+payment.addEventListener("click", () => {
+    payment_img.setAttribute("src", "assets/images/payment-white.png");
+    setup_img.setAttribute("src", "assets/images/setup-service.png");
+    your_details_img.setAttribute("src", "assets/images/details.png");
+    schedule_img.setAttribute("src", "assets/images/schedule.png");
+});
+
 
 // function onlyNumberKey(evt) {
 //     // Only ASCII character in that range allowed
@@ -241,23 +296,17 @@ function hideMessage() {
 
 function validateFirstTab(id) {
     let pCode = document.getElementById(id).value;
-    let setup_service_content = document.getElementById("setup-service-tab");
-    let setup_service = document.getElementById("setup-service");
-    const schedule_img = document.getElementById("schedule-img");
-    let serviceDate = document.getElementById("service-date");
-    let schedule_tab = document.getElementById("schedule");
-    let schedule_tab_content = document.getElementById("schedule-tab");
+    let serviceDate = document.getElementById('service-date');
 
     serviceDate.value = new Date().toISOString().slice(0, 10);
 
     if (pCode == "") {
         alert("Please Enter Postal Code");
     } else {
-
         changeTabs(
-            schedule_tab,
+            schedule,
             schedule_tab_content,
-            setup_service,
+            setup,
             setup_service_content
         );
         schedule_img.setAttribute("src", "assets/images/schedule-white.png");
@@ -268,6 +317,8 @@ function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {
     prevTab.classList.remove("active");
     PreTabContent.classList.remove("show", "active");
     currentTab.classList.add("active");
+    currentTab.style.background = '#1d7a8c';
+    currentTab.style.color = "#fff";
     currentTabContent.classList.add("show", "active");
     prevTab.style.background = "#1d7a8c";
     prevTab.style.color = "white";
@@ -276,15 +327,16 @@ function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {
 
 let hour = 3.0;
 let amount = 54;
-let temp = 0;
+let temp = 54;
 
 
 function addToCard(checkId, lableId) {
     let check = document.getElementById(checkId);
-    let extra = document.getElementById("extra-services");
+    let extra = document.getElementsByClassName("card-extra-services");
     let serviceHour = document.getElementById('s-hours');
-    let perCleaning = document.getElementById('per-cleaning');
-    let totalAmount = document.getElementById('total-amt');
+    let perCleaning = document.querySelectorAll('.per-cleaning');
+    let totalAmount = document.querySelectorAll('.payment-amt');
+    let totalDuration = document.querySelectorAll('.total-duration');
 
     function checkSelectoption(val) {
         for (let i = 0; i <= serviceHour.length; i++) {
@@ -297,63 +349,90 @@ function addToCard(checkId, lableId) {
     if (check.checked) {
         switch (lableId) {
             case "labelCabinet":
-                extra.innerHTML +=
-                    "<div class='service-info labelCabinet'><span>Inside Cabinets (extra)</span><span class='service-duration'>30 min</span></div>";
+                for (let i = 0; i < extra.length; i++) {
+                    extra[i].innerHTML += "<div class='service-info labelCabinet'><span>Inside Cabinets (extra)</span><span class='service-duration'>30 min</span></div>";
+                }
+
                 hour = hour + 0.5;
                 temp = temp + 9;
-                perCleaning.innerHTML = "$" + temp;
-                totalAmount.innerHTML = "$" + temp;
-                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                for (let j = 0; j < perCleaning.length; j++) {
+                    perCleaning[j].innerHTML = "$" + temp;
+                    totalAmount[j].innerHTML = "$" + temp;
+                }
+                document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+                document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
+
                 break;
             case "labelFridge":
-                extra.innerHTML +=
-                    "<div class = 'service-info labelFridge'><span>Inside Fridge (extra)</span><span class='service-duration'>30 min</span></div>";
+                for (let i = 0; i < extra.length; i++) {
+                    extra[i].innerHTML += "<div class='service-info labelFridge'><span>Inside Fridge (extra)</span><span class='service-duration'>30 min</span></div>";
+                }
                 hour = hour + 0.5;
                 temp = temp + 9;
-                perCleaning.innerHTML = "$" + temp;
-                totalAmount.innerHTML = "$" + temp;
-                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                for (let j = 0; j < perCleaning.length; j++) {
+                    perCleaning[j].innerHTML = "$" + temp;
+                    totalAmount[j].innerHTML = "$" + temp;
+                }
+                document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+                document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
                 break;
             case "labelOven":
-                extra.innerHTML +=
-                    "<div class = 'service-info labelOven'><span>Inside Oven (extra)</span><span class='service-duration'>30 min</span></div>";
+                for (let i = 0; i < extra.length; i++) {
+                    extra[i].innerHTML += "<div class='service-info labelOven'><span>Inside Oven (extra)</span><span class='service-duration'>30 min</span></div>";
+                }
                 hour = hour + 0.5;
                 temp = temp + 9;
-                perCleaning.innerHTML = "$" + temp;
-                totalAmount.innerHTML = "$" + temp;
-                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                for (let j = 0; j < perCleaning.length; j++) {
+                    perCleaning[j].innerHTML = "$" + temp;
+                    totalAmount[j].innerHTML = "$" + temp;
+                }
+                document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+                document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
                 break;
             case "labelWash":
-                extra.innerHTML +=
-                    "<div class = 'service-info labelWash'><span>Inside Wash (extra)</span><span class='service-duration'>30 min</span></div>";
+                for (let i = 0; i < extra.length; i++) {
+                    extra[i].innerHTML += "<div class='service-info labelWash'><span>Laundry wash & dry (extra)</span><span class='service-duration'>30 min</span></div>";
+                }
                 hour = hour + 0.5;
                 temp = temp + 9;
-                perCleaning.innerHTML = "$" + temp;
-                totalAmount.innerHTML = "$" + temp;
-                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                for (let j = 0; j < perCleaning.length; j++) {
+                    perCleaning[j].innerHTML = "$" + temp;
+                    totalAmount[j].innerHTML = "$" + temp;
+                }
+                document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+                document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
                 break;
             case "labelWindow":
-                extra.innerHTML +=
-                    "<div class = 'service-info labelWindow'><span>Inside Window (extra)</span><span class='service-duration'>30 min</span></div>";
+                for (let i = 0; i < extra.length; i++) {
+                    extra[i].innerHTML += "<div class='service-info labelWindow'><span>Interior Windows (extra)</span><span class='service-duration'>30 min</span></div>";
+                }
                 hour = hour + 0.5;
                 temp = temp + 9;
-                perCleaning.innerHTML = "$" + temp;
-                totalAmount.innerHTML = "$" + temp;
-                document.getElementById('total-duration').innerHTML = hour + " Hrs";
+                for (let j = 0; j < perCleaning.length; j++) {
+                    perCleaning[j].innerHTML = "$" + temp;
+                    totalAmount[j].innerHTML = "$" + temp;
+                }
+                document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+                document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
                 checkSelectoption(hour);
                 break;
         }
+
     } else {
-        document.getElementsByClassName(lableId)[1].remove();
+        document.querySelectorAll('.' + lableId)[1].remove();
+        document.querySelectorAll('.' + lableId)[1].remove();
         hour = hour - 0.5;
         temp = temp - 9;
-        perCleaning.innerHTML = "$" + temp;
-        totalAmount.innerHTML = "$" + temp;
-        document.getElementById('total-duration').innerHTML = hour + " Hrs";
+        for (let j = 0; j < perCleaning.length; j++) {
+            perCleaning[j].innerHTML = "$" + temp;
+            totalAmount[j].innerHTML = "$" + temp;
+        }
+        document.querySelectorAll('.total-duration')[0].innerHTML = hour + " Hrs";
+        document.querySelectorAll('.total-duration')[1].innerHTML = hour + " Hrs";
         checkSelectoption(hour);
     }
 }
@@ -362,41 +441,64 @@ function cardInfo() {
     let bed = document.getElementById('infoBed');
     let bath = document.getElementById('infoBath');
     let sTime = document.getElementById('s-time');
+    let infoBed = document.querySelectorAll('.bed');
+    let infoBath = document.querySelectorAll('.bath');
     let serviceDate = document.getElementById("service-date").value;
     let serviceHour = document.getElementById('s-hours');
-    let perCleaning = document.getElementById('per-cleaning');
-    let totalAmount = document.getElementById('total-amt');
-    let cardHour = document.getElementById('s-card-hours');
-    let totalDuration = document.getElementById('total-duration');
+    let perCleaning = document.querySelectorAll('.per-cleaning');
+    let totalAmount = document.querySelectorAll('.payment-amt');
+    let cardHour = document.querySelectorAll('.basic-service-duration');
+    let totalDuration = document.querySelectorAll('.total-duration');
+    let cardTime = document.getElementsByClassName('service-time');
+    let check1 = document.getElementById('check1').checked;
+    let check2 = document.getElementById('check2').checked;
+    let sHour = serviceHour[serviceHour.selectedIndex].value;
 
     let optionBed = bed.options[bed.selectedIndex];
     let optionBath = bath.options[bath.selectedIndex];
     let optionTime = sTime.options[sTime.selectedIndex];
     let optionHour = serviceHour[serviceHour.selectedIndex];
+    document.getElementById('s-date').innerHTML = serviceDate;
 
-    alert(totalDuration.textContent);
-    if (optionHour.value >= hour) {
-        hour = parseFloat(optionHour.value);
-        document.getElementById('bed').innerHTML = optionBed.text;
-        document.getElementById('bath').innerHTML = optionBath.text;
-        document.getElementById('s-card-time').innerHTML = optionTime.text;
-        document.getElementById('s-date').innerHTML = serviceDate;
-        cardHour.innerHTML = optionHour.text;
-        totalDuration.innerHTML = optionHour.text;
 
-        for (let i = 0; i <= serviceHour.length; i++) {
-            amount = 54;
-            if (serviceHour.options[i].selected == true) {
-                amount = amount + (9 * i);
-                perCleaning.innerHTML = "$" + amount;
-                totalAmount.innerHTML = "$" + amount;
-                temp = amount;
-            }
-        }
-
+    if (check1 == false && check2 == false) {
+        hour = serviceHour[serviceHour.selectedIndex];
     } else {
-        alert("Booking time is less than recommended, we may not be able to finish the job. Please confirm if you wish to proceed with your booking?");
-        window.location.href = "http://localhost/Helperland/?controller=home&function=bookService";
+        if (sHour <= totalDuration[0].textContent) {
+            alert("Booking time is less than recommended, we may not be able to finish the job. Please confirm if you wish to proceed with your booking?");
+            window.location.href = "http://localhost/Helperland/?controller=home&function=bookService";
+        }
+    }
+    hour = parseFloat(optionHour.value);
+
+    for (let i = 0; i < infoBed.length; i++) {
+        infoBed[i].innerHTML = optionBed.text;
+    }
+
+    for (let i = 0; i < infoBath.length; i++) {
+        infoBath[i].innerHTML = optionBath.text;
+    }
+    cardTime[0].innerHTML = optionTime.text;
+    cardTime[1].innerHTML = optionTime.text;
+
+    for (let i = 0; i < cardHour.length; i++) {
+        cardHour[i].innerHTML = optionHour.text;
+    }
+    for (let i = 0; i < totalDuration.length; i++) {
+        totalDuration[i].innerHTML = optionHour.text;
+    }
+
+    for (let i = 0; i <= serviceHour.length; i++) {
+        amount = 54;
+        if (serviceHour.options[i].selected == true) {
+            amount = amount + (9 * i);
+            for (let j = 0; j < perCleaning.length; j++) {
+                perCleaning[j].innerHTML = "$" + amount;
+                totalAmount[j].innerHTML = "$" + amount;
+            }
+
+            temp = amount;
+        }
     }
 
 }

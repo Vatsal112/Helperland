@@ -11,7 +11,57 @@ include 'popup-modal/login-modal.php';
 <!-- Book service page banner end -->
 
 <!-- Book service page sidebar for mobile screen start -->
+<?php if(isset($_SESSION['islogin']) && isset($_SESSION['expire'])){
+        $now= time(); 
+        if($now > $_SESSION['expire']){
+            echo "<script>alert('Session is expired');</script>";
+            unset($_SESSION['islogin']);
+            echo "<script>window.location.href='$arr[base_url]';</script>";
+        }       
+    ?>
+
 <section class="sidebar" id="sidebar">
+        <div class="username">
+            <p>Welcome, </p>
+            <b>First Customer</b>
+        </div>
+        <nav class="navigation">
+            <div class="nav flex-column nav-tab" aria-orientation="vertical">
+                <a class="nav-link" href="">Dashboard</a>
+                <a class="nav-link" href="">Service History</a>
+                <a class="nav-link" href="">Service Schedule</a>
+                <a class="nav-link" href="">Favourite Pros</a>
+                <a class="nav-link" href="">Invoices</a>
+                <a class="nav-link" href="">Notification</a>
+                <a class="nav-link" href="">My Settings</a>
+                <a class="nav-link" data-target="#logout-modal" data-toggle="modal">Logout</a>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Prices.html">Prices & Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Warranty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+            </ul>
+
+            <div class="sidebar-social-icons">
+                <i class="fa fa-facebook fb-icon"></i>
+                <i class="fa fa-instagram insta-icon"></i>
+            </div>
+        </nav>
+    </section>
+<?php }else {?>
+    <section class="sidebar" id="sidebar">
     <div class="book-service-sidebar">
         <ul class="navbar-nav">
             <li class="nav-item">
@@ -43,12 +93,14 @@ include 'popup-modal/login-modal.php';
         </div>
     </div>
 </section>
+    <?php }?>
 <!-- Book service page sidebar for mobile screen end -->
 
 <!-- Book service page content start -->
 <section class="book-service">
     <div class="container">
         <h2 class="faq-heading ">Set up your cleaning service</h2>
+       
 
         <div class="underline-design ">
             <div class="line"></div>
@@ -76,8 +128,6 @@ include 'popup-modal/login-modal.php';
                 </ul>
 
                 <!-- Book service page main tabs end -->
-
-
 
                 <div class="tab-content" id="myTabContent">
                     <!-- Book service page main tab setup service start -->
@@ -403,101 +453,9 @@ include 'popup-modal/login-modal.php';
                 </div>
 
                 <!-- Book service page payment summary modal for mobile view start -->
-                <div class="modal fade" id="payment-summary-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Payment Summary</h5>
-                                <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
-                            </div>
-                            <div class="modal-body">
-                                <span class="service-date">01/01/2018 @ </span>
-                                <span class="service-time">04:00 pm</span><br>
-                                <span class="bed">1 bed, </span>
-                                <span class="bed">1 bath</span>
-
-                                <div class="card-service-duration">
-                                    <b>Duration</b>
-                                    <div class="service-info">
-                                        <span>Basic</span>
-                                        <span class="service-duration">3 hrs</span>
-                                    </div>
-                                    <div class="service-info">
-                                        <span>Inside cabinets (extra)</span>
-                                        <span class="service-duration">30 min</span>
-                                    </div>
-                                    <div class="service-info total-required-time">
-                                        <b class="total-time">Total Service Time</b>
-                                        <b class="total-duration">3.5 hrs</b>
-                                    </div>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <span>Per Cleaning</span>
-                                        <b>$87</b>
-                                    </li>
-                                    <li class="list-group-item discount">
-                                        <span>Discount</span>
-                                        <b>-$27</b>
-                                    </li>
-                                </ul>
-                                <ul class="list-group list-group-flush list-2">
-                                    <li class="list-group-item">
-                                        <span class="payment-txt">Total Payment</span>
-                                        <b class="payment-amt">$63</b>
-                                    </li>
-                                    <li class="list-group-item effective-price">
-                                        <span>Effective Price</span>
-                                        <b class="effective-amt">$50.4</b>
-                                    </li>
-                                </ul>
-                                <div class="will-save">
-                                    <a href=""><span>*</span>You will save 20% according to §35a EStG.</a>
-                                </div>
-
-                                <div class="card-footer">
-                                    <a href=""><img src="assets/images/smiley.png" alt="">See what is always included</a>
-                                </div>
-
-                                <div class="questions">
-                                    <span>Questions?</span>
-
-                                    <div class="accordian">
-                                        <a href="#que1" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                                        <div class="collapse" id="que1">
-                                            <div class="card card-body">
-                                                Anyone
-                                            </div>
-                                        </div>
-                                        <a href="#que2" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                                        <div class="collapse" id="que2">
-                                            <div class="card card-body">
-                                                Anyone
-                                            </div>
-                                        </div>
-                                        <a href="#que3" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                                        <div class="collapse" id="que3">
-                                            <div class="card card-body">
-                                                Anyone
-                                            </div>
-                                        </div>
-                                        <a href="#que4" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                                        <div class="collapse" id="que4">
-                                            <div class="card card-body">
-                                                Anyone
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="for-more-help">
-                                        <a href="">For more help</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    include 'popup-modal/payment-summary-modal.php';
+                ?>
                 <!-- Book service page payment summary modal for mobile view end -->
             </div>
             <!-- Book service page payment summary side card start -->
@@ -521,9 +479,9 @@ include 'popup-modal/login-modal.php';
                                 <b>Duration</b>
                                 <div class="service-info">
                                     <span>Basic</span>
-                                    <span class="service-duration" id="s-card-hours">3 hrs</span>
+                                    <span class="basic-service-duration" id="s-card-hours">3 hrs</span>
                                 </div>
-                                <div id="extra-services">
+                                <div class="card-extra-services">
 
                                 </div>
                                 <div class="service-info" >
@@ -539,11 +497,11 @@ include 'popup-modal/login-modal.php';
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <span>Per Cleaning</span>
-                                <b id="per-cleaning">$54</b>
+                                <b id="per-cleaning" class="per-cleaning">$54</b>
                             </li>
                             <li class="list-group-item discount">
                                 <span>Discount</span>
-                                <b>-$27</b>
+                                <b>$0</b>
                             </li>
                         </ul>
                         <ul class="list-group list-group-flush list-2">
@@ -553,7 +511,7 @@ include 'popup-modal/login-modal.php';
                             </li>
                             <li class="list-group-item effective-price">
                                 <span>Effective Price</span>
-                                <b class="effective-amt">$50.4</b>
+                                <b class="effective-amt">$0</b>
                             </li>
                         </ul>
 
