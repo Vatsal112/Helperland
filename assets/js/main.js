@@ -81,12 +81,8 @@ const payment = document.getElementById("payment");
 
 //tabs and its content
 const setup_service_content = document.getElementById("setup-service-tab");
-// const setup_service = document.getElementById("setup-service");
-// const schedule_tab = document.getElementById("schedule");
 const schedule_tab_content = document.getElementById("schedule-tab");
-// const your_details = document.getElementById('your-details');
 const yourDetailsTabContent = document.getElementById('your-details-tab');
-// const payment = document.getElementById('payment');
 const paymentTabContent = document.getElementById('payment-tab');
 
 // images
@@ -101,28 +97,13 @@ setup.addEventListener("click", () => {
     your_details_img.setAttribute("src", "assets/images/details.png");
     payment_img.setAttribute("src", "assets/images/payment.png");
 
-    //for moving to setup
-    setup.classList.add("active");
-    setup_service_content.classList.add("show", "active");
+    showTabContent(setup, setup_service_content);
 
-    //disable all tabs other than setup
-    schedule.classList.remove('active');
-    schedule_tab_content.classList.remove("show", "active");
-    schedule.style.background = '#f3f3f3';
-    schedule.style.color = '#646464';
-    schedule.style.pointerEvents = 'none';
+    removeContent(schedule, schedule_tab_content);
 
-    your_detail.classList.remove('active');
-    yourDetailsTabContent.classList.remove("show", "active");
-    your_detail.style.background = '#f3f3f3';
-    your_detail.style.color = '#646464';
-    your_detail.style.pointerEvents = 'none';
+    removeContent(your_detail, yourDetailsTabContent);
 
-    payment.classList.remove("show", "active");
-    paymentTabContent.classList.remove("show", "active");
-    payment.style.background = '#f3f3f3';
-    payment.style.color = '#646464';
-    payment.style.pointerEvents = 'none';
+    removeContent(payment, paymentTabContent);
 
 });
 
@@ -132,32 +113,23 @@ schedule.addEventListener("click", () => {
     your_details_img.setAttribute("src", "assets/images/details.png");
     payment_img.setAttribute("src", "assets/images/payment.png");
 
-    schedule.classList.add("active");
-    schedule_tab_content.classList.add("show", "active");
+    showTabContent(schedule, schedule_tab_content);
 
-    your_detail.classList.remove('active');
-    yourDetailsTabContent.classList.remove("show", "active");
-    schedule.style.background = '#f3f3f3';
-    schedule.style.color = '#646464';
-    your_detail.style.pointerEvents = 'none';
+    removeContent(your_detail, yourDetailsTabContent);
 
-    payment.classList.remove("show", "active");
-    paymentTabContent.classList.remove("show", "active");
-    payment.style.pointerEvents = 'none';
+    removeContent(payment, paymentTabContent);
+
 });
 
 your_detail.addEventListener("click", () => {
     your_details_img.setAttribute("src", "assets/images/details-white.png");
-    setup_img.setAttribute("src", "assets/images/setup-service.png");
-    schedule_img.setAttribute("src", "assets/images/schedule.png");
+    setup_img.setAttribute("src", "assets/images/setup-service-white.png");
+    schedule_img.setAttribute("src", "assets/images/schedule-white.png");
     payment_img.setAttribute("src", "assets/images/payment.png");
 
-    your_detail.classList.add("active");
-    yourDetailsTabContent.classList.add("show", "active");
+    showTabContent(your_detail, yourDetailsTabContent);
 
-    payment.classList.remove("show", "active");
-    paymentTabContent.classList.remove("show", "active");
-    payment.style.pointerEvents = 'none';
+    removeContent(payment, paymentTabContent);
 });
 
 payment.addEventListener("click", () => {
@@ -166,6 +138,20 @@ payment.addEventListener("click", () => {
     your_details_img.setAttribute("src", "assets/images/details.png");
     schedule_img.setAttribute("src", "assets/images/schedule.png");
 });
+
+
+function showTabContent(tab, tabContent) {
+    tab.classList.add("active");
+    tabContent.classList.add("show", "active");
+}
+
+function removeContent(tab, tabContent) {
+    tab.classList.remove("active");
+    tabContent.classList.remove("show", "active");
+    tab.style.pointerEvents = "none";
+    tab.style.background = "#f3f3f3";
+    tab.style.color = "#646464";
+}
 
 
 // function onlyNumberKey(evt) {
@@ -294,23 +280,96 @@ function hideMessage() {
     document.getElementsByClassName("status-message")[0].style.display = "none";
 }
 
-function validateFirstTab(id) {
-    let pCode = document.getElementById(id).value;
-    let serviceDate = document.getElementById('service-date');
+$(document).ready(function() {
+    $('#postalCode-btn').click(function(e) {
+        e.preventDefault();
 
-    serviceDate.value = new Date().toISOString().slice(0, 10);
+        let pCode = document.getElementById('input-postalCode').value;
+        let serviceDate = document.getElementById('service-date');
+        let perCleaning = document.querySelectorAll('.per-cleaning');
+        let totalAmount = document.querySelectorAll('.payment-amt');
+        let cardHour = document.querySelectorAll('.basic-service-duration');
+        serviceDate.value = new Date().toISOString().slice(0, 10);
 
-    if (pCode == "") {
-        alert("Please Enter Postal Code");
-    } else {
-        changeTabs(
-            schedule,
-            schedule_tab_content,
-            setup,
-            setup_service_content
-        );
-        schedule_img.setAttribute("src", "assets/images/schedule-white.png");
-    }
+        if ($('.response-text').css('display', 'block')) {
+            $('.response-text').css('display', 'none')
+        }
+
+        if (pCode == '') {
+            alert('enter postal code');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/Helperland/?controller=service&function=checkZipCode",
+                data: { postalCode: pCode },
+                dataType: "JSON",
+                success: function(response) {
+                    res = JSON.parse(JSON.stringify(response));
+                    if (res == "Success") {
+                        for (let i = 0; i < perCleaning.length; i++) {
+                            perCleaning[i].innerHTML = "$54";
+                            totalAmount[i].innerHTML = "$54";
+                            cardHour[i].innerHTML = "3.0 Hrs"
+                        }
+                        changeTabs(
+                            schedule,
+                            schedule_tab_content,
+                            setup,
+                            setup_service_content
+                        );
+                        schedule_img.setAttribute("src", "assets/images/schedule-white.png");
+                    } else {
+                        $('.response-text').css('display', 'block');
+                        $('.text-danger').html(res);
+                    }
+                }
+            });
+        }
+
+    });
+
+    $('#secondTabContinue-btn').click(function(e) {
+        e.preventDefault();
+        var checkboxes = [];
+        $('input[type="checkbox"]:checked').each(function() {
+            checkboxes.push(this.value);
+        });
+        var array = {
+            "serviceDate": $('#service-date').val(),
+            "serviceTime": $('#s-time').val(),
+            "serviceHours": $('#s-hours').val(),
+            "extraService": checkboxes,
+            "comments": $('#comments').val(),
+            "pets": $('#pets-label:checked').val()
+        };
+
+        // console.log(array);
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/Helperland/?controller=service&function=checkScheduleTab",
+            data: { arr: array },
+            dataType: "JSON",
+            success: function(response) {
+                res = JSON.parse(JSON.stringify(response));
+                if (res == "Success") {
+                    alert(res);
+                }
+            }
+        });
+
+    });
+});
+
+function validateSecondTab() {
+    let schedule_tab = document.getElementById("schedule");
+    let schedule_tab_content = document.getElementById("schedule-tab");
+    let yourDetails = document.getElementById('your-details');
+    let yourDetailsTabContent = document.getElementById('your-details-tab');
+    let yourDetailsImage = document.getElementById('detail-img');
+    changeTabs(yourDetails, yourDetailsTabContent, schedule_tab, schedule_tab_content);
+    yourDetailsImage.setAttribute('src', 'assets/images/details-white.png')
+
 }
 
 function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {
@@ -336,7 +395,6 @@ function addToCard(checkId, lableId) {
     let serviceHour = document.getElementById('s-hours');
     let perCleaning = document.querySelectorAll('.per-cleaning');
     let totalAmount = document.querySelectorAll('.payment-amt');
-    let totalDuration = document.querySelectorAll('.total-duration');
 
     function checkSelectoption(val) {
         for (let i = 0; i <= serviceHour.length; i++) {
@@ -452,16 +510,22 @@ function cardInfo() {
     let cardTime = document.getElementsByClassName('service-time');
     let check1 = document.getElementById('check1').checked;
     let check2 = document.getElementById('check2').checked;
+    let check3 = document.getElementById('check3').checked;
+    let check4 = document.getElementById('check4').checked;
+    let check5 = document.getElementById('check5').checked;
     let sHour = serviceHour[serviceHour.selectedIndex].value;
+    let currentDate = new Date().toISOString().slice(0, 10);
+
 
     let optionBed = bed.options[bed.selectedIndex];
     let optionBath = bath.options[bath.selectedIndex];
     let optionTime = sTime.options[sTime.selectedIndex];
     let optionHour = serviceHour[serviceHour.selectedIndex];
+
     document.getElementById('s-date').innerHTML = serviceDate;
+    document.getElementById('s-date2').innerHTML = serviceDate;
 
-
-    if (check1 == false && check2 == false) {
+    if (check1 == false && check2 == false && check3 == false && check4 == false && check5 == false) {
         hour = serviceHour[serviceHour.selectedIndex];
     } else {
         if (sHour <= totalDuration[0].textContent) {
@@ -500,16 +564,5 @@ function cardInfo() {
             temp = amount;
         }
     }
-
-}
-
-function validateSecondTab() {
-    let schedule_tab = document.getElementById("schedule");
-    let schedule_tab_content = document.getElementById("schedule-tab");
-    let yourDetails = document.getElementById('your-details');
-    let yourDetailsTabContent = document.getElementById('your-details-tab');
-    let yourDetailsImage = document.getElementById('detail-img');
-    changeTabs(yourDetails, yourDetailsTabContent, schedule_tab, schedule_tab_content);
-    yourDetailsImage.setAttribute('src', 'assets/images/details-white.png')
 
 }

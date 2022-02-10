@@ -54,9 +54,8 @@
 
                 <?php
                     
-                   
                     if(isset($_GET['status'])==1){
-                        echo "<div class='status-message'>";
+                        echo "<div class='status-message' style='display:flex;'>";
                         echo "<p class='text-success'>Your reposne is successfully submitted! We will get back to you soon.</p>";
                         echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
                         echo "</div>";
@@ -64,9 +63,11 @@
 
                     if(isset($_GET['message']) && $_GET['message']!=''){
                         foreach(explode(",",$_GET['message'])as $e){
+                            echo "<div class='response-text' style='display:block;'>";
                             echo "<p class='text-danger'>";
                             echo $e;
                             echo "</p>";
+                            echo "</div>";
                         }
                     }
                 ?>
@@ -122,8 +123,8 @@
                 </div>
 
                 <div class="submit">
-                    <!-- <button type="submit" name="contactus-submit" class="form-submit">Submit</button> -->
-                    <input type="submit" value="submit" name="submit" id="submit">
+                    <button type="submit" name="submit" class="form-submit">Submit</button>
+                    <!-- <input type="submit" value="submit" name="submit" id="submit"> -->
                 </div>
 
             </form>

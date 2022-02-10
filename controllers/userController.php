@@ -14,7 +14,7 @@ class userController
 
     function submit_contactForm()
     {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST)) {
             $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&status=1';
 
             $array = [
@@ -26,12 +26,18 @@ class userController
                 'message' => $_POST['msg-area'],
                 'createdOn' => date('Y-m-d H:i:s'),
             ];
-            // $this->validateFields($array['firstname'], $array['lastname'],$array['phone']);
-            // $this->validatePhone($array['phone']);
+
             $this->validateContactMessage($array['message']);
 
-            if (sizeof($this->Err) > 0) {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . implode(",", $this->Err));
+            if (!preg_match("/^[a-zA-Z ]*$/", $array['firstname']) && !preg_match("/^[a-zA-Z ]*$/", $array['lastname'])) {
+                $this->Err =  "Only letters and white space allowed in name field" . "<br>";
+            }
+            if (!preg_match('/^[0-9]{10}+$/', $array['phone'])) {
+                $this->Err = $this->Err  . "phone number size must be 10." . "<br>";
+            }
+
+            if (!$this->Err == '') {
+                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . $this->Err);
             } else {
                 $ins = $this->model->insert_Contactus('contactus', $array);
                 header('Location: ' . $arr['base_url']);
@@ -61,8 +67,8 @@ class userController
     function validateContactMessage($array)
     {
         if (!preg_match("/^[a-zA-Z ]*$/", $array)) {
-            $Err['Error'] =  "Only letters and white space allowed in Message field." . "</br>";
-            echo json_encode($Err);
+            $this->Err = $this->Err . "Only letters and white space allowed in Message field." . "</br>";
+
         }
     }
 

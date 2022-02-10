@@ -18,20 +18,20 @@
                     <b>Duration</b>
                     <div class="service-info">
                         <span>Basic</span>
-                        <span class="basic-service-duration" id="s-card-hours">3 hrs</span>
+                        <span class="basic-service-duration" id="s-card-hours">0 hrs</span>
                     </div>
                     <div class="card-extra-services">
 
                     </div>
                     <div class="service-info total-required-time">
                         <b class="total-time">Total Service Time</b>
-                        <b class="total-duration" id="total-duration">3.0 hrs</b>
+                        <b class="total-duration" id="total-duration">0 hrs</b>
                     </div>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <span>Per Cleaning</span>
-                        <b id="per-cleaning" class="per-cleaning">$54</b>
+                        <b id="per-cleaning" class="per-cleaning">$0</b>
                     </li>
                     <li class="list-group-item discount">
                         <span>Discount</span>
@@ -41,7 +41,7 @@
                 <ul class="list-group list-group-flush list-2">
                     <li class="list-group-item">
                         <span class="payment-txt">Total Payment</span>
-                        <b class="payment-amt" id="total-amt">$54</b>
+                        <b class="payment-amt" id="total-amt">$0</b>
                     </li>
                     <li class="list-group-item effective-price">
                         <span>Effective Price</span>

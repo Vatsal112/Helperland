@@ -1,4 +1,3 @@
-
 <div class="service-banner-img">
     <img src="assets/images/book-service-banner.jpg" alt="">
 </div>
@@ -11,16 +10,16 @@ include 'popup-modal/login-modal.php';
 <!-- Book service page banner end -->
 
 <!-- Book service page sidebar for mobile screen start -->
-<?php if(isset($_SESSION['islogin']) && isset($_SESSION['expire'])){
-        $now= time(); 
-        if($now > $_SESSION['expire']){
-            echo "<script>alert('Session is expired');</script>";
-            unset($_SESSION['islogin']);
-            echo "<script>window.location.href='$arr[base_url]';</script>";
-        }       
-    ?>
+<?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+    $now = time();
+    if ($now > $_SESSION['expire']) {
+        echo "<script>alert('Session is expired');</script>";
+        unset($_SESSION['islogin']);
+        echo "<script>window.location.href='$arr[base_url]';</script>";
+    }
+?>
 
-<section class="sidebar" id="sidebar">
+    <section class="sidebar" id="sidebar">
         <div class="username">
             <p>Welcome, </p>
             <b>First Customer</b>
@@ -60,47 +59,47 @@ include 'popup-modal/login-modal.php';
             </div>
         </nav>
     </section>
-<?php }else {?>
+<?php } else { ?>
     <section class="sidebar" id="sidebar">
-    <div class="book-service-sidebar">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="" onclick="closeSideBar()">Book Now</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Prices.html" onclick="closeSideBar()">Prices & Services</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="" onclick="closeSideBar()">Warranty</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="" onclick="closeSideBar()">Blog</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="contact.html" onclick="closeSideBar()">Contact</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#login-modal" onclick="closeSideBar()">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="sp-reg.html" onclick="closeSideBar()">Become a Helper</a>
-            </li>
-        </ul>
+        <div class="book-service-sidebar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="" onclick="closeSideBar()">Book Now</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Prices.html" onclick="closeSideBar()">Prices & Services</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" onclick="closeSideBar()">Warranty</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="" onclick="closeSideBar()">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="contact.html" onclick="closeSideBar()">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#login-modal" onclick="closeSideBar()">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="sp-reg.html" onclick="closeSideBar()">Become a Helper</a>
+                </li>
+            </ul>
 
-        <div class="sidebar-social-icons">
-            <i class="fa fa-facebook fb-icon"></i>
-            <i class="fa fa-instagram insta-icon"></i>
+            <div class="sidebar-social-icons">
+                <i class="fa fa-facebook fb-icon"></i>
+                <i class="fa fa-instagram insta-icon"></i>
+            </div>
         </div>
-    </div>
-</section>
-    <?php }?>
+    </section>
+<?php } ?>
 <!-- Book service page sidebar for mobile screen end -->
 
 <!-- Book service page content start -->
 <section class="book-service">
     <div class="container">
         <h2 class="faq-heading ">Set up your cleaning service</h2>
-       
+
 
         <div class="underline-design ">
             <div class="line"></div>
@@ -132,14 +131,17 @@ include 'popup-modal/login-modal.php';
                 <div class="tab-content" id="myTabContent">
                     <!-- Book service page main tab setup service start -->
                     <div class="tab-pane fade show active" id="setup-service-tab" role="tabpanel" aria-labelledby="setup-service">
-                        <form action="" method="post">
+                        <form method="post">
+                            <div class="response-text">
+                                <p id="response" class="text-danger"></p>
+                            </div>
                             <div class="setup-service-content">
                                 <span>Enter your Postal Code</span>
 
                                 <div class="form-group mt-2">
-                                    <input type="number" class="form-control" id="bs-input-postalCode" placeholder="Postal Code">
+                                    <input type="number" class="form-control" id="input-postalCode" placeholder="Postal Code">
                                     <div class="btn-availability">
-                                        <button type="button" onclick="validateFirstTab('bs-input-postalCode')">Check Availability</button>
+                                        <button type="submit" id="postalCode-btn">Check Availability</button>
                                     </div>
                                 </div>
                             </div>
@@ -149,128 +151,130 @@ include 'popup-modal/login-modal.php';
                     <!-- Book service page main tab schedule service start -->
                     <div class="tab-pane fade" id="schedule-tab" role="tabpanel" aria-labelledby="schedule">
                         <div class="service-schedule-content">
-                            <span>Select number of rooms and bath</span>
+                            <form method="post">
+                                <span>Select number of rooms and bath</span>
 
-                            <div class="select-room-bath form-group">
-                                <select name="" id="infoBed" onchange="cardInfo()">
-                                    <option value="1 bed">1 bed</option>
-                                    <option value="2 bed">2 bed</option>
-                                    <option value="3 bed">3 bed</option>
-                                    <option value="4 bed">4 bed</option>
-                                </select>
+                                <div class="select-room-bath form-group">
+                                    <select name="" id="infoBed" onchange="cardInfo()">
+                                        <option value="1 bed">1 bed</option>
+                                        <option value="2 bed">2 bed</option>
+                                        <option value="3 bed">3 bed</option>
+                                        <option value="4 bed">4 bed</option>
+                                    </select>
 
-                                <select name="" id="infoBath" onchange="cardInfo()">
-                                    <option value="1 bath">1 bath</option>
-                                    <option value="2 bath">2 bath</option>
-                                    <option value="3 bath">3 bath</option>
-                                    <option value="4 bath">4 bath</option>
-                                </select>
-                            </div>
+                                    <select name="" id="infoBath" onchange="cardInfo()">
+                                        <option value="1 bath">1 bath</option>
+                                        <option value="2 bath">2 bath</option>
+                                        <option value="3 bath">3 bath</option>
+                                        <option value="4 bath">4 bath</option>
+                                    </select>
+                                </div>
 
-                            <div class="service-duration">
-                                <div class="service-date-time">
-                                    <span>When do you need the cleaner?</span>
-                                    <div class="service-datetime-input">
-                                        <input type="date" name="" id="service-date" onchange="cardInfo()">
-                                        <select name="" id="s-time" onchange="cardInfo()">
-                                            <option value="08:00 AM">08:00 AM</option>
-                                            <option value="08:30 AM">08:30 AM</option>
-                                            <option value="09:00 AM">09:00 AM</option>
-                                            <option value="09:30 AM">09:30 AM</option>
-                                            <option value="10:00 AM">10:00 AM</option>
-                                            <option value="10:30 AM">10:30 AM</option>
-                                            <option value="11:00 AM">11:00 AM</option>
-                                            <option value="11:30 AM">11:30 AM</option>
-                                            <option value="12:00 PM">12:00 PM</option>
-                                            <option value="12:30 PM">12:30 PM</option>
-                                            <option value="01:00 PM">01:00 PM</option>
-                                        </select>
+                                <div class="service-duration">
+                                    <div class="service-date-time">
+                                        <span>When do you need the cleaner?</span>
+                                        <div class="service-datetime-input">
+                                            <input type="date" name="" id="service-date" min="<?php echo date('Y-m-d'); ?>" onchange="cardInfo()">
+                                            <select name="" id="s-time" onchange="cardInfo()">
+                                                <option value="08:00 AM">08:00 AM</option>
+                                                <option value="08:30 AM">08:30 AM</option>
+                                                <option value="09:00 AM">09:00 AM</option>
+                                                <option value="09:30 AM">09:30 AM</option>
+                                                <option value="10:00 AM">10:00 AM</option>
+                                                <option value="10:30 AM">10:30 AM</option>
+                                                <option value="11:00 AM">11:00 AM</option>
+                                                <option value="11:30 AM">11:30 AM</option>
+                                                <option value="12:00 PM">12:00 PM</option>
+                                                <option value="12:30 PM">12:30 PM</option>
+                                                <option value="01:00 PM">01:00 PM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="cleaner-to-stay">
+                                        <span>How long do you need your cleaner to stay?</span>
+
+                                        <div class="cleaner-hrs">
+                                            <select name="" id="s-hours" onchange="cardInfo()">
+                                                <option value="3.0">3.0 Hrs</option>
+                                                <option value="3.5">3.5 Hrs</option>
+                                                <option value="4.0">4.0 Hrs</option>
+                                                <option value="4.5">4.5 Hrs</option>
+                                                <option value="5.0">5.0 Hrs</option>
+                                                <option value="5.5">5.5 Hrs</option>
+                                                <option value="6.0">6.0 Hrs</option>
+                                                <option value="6.5">6.5 Hrs</option>
+                                                <option value="7.0">7.0 Hrs</option>
+                                                <option value="7.5">7.5 Hrs</option>
+                                                <option value="8.0">8.0 Hrs</option>
+                                                <option value="8.5">8.5 Hrs</option>
+                                                <option value="9.0">9.0 Hrs</option>
+                                                <option value="9.5">9.5 Hrs</option>
+                                                <option value="10.0">10.0 Hrs</option>
+                                                <option value="10.5">10.5 Hrs</option>
+                                                <option value="11.0">11.0 Hrs</option>
+                                                <option value="11.5">11.5 Hrs</option>
+                                                <option value="12.0">12.0 Hrs</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="cleaner-to-stay">
-                                    <span>How long do you need your cleaner to stay?</span>
 
-                                    <div class="cleaner-hrs">
-                                        <select name="" id="s-hours" onchange="cardInfo()">
-                                            <option value="3.0">3.0 Hrs</option>
-                                            <option value="3.5">3.5 Hrs</option>
-                                            <option value="4.0">4.0 Hrs</option>
-                                            <option value="4.5">4.5 Hrs</option>
-                                            <option value="5.0">5.0 Hrs</option>
-                                            <option value="5.5">5.5 Hrs</option>
-                                            <option value="6.0">6.0 Hrs</option>
-                                            <option value="6.5">6.5 Hrs</option>
-                                            <option value="7.0">7.0 Hrs</option>
-                                            <option value="7.5">7.5 Hrs</option>
-                                            <option value="8.0">8.0 Hrs</option>
-                                            <option value="8.5">8.5 Hrs</option>
-                                            <option value="9.0">9.0 Hrs</option>
-                                            <option value="9.5">9.5 Hrs</option>
-                                            <option value="10.0">10.0 Hrs</option>
-                                            <option value="10.5">10.5 Hrs</option>
-                                            <option value="11.0">11.0 Hrs</option>
-                                            <option value="11.5">11.5 Hrs</option>
-                                            <option value="12.0">12.0 Hrs</option>
-                                        </select>
+                                <div class="extra-services">
+                                    <span>Extra Services</span>
+
+                                    <div class="services">
+
+                                        <div class="outer">
+                                            <input type="checkbox" name="extra" value="1" id="check1" class="check" onclick="addToCard(this.id,'labelCabinet')">
+                                            <label for="check1" class="labelCabinet">Inside cabinet</label>
+                                        </div>
+                                        <div class="outer">
+                                            <input type="checkbox" name="extra" value="2" id="check2" class="check" onclick="addToCard(this.id,'labelFridge')">
+                                            <label for="check2" class="labelFridge">Inside fridge</label>
+                                        </div>
+                                        <div class="outer">
+                                            <input type="checkbox" name="extra" value="3" id="check3" class="check" onclick="addToCard(this.id,'labelOven')">
+                                            <label for="check3" class="labelOven">Inside oven</label>
+                                        </div>
+                                        <div class="outer">
+                                            <input type="checkbox" name="extra" value="4" id="check4" class="check" onclick="addToCard(this.id,'labelWash')">
+                                            <label for="check4" class="labelWash">Laundry wash & dry</label>
+                                        </div>
+                                        <div class="outer">
+                                            <input type="checkbox" name="extra" value="5" id="check5" class="check" onclick="addToCard(this.id,'labelWindow')">
+                                            <label for="check5" class="labelWindow">Interior windows</label>
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
 
-
-                            <div class="extra-services">
-                                <span>Extra Services</span>
-
-                                <div class="services">
-
-                                    <div class="outer">
-                                        <input type="checkbox" name="" id="check1" class="check" onclick="addToCard(this.id,'labelCabinet')">
-                                        <label for="check1" class="labelCabinet">Inside cabinet</label>
+                                <div class="comments">
+                                    <span>Comments</span>
+                                    <div class="comment-textarea">
+                                        <textarea name="" id="comments"></textarea>
                                     </div>
-                                    <div class="outer">
-                                        <input type="checkbox" name="" id="check2" class="check" onclick="addToCard(this.id,'labelFridge')">
-                                        <label for="check2" class="labelFridge">Inside fridge</label>
-                                    </div>
-                                    <div class="outer">
-                                        <input type="checkbox" name="" id="check3" class="check" onclick="addToCard(this.id,'labelOven')">
-                                        <label for="check3" class="labelOven">Inside oven</label>
-                                    </div>
-                                    <div class="outer">
-                                        <input type="checkbox" name="" id="check4" class="check" onclick="addToCard(this.id,'labelWash')">
-                                        <label for="check4" class="labelWash">Laundry wash & dry</label>
-                                    </div>
-                                    <div class="outer">
-                                        <input type="checkbox" name="" id="check5" class="check" onclick="addToCard(this.id,'labelWindow')">
-                                        <label for="check5" class="labelWindow">Interior windows</label>
-                                    </div>
-
                                 </div>
-                            </div>
 
-                            <div class="comments">
-                                <span>Comments</span>
-                                <div class="comment-textarea">
-                                    <textarea name=""></textarea>
+                                <div class="pets-checkbox">
+                                    <input type="checkbox" name="" id="pets-label">
+                                    <label for="pets-label">I have pets at home</label>
                                 </div>
-                            </div>
 
-                            <div class="pets-checkbox">
-                                <input type="checkbox" name="" id="pets-label">
-                                <label for="pets-label">I have pets at home</label>
-                            </div>
+                                <?php
+                                if (isset($_SESSION['islogin'])) {
+                                ?>
+                                    <div class="btn-continue">
+                                        <button type="submit" id="secondTabContinue-btn">Continue</button>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="btn-continue">
+                                        <button type="button" data-toggle="modal" data-target="#login-modal">Continue</button>
+                                    </div>
+                                <?php } ?>
 
-                           <?php
-                            if(isset($_SESSION['islogin'])){
-                           ?>
-                            <div class="btn-continue">
-                                <button type="button" onclick="validateSecondTab()">Continue</button>
-                            </div>
-                            <?php }else {?>
-                                <div class="btn-continue">
-                                <button type="button" data-toggle="modal" data-target="#login-modal">Continue</button>
-                            </div>
-                            <?php }?>
-
+                            </form>
                             <div class="btn-sm-payment-summary">
                                 <button type="button" data-toggle="modal" data-target="#payment-summary-modal">Payment Summary</button>
                             </div>
@@ -454,7 +458,7 @@ include 'popup-modal/login-modal.php';
 
                 <!-- Book service page payment summary modal for mobile view start -->
                 <?php
-                    include 'popup-modal/payment-summary-modal.php';
+                include 'popup-modal/payment-summary-modal.php';
                 ?>
                 <!-- Book service page payment summary modal for mobile view end -->
             </div>
@@ -479,25 +483,25 @@ include 'popup-modal/login-modal.php';
                                 <b>Duration</b>
                                 <div class="service-info">
                                     <span>Basic</span>
-                                    <span class="basic-service-duration" id="s-card-hours">3 hrs</span>
+                                    <span class="basic-service-duration" id="s-card-hours">0 Hrs</span>
                                 </div>
                                 <div class="card-extra-services">
 
                                 </div>
-                                <div class="service-info" >
+                                <div class="service-info">
                                     <!-- <span>Inside cabinets (extra)</span>
                                     <span class="service-duration">30 min</span> -->
                                 </div>
                                 <div class="service-info total-required-time">
                                     <b class="total-time">Total Service Time</b>
-                                    <b class="total-duration" id="total-duration">3.0 hrs</b>
+                                    <b class="total-duration" id="total-duration">3.0 Hrs</b>
                                 </div>
                             </div>
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
                                 <span>Per Cleaning</span>
-                                <b id="per-cleaning" class="per-cleaning">$54</b>
+                                <b id="per-cleaning" class="per-cleaning">$0</b>
                             </li>
                             <li class="list-group-item discount">
                                 <span>Discount</span>
@@ -507,7 +511,7 @@ include 'popup-modal/login-modal.php';
                         <ul class="list-group list-group-flush list-2">
                             <li class="list-group-item">
                                 <span class="payment-txt">Total Payment</span>
-                                <b class="payment-amt" id="total-amt">$54</b>
+                                <b class="payment-amt" id="total-amt">$0</b>
                             </li>
                             <li class="list-group-item effective-price">
                                 <span>Effective Price</span>
@@ -572,11 +576,9 @@ include 'popup-modal/login-modal.php';
 
 <script>
     <?php
-        include 'assets/js/main.js';
+    include 'assets/js/main.js';
     ?>
 </script>
 <?php
-    require 'footer.php';
+require 'footer.php';
 ?>
-
-
