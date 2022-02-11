@@ -24,7 +24,8 @@
                 url: "http://localhost/Helperland/?controller=user&function=userLogout",
                 success: function(response) {
                 setTimeout(function(){
-                    location.reload();
+                    <?php $link= $_SERVER['HTTP_REFERER'];?>
+                     window.location.href = '<?php $link;?>';
                 },3000);
                 }
             });

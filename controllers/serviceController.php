@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 class serviceController
 {
     function __construct()
@@ -29,9 +29,31 @@ class serviceController
     {
         if (isset($_POST)) {
             $data = $_POST['arr'];
-            echo json_encode('Success');
+            $date = date('Y-m-d');
+
+            if($data['serviceDate'] < $date){
+                $this->Err = $this->Err ."not a valid date";
+                echo json_encode($this->Err);
+            }else{
+                $userId = $_SESSION['userId'];
+                $records=$this->model->getUserData('useraddress',$userId);
+
+                if($records){
+                    echo json_encode($records);
+                }
+            }
+           
         }else{
             echo 'error occurred!! try again...';
+        }
+    }
+
+    function userNewAddress(){
+        $userId = $_SESSION['userId'];
+        $records=$this->model->getUserData('useraddress',$userId);
+
+        if($records){
+            echo json_encode($records);
         }
     }
 }

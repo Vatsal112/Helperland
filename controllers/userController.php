@@ -205,6 +205,7 @@ class userController
   
             if ($pass == 1 && $records['Status'] == 1) {
                 $_SESSION['islogin']=true;
+                $_SESSION['userId'] = $records['UserId'];  
                 $_SESSION['start'] = time();
                 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
                 $res["status"] = true;

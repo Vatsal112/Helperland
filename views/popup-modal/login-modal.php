@@ -82,10 +82,8 @@ include 'forget-pass-modal.php';
                     res = JSON.parse(JSON.stringify(response));
                     if (response.status) {
                         console.log(response);
-                        // setCookie("isLogin", true,15)
-                        // localStorage.setItem("isLogin", true);
-                        // localStorage.setItem("loginToken", response.loginToken);
-                       window.location.href = 'http://localhost/Helperland';
+                        <?php $link= $_SERVER['HTTP_REFERER'];?>
+                         window.location.href = '<?php $link;?>';
                     
                     } else {
                         $('.response-text').css('display', 'block');

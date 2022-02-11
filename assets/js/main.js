@@ -182,12 +182,6 @@ function removeContent(tab, tabContent) {
 //     }
 // }
 
-let showAddressDialog = () => {
-    const addressDialog = document.getElementById("address-dialog");
-    const btnNewAddress = document.getElementById("btn-new-address");
-    addressDialog.style.display = "block";
-    btnNewAddress.style.display = "none";
-};
 
 let closeAddressDialog = () => {
     const closeDialog = document.getElementById("address-dialog");
@@ -330,6 +324,9 @@ $(document).ready(function() {
 
     $('#secondTabContinue-btn').click(function(e) {
         e.preventDefault();
+        if ($('.response-text').css('display', 'block')) {
+            $('.response-text').css('display', 'none')
+        }
         var checkboxes = [];
         $('input[type="checkbox"]:checked').each(function() {
             checkboxes.push(this.value);
@@ -343,8 +340,6 @@ $(document).ready(function() {
             "pets": $('#pets-label:checked').val()
         };
 
-        // console.log(array);
-
         $.ajax({
             type: "POST",
             url: "http://localhost/Helperland/?controller=service&function=checkScheduleTab",
@@ -352,14 +347,62 @@ $(document).ready(function() {
             dataType: "JSON",
             success: function(response) {
                 res = JSON.parse(JSON.stringify(response));
-                if (res == "Success") {
-                    alert(res);
+                if (response) {
+                    changeTabs(your_detail, yourDetailsTabContent, schedule, schedule_tab_content);
+                    your_details_img.setAttribute("src", "assets/images/details-white.png");
+
+                    addAddress(response);
+                } else {
+                    $('.response-text').css('display', 'block');
+                    $('.text-danger').html(res);
                 }
             }
         });
 
     });
+
 });
+let showAddressDialog = () => {
+    const addressDialog = document.getElementById("address-dialog");
+    const btnNewAddress = document.getElementById("btn-new-address");
+    addressDialog.style.display = "block";
+    btnNewAddress.style.display = "none";
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/Helperland/?controller=service&function=userNewAddress",
+        dataType: 'JSON',
+        success: function(response) {
+            console.log(response);
+            for (let i = 0; i < response.length; i++) {
+                $('#postalCode').val(response[i]['PostalCode']);
+            }
+        }
+    });
+};
+
+
+function addAddress(response) {
+    for (let i = 0; i < response.length; i++) {
+        checked = response[i].IsDefault == 1 ? 'checked' : '';
+        $('.user-address')
+            .append(
+                `<div class="address-radio form-group">
+                <input type="radio" name="address" id="radio1" value="
+                " ${checked}>
+
+                <div class="radio-labels">
+                    <label for="radio1">Address:
+                        <span class="radio-text">${response[i]['AddressLine1']}</span>
+                    </label>
+                    <label for="radio1">Phone number:
+                        <span class="radio-text-phone" id="mobile">${response[i]['Mobile']}</span>
+                    </label>
+                </div>
+            </div>`
+            );
+    }
+}
 
 function validateSecondTab() {
     let schedule_tab = document.getElementById("schedule");

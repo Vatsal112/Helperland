@@ -25,4 +25,10 @@ class serviceModel{
         $count = $stmt->rowCount();
         return $count;
     }
+    function getUserData($table,$userId){
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE UserId = ?");
+        $stmt->execute([$userId]);
+        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $record;
+    }
 }

@@ -41,7 +41,7 @@ if (isset($_COOKIE['siteCookie'])) {
 </head>
 
 <body>
-        <!--********* Main Screen Banner Section start************-->
+    <!--********* Main Screen Banner Section start************-->
     <section class="main-screen" id="main-screen">
         <header>
             <nav class="navbar navbar-expand-lg fixed-top " id="navbar">
@@ -51,11 +51,24 @@ if (isset($_COOKIE['siteCookie'])) {
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
-                        <li class=" nav-item rounded-btn">
-                            <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'].'?controller=home&function=bookService';?>" target="blank">Book a Cleaner</a>
-                        </li>
+                        <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+                            $now = time();
+                            if ($now > $_SESSION['expire']) {
+                                echo "<script>alert('Session is expired');</script>";
+                                unset($_SESSION['islogin']);
+                                echo "<script>window.location.href='$arr[base_url]';</script>";
+                            }
+                        ?>
+                            <li class=" nav-item rounded-btn">
+                                <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>" target="blank">Book a Cleaner</a>
+                            </li>
+                        <?php } else { ?>
+                            <li class=" nav-item rounded-btn">
+                                <a class="nav-link active " aria-current="page" data-toggle="modal" data-target="#login-modal" target="blank">Book a Cleaner</a>
+                            </li>
+                        <?php } ?>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=prices';?>" target="blank">Prices</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=prices'; ?>" target="blank">Prices</a>
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link " href="# ">Our Guarantee</a>
@@ -64,82 +77,82 @@ if (isset($_COOKIE['siteCookie'])) {
                             <a class="nav-link " href="# ">Blog</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=contact';?>" target="blank">Contact us</a>
+                            <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=contact'; ?>" target="blank">Contact us</a>
                         </li>
 
 
-                        <?php if(isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
-                            $now= time(); 
-                            if($now > $_SESSION['expire']){
+                        <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+                            $now = time();
+                            if ($now > $_SESSION['expire']) {
                                 echo "<script>alert('Session is expired');</script>";
                                 unset($_SESSION['islogin']);
                                 echo "<script>window.location.href='$arr[base_url]';</script>";
-                            }    
+                            }
                         ?>
 
                             <div class="noti-user-icons" id="user-icon">
-                            <li class="nav-item notification-icon d-flex">
-                                <span id="notification-count">2</span>
-                                <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
-                            </li>
-                            <div class="dropdown user-icon d-flex align-items-center">
-                                <button class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <li class="nav-item notification-icon d-flex">
+                                    <span id="notification-count">2</span>
+                                    <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
+                                </li>
+                                <div class="dropdown user-icon d-flex align-items-center">
+                                    <button class="dropdown-toggle d-flex align-items-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <a class="nav-link" href="#"><img src="assets/images/user.png" alt=""></a>
                                         <a class="nav-link" href="#"><img src="assets/images/sp-arrow-down.png" alt="" class="sp-down-arrow"></a>
                                     </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <div class="username">
-                                        <p>Welcome, <b>First Customer</b></p>
-                                    </div>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <div class="username">
+                                            <p>Welcome, <b>First Customer</b></p>
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
 
-                                    <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
-                                    <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
+                                        <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                        <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php } else {?>
-                        <li class="nav-item login-rounded-btn btn-hide">
-                            <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
-                        </li>
-                        <li class="nav-item rounded-btn btn-hide">
-                            <a class="nav-link " href="<?php echo $arr['base_url'].'?controller=home&function=spReg';?>" target="blank">Become a Helper</a>
-                        </li>
-                        <li class="dropdown" id="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="assets/images/flag.png" alt="">
-                            </a>
-                            <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdownMenuLink ">
-                                <a class="dropdown-item" href="#">India</a>
-                                <a class="dropdown-item" href="#">Bangladesh</a>
-                                <a class="dropdown-item" href="#">France</a>
-                            </div>
-                        </li>
+                        <?php } else { ?>
+                            <li class="nav-item login-rounded-btn btn-hide">
+                                <a class="nav-link " href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+                            </li>
+                            <li class="nav-item rounded-btn btn-hide">
+                                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg'; ?>" target="blank">Become a Helper</a>
+                            </li>
+                            <li class="dropdown" id="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="assets/images/flag.png" alt="">
+                                </a>
+                                <div class="dropdown-menu dropdown-content" aria-labelledby="navbarDropdownMenuLink ">
+                                    <a class="dropdown-item" href="#">India</a>
+                                    <a class="dropdown-item" href="#">Bangladesh</a>
+                                    <a class="dropdown-item" href="#">France</a>
+                                </div>
+                            </li>
 
-                    <?php } ?>
+                        <?php } ?>
 
                     </ul>
                 </div>
             </nav>
 
             <div class="modal fade logout-modal" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="logout-modal-content">
-                            <div class="logout-green-circle">
-                                <img src="assets/images/ic-check.png" alt="">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="logout-modal-content">
+                                <div class="logout-green-circle">
+                                    <img src="assets/images/ic-check.png" alt="">
+                                </div>
+                                <h5>You have successfully logged out</h5>
                             </div>
-                            <h5>You have successfully logged out</h5>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn-logout-ok" data-dismiss="modal" id="btn-logout">Ok</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-logout-ok" data-dismiss="modal" id="btn-logout">Ok</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </header>
         <!--********* Main Screen Banner Section start************-->
         <div class="main-text ">
@@ -151,7 +164,19 @@ if (isset($_COOKIE['siteCookie'])) {
             </p>
         </div>
         <div class="banner-btn">
-            <button type="button " class="mainscreen-btn" onclick=window.location.href="<?php echo $arr['base_url'].'?controller=home&function=bookService';?>">Let's Book a Cleaner</button>
+
+            <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+                $now = time();
+                if ($now > $_SESSION['expire']) {
+                    echo "<script>alert('Session is expired');</script>";
+                    unset($_SESSION['islogin']);
+                    echo "<script>window.location.href='$arr[base_url]';</script>";
+                }
+            ?>
+                <button type="button " class="mainscreen-btn" onclick=window.location.href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>">Let's Book a Cleaner</button>
+            <?php } else { ?>
+                <button type="button " class="mainscreen-btn" data-toggle="modal" data-target="#login-modal">Let's Book a Cleaner</button>
+            <?php } ?>
         </div>
 
 
@@ -194,8 +219,8 @@ if (isset($_COOKIE['siteCookie'])) {
 
         <!--  Homepage modal for login start -->
         <?php
-            include 'popup-modal/login-modal.php';
-            include 'popup-modal/logout-modal.php';
+        include 'popup-modal/login-modal.php';
+        include 'popup-modal/logout-modal.php';
         ?>
         <!--  Homepage modal for forget-pass end -->
     </section>
@@ -456,4 +481,5 @@ if (isset($_COOKIE['siteCookie'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
 
 </body>
+
 </html>

@@ -3198,7 +3198,8 @@ body {
     font-weight: 600;
 }
 
-.main-content .your-details-content .address-radio .radio-text {
+.main-content .your-details-content .address-radio .radio-text,
+.main-content .your-details-content .address-radio .radio-text-phone {
     color: #646464;
     font-weight: normal;
 }

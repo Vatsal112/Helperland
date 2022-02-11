@@ -129,6 +129,9 @@ include 'popup-modal/login-modal.php';
                 <!-- Book service page main tabs end -->
 
                 <div class="tab-content" id="myTabContent">
+                    <div class="response-text">
+                        <p id="response" class="text-danger"></p>
+                    </div>
                     <!-- Book service page main tab setup service start -->
                     <div class="tab-pane fade show active" id="setup-service-tab" role="tabpanel" aria-labelledby="setup-service">
                         <form method="post">
@@ -288,35 +291,20 @@ include 'popup-modal/login-modal.php';
                         <div class="your-details-content">
                             <span>Enter your contact details, so we can serve you in better way!</span>
 
-                            <div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio1" value="
-                                    ">
-                                <div class="radio-labels">
-                                    <label for="radio1">Address:
-                                        <span class="radio-text">koiengstrasse, </span>
-                                        <span class="radio-text">112 </span>
-                                        <span class="radio-text">Tambach-Dietharz</span>
-                                        <span class="radio-text">53844</span>
-                                    </label>
-                                    <label for="radio1">Phone number:
-                                        <span class="radio-text">998855772</span>
-                                    </label>
-                                </div>
-                            </div>
+                            <div class="user-address">
+                                <!-- <div class="address-radio form-group">
+                                    <input type="radio" name="address" id="radio1" value="
+                                    " checked>
 
-                            <div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio2" value="">
-                                <div class="radio-labels">
-                                    <label for="radio2">Address:
-                                        <span class="radio-text">koiengstrasse, </span>
-                                        <span class="radio-text">112 </span>
-                                        <span class="radio-text">Tambach-Dietharz</span>
-                                        <span class="radio-text">53844</span>
-                                    </label>
-                                    <label for="radio2">Phone number:
-                                        <span class="radio-text">998855772</span>
-                                    </label>
-                                </div>
+                                    <div class="radio-labels">
+                                        <label for="radio1">Address:
+                                            <span class="radio-text"></span>
+                                        </label>
+                                        <label for="radio1">Phone number:
+                                            <span class="radio-text-phone" id="mobile"></span>
+                                        </label>
+                                    </div>
+                                </div> -->
                             </div>
 
                             <div class="add-new-address">
@@ -338,7 +326,7 @@ include 'popup-modal/login-modal.php';
                                     <div class="postalcode-city">
                                         <div class="postalcode">
                                             <label for="postalcode">Postal Code</label>
-                                            <input type="tel" name="" id="postalcode" class="form-control">
+                                            <input type="tel" name="" id="postalCode" class="form-control" disabled>
                                         </div>
                                         <div class="city">
                                             <label for="city">City</label>
