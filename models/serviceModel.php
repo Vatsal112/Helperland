@@ -31,4 +31,17 @@ class serviceModel{
         $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $record;
     }
+
+    function newAddress($table,$address){
+        $sql = "INSERT INTO $table (UserId,AddressLine1,City,PostalCode,IsDefault,IsDeleted,Mobile) values(:UserId,:AddressLine1,:City,:PostalCode,:IsDefault,:IsDeleted,:Mobile)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute($address);
+        return $this->conn->lastInsertId();
+    }
+    function getLastUserData($table,$id){
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE AddressId = ?");
+        $stmt->execute([$id]);
+        $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $record;
+    }
 }
