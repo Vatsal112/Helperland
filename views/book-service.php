@@ -129,14 +129,14 @@ include 'popup-modal/login-modal.php';
                 <!-- Book service page main tabs end -->
 
                 <div class="tab-content" id="myTabContent">
-                    <div class="response-text">
-                        <p id="response" class="text-danger"></p>
+                    <div class="response-text1">
+                        <p id="response1" class="text-danger"></p>
                     </div>
                     <!-- Book service page main tab setup service start -->
                     <div class="tab-pane fade show active" id="setup-service-tab" role="tabpanel" aria-labelledby="setup-service">
                         <form method="post">
-                            <div class="response-text">
-                                <p id="response" class="text-danger"></p>
+                            <div class="response-text2">
+                                <p id="response2" class="text-danger"></p>
                             </div>
                             <div class="setup-service-content">
                                 <span>Enter your Postal Code</span>
@@ -261,7 +261,7 @@ include 'popup-modal/login-modal.php';
                                 </div>
 
                                 <div class="pets-checkbox">
-                                    <input type="checkbox" name="" id="pets-label">
+                                    <input type="checkbox" name="" id="pets-label" value="1">
                                     <label for="pets-label">I have pets at home</label>
                                 </div>
 
@@ -290,9 +290,10 @@ include 'popup-modal/login-modal.php';
                     <div class="tab-pane fade" id="your-details-tab" role="tabpanel" aria-labelledby="your-details">
                         <div class="your-details-content">
                             <span>Enter your contact details, so we can serve you in better way!</span>
+                            <form method="POST">
 
-                            <div class="user-address" id="user-address">
-                                <!-- <div class="address-radio form-group">
+                                <div class="user-address" id="user-address">
+                                    <!-- <div class="address-radio form-group">
                                     <input type="radio" name="address" id="radio1" value="
                                     " checked>
 
@@ -305,17 +306,17 @@ include 'popup-modal/login-modal.php';
                                         </label>
                                     </div>
                                 </div> -->
-                            </div>
+                                </div>
 
-                            <div id="new-address">
+                                <div id="new-address">
 
-                            </div>
-                            <div class="add-new-address">
-                                <button type="button" onclick="showAddressDialog()" id="btn-new-address">+ Add New Address</button>
-                            </div>
+                                </div>
+                                <div class="add-new-address">
+                                    <button type="button" onclick="showAddressDialog()" id="btn-new-address">+ Add New Address</button>
+                                </div>
 
-                            <div class="add-new-address-content">
-                                <form method="POST">
+                                <div class="add-new-address-content">
+
                                     <div class="outer" id="address-dialog">
                                         <div class="response-text2">
                                             <p id="response" class="text-danger"></p>
@@ -355,215 +356,216 @@ include 'popup-modal/login-modal.php';
                                             </div>
 
                                         </div>
-                                </form>
 
-                                <div class="btn-save-close">
-                                    <button type="button" class="save" id="btn-add-new-address">Save</button>
-                                    <button type="button" class="cancel" onclick="closeAddressDialog()">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
-<!-- 
-                        <div class="favourite-sp">
-                            <span>Your Favourite Service Providers</span>
-                            <p class="radio-text">you can choose your favourite service provider from the below list.</p>
 
-                            <div class="fav-sp-info">
-                                <img src="assets/images/avatar-hat.png" alt="">
-                                <span class="sp-name">Sandip Patel</span>
-                                <button type="button">Select</button>
-                            </div>
-                        </div> -->
-
-                        <div class="btn-continue">
-                            <button type="button">Continue</button>
-                        </div>
-
-                        <div class="btn-sm-payment-summary">
-                            <button type="button" data-toggle="modal" data-target="#payment-summary-modal">Payment Summary</button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Book service page main tab your details end -->
-
-                <!-- Book service page main tab payments start -->
-                <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment">
-                    <div class="payment-tab-content">
-                        <span>Pay securely with helperland payment gateway!</span>
-                        <label for="promo-code">Promo code (optional)</label>
-                        <div class="promo-code">
-                            <input type="number" name="" id="" id="promo-code" placeholder="promo-code (optional)">
-                            <button type="button">Apply</button>
-                        </div>
-
-                        <div class="payment-card-input">
-                            <i class="fa fa-credit-card"></i>
-                            <input type="tel" name="" id="" placeholder="Card number" class="credit-card-text" maxlength="19">
-                            <input type="text" placeholder="MM / YY" maxlength="7" class="card-date" onkeypress="return onlyNumberKey(event)" onkeyup="addSlash(event)">
-                            <input type="password" placeholder="CVC" maxlength="3" class="card-cvv">
-                        </div>
-                        <div class="accepted-cards-img">
-                            <span>Accepted Cards:</span>
-                            <div class="card-img">
-                                <img src="assets/images/visa-icon.png" alt="">
-                                <img src="assets/images/master-card-icon.png" alt="">
-                                <img src="assets/images/amrican-exp-icon.png" alt="">
-                            </div>
-                        </div>
-
-                        <div class="privacy-policy-check">
-                            <input type="checkbox" name="" id="privacy-check">
-                            <label for="privacy-check">I accept <a href="">terms and conditions</a>, the <a href="">cancellation policy </a>and the <a href="">privacy policy.</a></label>
-                        </div>
-
-                        <div class="btn-continue">
-                            <button type="button" data-toggle="modal" data-target="#complete-booking-modal">Complete Booking</button>
-                        </div>
-                        <div class="btn-sm-payment-summary">
-                            <button type="button" data-toggle="modal" data-target="#payment-summary-modal" data-dismiss="modal">Payment Summary</button>
-                        </div>
-                    </div>
-                    <!-- Book service page complete booking modal start -->
-                    <div class="modal fade logout-modal" id="complete-booking-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-part">
-                                    <div class="modal-header d-block">
-                                        <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="logout-modal-content">
-                                            <div class="logout-green-circle">
-                                                <img src="assets/images/ic-check.png" alt="">
-                                            </div>
-                                            <h5>Booking has been successfully submitted</h5>
-                                            <p class="text-center">Service Request Id: <span class="s-id" id="s-id">8303</span></p>
+                                        <div class="btn-save-close">
+                                            <button type="button" class="save" id="btn-add-new-address">Save</button>
+                                            <button type="button" class="cancel" onclick="closeAddressDialog()">Cancel</button>
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn-logout-ok" data-dismiss="modal">Ok</button>
+                                </div>
+                                <!-- 
+                                    <div class="favourite-sp">
+                                        <span>Your Favourite Service Providers</span>
+                                        <p class="radio-text">you can choose your favourite service provider from the below list.</p>
+
+                                        <div class="fav-sp-info">
+                                            <img src="assets/images/avatar-hat.png" alt="">
+                                            <span class="sp-name">Sandip Patel</span>
+                                            <button type="button">Select</button>
+                                        </div>
+                                    </div> -->
+
+                                <div class="btn-continue">
+                                    <button type="button" id="your-details-continue">Continue</button>
+                                </div>
+                            </form>
+
+                            <div class="btn-sm-payment-summary">
+                                <button type="button" data-toggle="modal" data-target="#payment-summary-modal">Payment Summary</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Book service page main tab your details end -->
+
+                    <!-- Book service page main tab payments start -->
+                    <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment">
+                        <div class="payment-tab-content">
+                            <span>Pay securely with helperland payment gateway!</span>
+                            <label for="promo-code">Promo code (optional)</label>
+                            <div class="promo-code">
+                                <input type="number" name="" id="" id="promo-code" placeholder="promo-code (optional)">
+                                <button type="button">Apply</button>
+                            </div>
+
+                            <div class="payment-card-input">
+                                <i class="fa fa-credit-card"></i>
+                                <input type="tel" name="" id="" placeholder="Card number" class="credit-card-text" maxlength="19" required>
+                                <input type="text" placeholder="MM / YY" maxlength="7" class="card-date" onkeypress="return onlyNumberKey(event)" onkeyup="addSlash(event)" required>
+                                <input type="password" placeholder="CVC" maxlength="3" class="card-cvv" required>
+                            </div>
+                            <div class="accepted-cards-img">
+                                <span>Accepted Cards:</span>
+                                <div class="card-img">
+                                    <img src="assets/images/visa-icon.png" alt="">
+                                    <img src="assets/images/master-card-icon.png" alt="">
+                                    <img src="assets/images/amrican-exp-icon.png" alt="">
+                                </div>
+                            </div>
+
+                            <div class="privacy-policy-check">
+                                <input type="checkbox" name="" id="privacy-check" required>
+                                <label for="privacy-check">I accept <a href="">terms and conditions</a>, the <a href="">cancellation policy </a>and the <a href="">privacy policy.</a></label>
+                            </div>
+
+                            <div class="btn-continue">
+                                <button type="button" id="complete-booking-btn">Complete Booking</button>
+                            </div>
+                            <div class="btn-sm-payment-summary">
+                                <button type="button" data-toggle="modal" data-target="#payment-summary-modal" data-dismiss="modal">Payment Summary</button>
+                            </div>
+                        </div>
+                        <!-- Book service page complete booking modal start -->
+                        <div class="modal fade logout-modal" id="complete-booking-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-part">
+                                        <div class="modal-header d-block">
+                                            <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="logout-modal-content">
+                                                <div class="logout-green-circle">
+                                                    <img src="assets/images/ic-check.png" alt="">
+                                                </div>
+                                                <h5>Booking has been successfully submitted</h5>
+                                                <p class="text-center">Service Request Id: <span class="s-id" id="s-id">8303</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn-logout-ok" data-dismiss="modal">Ok</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Book service page complete booking modal end -->
                     </div>
-                    <!-- Book service page complete booking modal end -->
+                    <!-- Book service page main tab payments end -->
                 </div>
-                <!-- Book service page main tab payments end -->
+
+                <!-- Book service page payment summary modal for mobile view start -->
+                <?php
+                include 'popup-modal/payment-summary-modal.php';
+                ?>
+                <!-- Book service page payment summary modal for mobile view end -->
             </div>
+            <!-- Book service page payment summary side card start -->
+            <div class="payment-summary" id="payment-summary">
+                <div class="payment-text">
+                    <span>Payment Summary</span>
+                </div>
 
-            <!-- Book service page payment summary modal for mobile view start -->
-            <?php
-            include 'popup-modal/payment-summary-modal.php';
-            ?>
-            <!-- Book service page payment summary modal for mobile view end -->
-        </div>
-        <!-- Book service page payment summary side card start -->
-        <div class="payment-summary" id="payment-summary">
-            <div class="payment-text">
-                <span>Payment Summary</span>
-            </div>
+                <div class="payment-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <span class="service-date" id="s-date">01/01/2018</span><span> @</span>
+                            <script>
+                                document.getElementById('s-date').innerHTML = new Date().toISOString().slice(0, 10);
+                            </script>
+                            <span class="service-time" id="s-card-time">08:00 AM</span><br>
+                            <span class="bed" id="bed">1 bed, </span>
+                            <span class="bed bath" id="bath">1 bath</span>
 
-            <div class="payment-card">
-                <div class="card">
-                    <div class="card-body">
-                        <span class="service-date" id="s-date">01/01/2018</span><span> @</span>
-                        <script>
-                            document.getElementById('s-date').innerHTML = new Date().toISOString().slice(0, 10);
-                        </script>
-                        <span class="service-time" id="s-card-time">08:00 AM</span><br>
-                        <span class="bed" id="bed">1 bed, </span>
-                        <span class="bed bath" id="bath">1 bath</span>
+                            <div class="card-service-duration">
+                                <b>Duration</b>
+                                <div class="service-info">
+                                    <span>Basic</span>
+                                    <span class="basic-service-duration" id="s-card-hours">0 Hrs</span>
+                                </div>
+                                <div class="card-extra-services">
 
-                        <div class="card-service-duration">
-                            <b>Duration</b>
-                            <div class="service-info">
-                                <span>Basic</span>
-                                <span class="basic-service-duration" id="s-card-hours">0 Hrs</span>
-                            </div>
-                            <div class="card-extra-services">
-
-                            </div>
-                            <div class="service-info">
-                                <!-- <span>Inside cabinets (extra)</span>
+                                </div>
+                                <div class="service-info">
+                                    <!-- <span>Inside cabinets (extra)</span>
                                     <span class="service-duration">30 min</span> -->
+                                </div>
+                                <div class="service-info total-required-time">
+                                    <b class="total-time">Total Service Time</b>
+                                    <b class="total-duration" id="total-duration">3.0 Hrs</b>
+                                </div>
                             </div>
-                            <div class="service-info total-required-time">
-                                <b class="total-time">Total Service Time</b>
-                                <b class="total-duration" id="total-duration">3.0 Hrs</b>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <span>Per Cleaning</span>
+                                <b id="per-cleaning" class="per-cleaning">$0</b>
+                            </li>
+                            <li class="list-group-item discount">
+                                <span>Discount</span>
+                                <b>$0</b>
+                            </li>
+                        </ul>
+                        <ul class="list-group list-group-flush list-2">
+                            <li class="list-group-item">
+                                <span class="payment-txt">Total Payment</span>
+                                <b class="payment-amt" id="total-amt">$0</b>
+                            </li>
+                            <li class="list-group-item effective-price">
+                                <span>Effective Price</span>
+                                <b class="effective-amt">$0</b>
+                            </li>
+                        </ul>
+
+                        <div class="card-body card-bottom-body">
+                            <div class="will-save">
+                                <a href=""><span>*</span>You will save 20% according to §35a EStG.</a>
+                            </div>
+
+                            <div class="card-footer">
+                                <a href=""><img src="assets/images/smiley.png" alt="">See what is always included</a>
                             </div>
                         </div>
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <span>Per Cleaning</span>
-                            <b id="per-cleaning" class="per-cleaning">$0</b>
-                        </li>
-                        <li class="list-group-item discount">
-                            <span>Discount</span>
-                            <b>$0</b>
-                        </li>
-                    </ul>
-                    <ul class="list-group list-group-flush list-2">
-                        <li class="list-group-item">
-                            <span class="payment-txt">Total Payment</span>
-                            <b class="payment-amt" id="total-amt">$0</b>
-                        </li>
-                        <li class="list-group-item effective-price">
-                            <span>Effective Price</span>
-                            <b class="effective-amt">$0</b>
-                        </li>
-                    </ul>
+                </div>
 
-                    <div class="card-body card-bottom-body">
-                        <div class="will-save">
-                            <a href=""><span>*</span>You will save 20% according to §35a EStG.</a>
-                        </div>
+                <div class="questions">
+                    <span>Questions?</span>
 
-                        <div class="card-footer">
-                            <a href=""><img src="assets/images/smiley.png" alt="">See what is always included</a>
+                    <div class="accordian">
+                        <a href="#que1" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
+                        <div class="collapse" id="que1">
+                            <div class="card card-body">
+                                Anyone
+                            </div>
                         </div>
+                        <a href="#que2" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
+                        <div class="collapse" id="que2">
+                            <div class="card card-body">
+                                Anyone
+                            </div>
+                        </div>
+                        <a href="#que3" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
+                        <div class="collapse" id="que3">
+                            <div class="card card-body">
+                                Anyone
+                            </div>
+                        </div>
+                        <a href="#que4" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
+                        <div class="collapse" id="que4">
+                            <div class="card card-body">
+                                Anyone
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="for-more-help">
+                        <a href="">For more help</a>
                     </div>
                 </div>
             </div>
-
-            <div class="questions">
-                <span>Questions?</span>
-
-                <div class="accordian">
-                    <a href="#que1" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                    <div class="collapse" id="que1">
-                        <div class="card card-body">
-                            Anyone
-                        </div>
-                    </div>
-                    <a href="#que2" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                    <div class="collapse" id="que2">
-                        <div class="card card-body">
-                            Anyone
-                        </div>
-                    </div>
-                    <a href="#que3" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                    <div class="collapse" id="que3">
-                        <div class="card card-body">
-                            Anyone
-                        </div>
-                    </div>
-                    <a href="#que4" data-toggle="collapse" aria-expanded="false" aria-controls="questions">Which helperland professional will come to my place?</a>
-                    <div class="collapse" id="que4">
-                        <div class="card card-body">
-                            Anyone
-                        </div>
-                    </div>
-                </div>
-
-                <div class="for-more-help">
-                    <a href="">For more help</a>
-                </div>
-            </div>
+            <!-- Book service page payment summary side card end -->
         </div>
-        <!-- Book service page payment summary side card end -->
-    </div>
     </div>
 </section>
 <!-- Book service page content end -->

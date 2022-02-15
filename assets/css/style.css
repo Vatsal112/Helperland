@@ -468,7 +468,8 @@ body {
 }
 
 .status-message,
-.response-text {
+.response-text1,
+.response-text2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -479,18 +480,21 @@ body {
     display: none;
 }
 
-.response-text {
+.response-text1,
+.response-text2 {
     background-color: #fcdfe1;
     display: none;
 }
 
 .status-message p,
-.response-text p {
+.response-text1 p,
+.response-text2 p {
     margin-bottom: 0;
 }
 
 .status-message i,
-.response-text i {
+.response-text1 i,
+.response-text2 i {
     cursor: pointer;
 }
 
@@ -956,12 +960,13 @@ body {
     font-weight: bold;
 }
 
-.map {
-    position: relative;
-}
 
-.map-img img {
-    max-width: 100%;
+/* .map {
+    position: relative;
+} */
+
+.googleMap iframe {
+    width: 100%;
     margin-top: 4rem;
     margin-bottom: 2rem;
 }

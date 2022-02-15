@@ -14,8 +14,8 @@ class serviceController
         if (isset($_POST)) {
             $result = $this->model->validateZipCode('zipcode', $_POST['postalCode']);
 
-            if ($result > 0) {
-                echo json_encode('Success');
+            if ($result) {
+                echo json_encode($result);
             } else {
                 $this->Err = $this->Err . 'Zipcode not found';
                 echo json_encode($this->Err);
@@ -62,7 +62,7 @@ class serviceController
         if (!preg_match("/^[a-zA-Z ]*$/", $sname)) {
             $this->Err =  "Only letters and white space allowed in Street name field" . "<br>";
         }
-        if (!preg_match('/^[0-9]{5}+$/', $hnum)) {
+        if (!preg_match('/^[0-9]{3}+$/', $hnum)) {
             $this->Err = "Only Numbers are allowed in house number field." . "<br>";
         }
         if (!preg_match('/^[0-9]{10}+$/', $phone)) {
@@ -97,6 +97,20 @@ class serviceController
             } else {
                 echo json_encode($this->Err);
             }
+        }
+    }
+
+    function yourDetailsTabData(){
+        if(isset($_POST)){
+            $address = $_POST['address'];
+            echo json_encode('Success');
+        }
+    }
+
+    function submitServiceReq(){
+        if(isset($_POST)){
+            echo "<pre>";
+            print_r($_POST);
         }
     }
 }

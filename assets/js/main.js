@@ -160,23 +160,19 @@ function removeContent(tab, tabContent) {
 //     }
 // }
 
-// function addSlash(e) {
-//     let ch = e.target.value;
-//     let text = ch.slice(0, 2);
-//     let yr = ch.slice(3);
-//     console.log(yr);
-//     let year = new Date().getFullYear();
-//     console.log(year);
+function addSlash(e) {
+    let ch = e.target.value;
+    let text = ch.slice(0, 2);
 
-//     if (text >= 12) {
-//         alert("invalid month");
-//         e.target.value = "";
-//     } else {
-//         if (ch.length == 2) {
-//             e.target.value = ch + "/";
-//         }
-//     }
-// }
+    if (text >= 12) {
+        alert("invalid month");
+        e.target.value = "";
+    } else {
+        if (ch.length == 2) {
+            e.target.value = ch + "/";
+        }
+    }
+}
 
 let closeAddressDialog = () => {
     const closeDialog = document.getElementById("address-dialog");
@@ -269,6 +265,10 @@ function hideMessage() {
     document.getElementsByClassName("status-message")[0].style.display = "none";
 }
 
+var postalCode;
+var hasPets;
+var checkboxes = [];
+
 $(document).ready(function() {
     $("#postalCode-btn").click(function(e) {
         e.preventDefault();
@@ -280,8 +280,8 @@ $(document).ready(function() {
         let cardHour = document.querySelectorAll(".basic-service-duration");
         serviceDate.value = new Date().toISOString().slice(0, 10);
 
-        if ($(".response-text").css("display", "block")) {
-            $(".response-text").css("display", "none");
+        if ($(".response-text1").css("display", "block")) {
+            $(".response-text1").css("display", "none");
         }
 
         if (pCode == "") {
@@ -294,7 +294,9 @@ $(document).ready(function() {
                 dataType: "JSON",
                 success: function(response) {
                     res = JSON.parse(JSON.stringify(response));
-                    if (res == "Success") {
+                    if (response) {
+                        postalCode = response["ZipcodeValue"];
+
                         for (let i = 0; i < perCleaning.length; i++) {
                             perCleaning[i].innerHTML = "$54";
                             totalAmount[i].innerHTML = "$54";
@@ -311,8 +313,8 @@ $(document).ready(function() {
                             "assets/images/schedule-white.png"
                         );
                     } else {
-                        $(".response-text").css("display", "block");
-                        $(".text-danger").html(res);
+                        $(".response-text1").css("display", "block");
+                        $("#response1").html(res);
                     }
                 },
             });
@@ -321,21 +323,39 @@ $(document).ready(function() {
 
     $("#secondTabContinue-btn").click(function(e) {
         e.preventDefault();
-        if ($(".response-text").css("display", "block")) {
-            $(".response-text").css("display", "none");
+        if ($(".response-text2").css("display", "block")) {
+            $(".response-text2").css("display", "none");
         }
-        var checkboxes = [];
-        $('input[type="checkbox"]:checked').each(function() {
+        changeTabs(
+            your_detail,
+            yourDetailsTabContent,
+            schedule,
+            schedule_tab_content
+        );
+        your_details_img.setAttribute(
+            "src",
+            "assets/images/details-white.png"
+        );
+
+        $('input[name="extra"]:checked').each(function() {
             checkboxes.push(this.value);
         });
+
+        if ($("#pets-label:checked").val() == 1) {
+            hasPets = 1;
+        } else {
+            hasPets = 0;
+        }
         var array = {
             serviceDate: $("#service-date").val(),
             serviceTime: $("#s-time").val(),
             serviceHours: $("#s-hours").val(),
             extraService: checkboxes,
             comments: $("#comments").val(),
-            pets: $("#pets-label:checked").val(),
+            pets: hasPets,
         };
+
+        console.log(array);
 
         $.ajax({
             type: "POST",
@@ -345,21 +365,10 @@ $(document).ready(function() {
             success: function(response) {
                 res = JSON.parse(JSON.stringify(response));
                 if (response) {
-                    changeTabs(
-                        your_detail,
-                        yourDetailsTabContent,
-                        schedule,
-                        schedule_tab_content
-                    );
-                    your_details_img.setAttribute(
-                        "src",
-                        "assets/images/details-white.png"
-                    );
-
                     addAddress(response);
                 } else {
-                    $(".response-text").css("display", "block");
-                    $(".text-danger").html(res);
+                    $(".response-text2").css("display", "block");
+                    $("#response2").html(res);
                 }
             },
         });
@@ -387,16 +396,15 @@ $(document).ready(function() {
                 res = JSON.parse(JSON.stringify(response));
                 if (response) {
                     alert("Success");
-
                     $("#new-address").append(
                         `<div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio1">
+                                <input type="radio" name="address" id="radio2" value="${response["AddressLine1"]+" "+response["Mobile"]}">
                 
                                 <div class="radio-labels">
-                                    <label for="radio1">Address:
+                                    <label for="radio2">Address:
                                         <span class="radio-text">${response["AddressLine1"]}</span>
                                     </label>
-                                    <label for="radio1">Phone number:
+                                    <label for="radio2">Phone number:
                                         <span class="radio-text-phone" id="mobile">${response["Mobile"]}</span>
                                     </label>
                                 </div>
@@ -408,6 +416,51 @@ $(document).ready(function() {
                     $(".text-danger").html(res);
                 }
             },
+        });
+    });
+
+    $('#your-details-continue').click(function(e) {
+        e.preventDefault();
+        var address = '';
+        $('.your-details-content input[type="radio"]:checked').each(function() {
+            address = $(this).val();
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/Helperland/?controller=service&function=yourDetailsTabData",
+            data: { address: address },
+            dataType: "JSON",
+            success: function(response) {
+                changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
+                payment_img.setAttribute("src", "assets/images/payment-white.png");
+            }
+        });
+    });
+
+    $('#complete-booking-btn').click(function(e) {
+        e.preventDefault();
+
+        let serviceData = {
+            ZipcodeValue: postalCode,
+            serviceDate: $("#service-date").val(),
+            serviceTime: $("#s-time").val(),
+            serviceHours: $("#s-hours").val(),
+            extraService: checkboxes,
+            comments: $("#comments").val(),
+            pets: hasPets
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/Helperland/?controller=service&function=submitServiceReq",
+            data: {
+                serviceData: serviceData
+            },
+            dataType: "JSON",
+            success: function(response) {
+                alert(response);
+            }
         });
     });
 });
@@ -441,7 +494,7 @@ function addAddress(response) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
             $(".user-address").append(
                 `<div class="address-radio form-group">
-                    <input type="radio" name="address" id="radio1" value="
+                    <input type="radio" name="address" id="radio1" value="${response[i]["AddressLine1"]+" "+response[i]["Mobile"]}
                     " ${checked}>
     
                     <div class="radio-labels">
@@ -457,21 +510,6 @@ function addAddress(response) {
             flag = false;
         }
     }
-}
-
-function validateSecondTab() {
-    let schedule_tab = document.getElementById("schedule");
-    let schedule_tab_content = document.getElementById("schedule-tab");
-    let yourDetails = document.getElementById("your-details");
-    let yourDetailsTabContent = document.getElementById("your-details-tab");
-    let yourDetailsImage = document.getElementById("detail-img");
-    changeTabs(
-        yourDetails,
-        yourDetailsTabContent,
-        schedule_tab,
-        schedule_tab_content
-    );
-    yourDetailsImage.setAttribute("src", "assets/images/details-white.png");
 }
 
 function changeTabs(currentTab, currentTabContent, prevTab, PreTabContent) {

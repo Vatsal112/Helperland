@@ -22,7 +22,7 @@ class serviceModel{
     function validateZipCode($table,$zipCode){
         $stmt = $this->conn->prepare("SELECT * FROM $table WHERE ZipcodeValue = ?");
         $stmt->execute([$zipCode]);
-        $count = $stmt->rowCount();
+        $count = $stmt->fetch(PDO::FETCH_ASSOC);
         return $count;
     }
     function getUserData($table,$userId){
