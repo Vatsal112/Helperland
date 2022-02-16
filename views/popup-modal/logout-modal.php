@@ -26,7 +26,7 @@
                 setTimeout(function(){
                     <?php $link= $_SERVER['HTTP_REFERER'];?>
                      window.location.href = '<?php $link;?>';
-                },3000);
+                },1000);
                 }
             });
         });

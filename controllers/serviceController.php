@@ -1,4 +1,7 @@
 <?php
+
+use function PHPSTORM_META\type;
+
 session_start();
 class serviceController
 {
@@ -77,19 +80,19 @@ class serviceController
             $data = $_POST['array'];
 
             $address = [
-                'UserId'=>$_SESSION['userId'],
-                'AddressLine1'=>$data['streetName'].", ".$data['houseNum']." ".$data['city']." ".$data['postalCode'],
-                'City'=>$data['city'],
-                'PostalCode'=>$data['postalCode'],
-                'IsDefault'=>0,
-                'IsDeleted'=>0,
-                'Mobile'=>$data['phone']
+                'UserId' => $_SESSION['userId'],
+                'AddressLine1' => $data['streetName'] . ", " . $data['houseNum'] . " " . $data['city'] . " " . $data['postalCode'],
+                'City' => $data['city'],
+                'PostalCode' => $data['postalCode'],
+                'IsDefault' => 0,
+                'IsDeleted' => 0,
+                'Mobile' => $data['phone']
             ];
             $this->validateFields($data['streetName'], $data['houseNum'], $data['phone']);
 
             if ($this->Err == '') {
-                $lastId = $this->model->newAddress('useraddress',$address);
-                // $userId = $_SESSION['userId'];
+                $lastId = $this->model->newAddress('useraddress', $address);
+
                 $record = $this->model->getLastUserData('useraddress', $lastId);
                 if ($record) {
                     echo json_encode($record);
@@ -100,17 +103,46 @@ class serviceController
         }
     }
 
-    function yourDetailsTabData(){
-        if(isset($_POST)){
-            $address = $_POST['address'];
-            echo json_encode('Success');
-        }
-    }
+    function submitServiceReq()
+    {
+        if (isset($_POST)) {
+            $data = $_POST['serviceData'];
 
-    function submitServiceReq(){
-        if(isset($_POST)){
-            echo "<pre>";
-            print_r($_POST);
+            $serviceId = mt_rand(1000, 9999);
+
+            $serviceData = [
+                "UserId" => $_SESSION['userId'],
+                "ServiceId" => $serviceId,
+                "ServiceStartDate" => $data['serviceDate'],
+                "ZipCode" => $data['ZipcodeValue'],
+                "ServiceHours" => $data['serviceHours'],
+                "SubTotal" => substr($data['totalCost'], 1),
+                "TotalCost" => substr($data['totalCost'], 1),
+                "Comments" => $data['comments'],
+                "PaymentDue" => 0,
+                "HasPets" => $data['pets'],
+                "Status" => 1,
+                "CreatedDate" => $data['serviceDate'],
+                "ModifiedDate" => $data['serviceDate'],
+                "Distance" => 0
+            ];
+
+            $serviceAddressData = $data['address'];
+
+            $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
+            $address = $this->model->addServiceAddress('servicerequestaddress',$lastId,$serviceAddressData);
+            $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
+
+            if (isset($data['extraService'])) {
+                $extraService = implode("", $data['extraService']);
+                $extraServiceData = [
+                    "ServiceRequestId" => $lastId,
+                    "ServiceExtraId" => $extraService
+                ];
+                $extraServiceReq = $this->model->extraServiceRequest('servicerequestextra', $extraServiceData);
+            }
+
+            echo json_encode($getReq);
         }
     }
 }

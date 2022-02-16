@@ -354,9 +354,6 @@ $(document).ready(function() {
             comments: $("#comments").val(),
             pets: hasPets,
         };
-
-        console.log(array);
-
         $.ajax({
             type: "POST",
             url: "http://localhost/Helperland/?controller=service&function=checkScheduleTab",
@@ -398,7 +395,7 @@ $(document).ready(function() {
                     alert("Success");
                     $("#new-address").append(
                         `<div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio2" value="${response["AddressLine1"]+" "+response["Mobile"]}">
+                                <input type="radio" name="address" id="radio2" value="${response['AddressId']}">
                 
                                 <div class="radio-labels">
                                     <label for="radio2">Address:
@@ -421,34 +418,27 @@ $(document).ready(function() {
 
     $('#your-details-continue').click(function(e) {
         e.preventDefault();
-        var address = '';
-        $('.your-details-content input[type="radio"]:checked').each(function() {
-            address = $(this).val();
-        });
 
-        $.ajax({
-            type: "POST",
-            url: "http://localhost/Helperland/?controller=service&function=yourDetailsTabData",
-            data: { address: address },
-            dataType: "JSON",
-            success: function(response) {
-                changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
-                payment_img.setAttribute("src", "assets/images/payment-white.png");
-            }
-        });
+        changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
+        payment_img.setAttribute("src", "assets/images/payment-white.png");
     });
 
     $('#complete-booking-btn').click(function(e) {
         e.preventDefault();
-
+        var address = '';
+        $('.your-details-content input[type="radio"]:checked').each(function() {
+            address = $(this).val();
+        });
         let serviceData = {
             ZipcodeValue: postalCode,
             serviceDate: $("#service-date").val(),
             serviceTime: $("#s-time").val(),
             serviceHours: $("#s-hours").val(),
+            totalCost: $('#total-amt').text(),
             extraService: checkboxes,
             comments: $("#comments").val(),
-            pets: hasPets
+            pets: hasPets,
+            address: address
         };
 
         $.ajax({
@@ -459,9 +449,18 @@ $(document).ready(function() {
             },
             dataType: "JSON",
             success: function(response) {
-                alert(response);
+                if (response) {
+                    $('#complete-booking-modal').modal('show');
+                    $('#service-id').html(response['ServiceId']);
+                    console.log('service booked');
+                }
             }
         });
+    });
+
+    $('#complete-booking-modal-ok-btn').click(function(e) {
+        $('#complete-booking-modal').modal('hide');
+        window.location.href = "http://localhost/Helperland/?controller=home&function=bookService"
     });
 });
 let showAddressDialog = () => {
@@ -494,7 +493,7 @@ function addAddress(response) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
             $(".user-address").append(
                 `<div class="address-radio form-group">
-                    <input type="radio" name="address" id="radio1" value="${response[i]["AddressLine1"]+" "+response[i]["Mobile"]}
+                    <input type="radio" name="address" id="radio1" value="${response[i]['AddressId']}
                     " ${checked}>
     
                     <div class="radio-labels">

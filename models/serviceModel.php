@@ -44,4 +44,32 @@ class serviceModel{
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
     }
+
+    function newServiceRequest($table,$data){
+        $sql = "INSERT INTO $table (UserId,ServiceId,ServiceStartDate,ZipCode,ServiceHours,SubTotal,TotalCost,Comments,PaymentDue,HasPets,Status,CreatedDate,ModifiedDate,Distance) values(:UserId,:ServiceId,:ServiceStartDate,:ZipCode,:ServiceHours,:SubTotal,:TotalCost,:Comments,:PaymentDue,:HasPets,:Status,:CreatedDate,:ModifiedDate,:Distance)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute($data);
+        return $this->conn->lastInsertId();
+    }
+
+    function getServiceRequest($table,$id){
+        $stmt = $this->conn->prepare("SELECT * FROM $table WHERE ServiceRequestId = ?");
+        $stmt->execute([$id]);
+        $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $record;
+    }
+
+    function extraServiceRequest($table,$data){
+        $sql = "INSERT INTO $table (ServiceRequestId,ServiceExtraId) values (:ServiceRequestId,:ServiceExtraId)";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute($data);
+        return $this->conn->lastInsertId();
+    }
+
+    function addServiceAddress($table, $serviceRequestId,$addressId){
+        $sql = "INSERT INTO $table (ServiceRequestId, AddressLine1, City, State, PostalCode, Mobile) SELECT $serviceRequestId, AddressLine1, City, State, PostalCode, Mobile FROM useraddress WHERE AddressId=$addressId";
+        $stmt= $this->conn->prepare($sql);
+        $stmt->execute();
+        return $this->conn->lastInsertId(); 
+    }
 }

@@ -22,7 +22,7 @@ include 'popup-modal/login-modal.php';
     <section class="sidebar" id="sidebar">
         <div class="username">
             <p>Welcome, </p>
-            <b>First Customer</b>
+            <b><?php echo $_SESSION['userName'];?></b>
         </div>
         <nav class="navigation">
             <div class="nav flex-column nav-tab" aria-orientation="vertical">
@@ -439,11 +439,11 @@ include 'popup-modal/login-modal.php';
                                                     <img src="assets/images/ic-check.png" alt="">
                                                 </div>
                                                 <h5>Booking has been successfully submitted</h5>
-                                                <p class="text-center">Service Request Id: <span class="s-id" id="s-id">8303</span></p>
+                                                <p class="text-center">Service Request Id: <span class="s-id" id="service-id">8303</span></p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn-logout-ok" data-dismiss="modal">Ok</button>
+                                            <button type="button" class="btn-logout-ok" id="complete-booking-modal-ok-btn" data-dismiss="modal">Ok</button>
                                         </div>
                                     </div>
                                 </div>

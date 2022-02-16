@@ -102,7 +102,7 @@ if (isset($_COOKIE['siteCookie'])) {
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <div class="username">
-                                            <p>Welcome, <b>First Customer</b></p>
+                                            <p>Welcome, <b><?php echo $_SESSION['userName'];?></b></p>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>

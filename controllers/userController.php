@@ -202,10 +202,18 @@ class userController
             $password = $_POST['pass'];
 
             $pass = password_verify($password, $records['Password']);
+
   
-            if ($pass == 1 && $records['Status'] == 1) {
+            if ($pass == 1 && $records['Status'] == 1 ) {
+
+               if(isset($_POST['remember'])){
+                   setcookie('email',$_POST['email'],time()+(86400*7));
+                   setcookie('pass',$_POST['pass'],time()+(86400*7));
+                   setcookie('remember-me','checked',time()+(86400*7));
+               }
                 $_SESSION['islogin']=true;
                 $_SESSION['userId'] = $records['UserId'];  
+                $_SESSION['userName'] = $records['FirstName'];
                 $_SESSION['start'] = time();
                 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
                 $res["status"] = true;
