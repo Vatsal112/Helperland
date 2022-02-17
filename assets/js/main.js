@@ -395,7 +395,7 @@ $(document).ready(function() {
                     alert("Success");
                     $("#new-address").append(
                         `<div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio2" value="${response['AddressId']}">
+                                <input type="radio" name="address" id="radio2" value="${response['AddressLine1']}">
                 
                                 <div class="radio-labels">
                                     <label for="radio2">Address:
@@ -418,9 +418,32 @@ $(document).ready(function() {
 
     $('#your-details-continue').click(function(e) {
         e.preventDefault();
+        var address = '';
+        $('.your-details-content input[type="radio"]:checked').each(function() {
+            address = $(this).val();
+        });
+        let serviceDate = $("#service-date").val();
 
-        changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
-        payment_img.setAttribute("src", "assets/images/payment-white.png");
+        let data = {
+            addressLine: address,
+            date: serviceDate
+        };
+
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/Helperland/?controller=service&function=validateAddress",
+            data: {
+                data: data
+            },
+            dataType: "JSON",
+            success: function(response) {
+                alert(response);
+
+                changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
+                payment_img.setAttribute("src", "assets/images/payment-white.png");
+            }
+        });
     });
 
     $('#complete-booking-btn').click(function(e) {
@@ -493,7 +516,7 @@ function addAddress(response) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
             $(".user-address").append(
                 `<div class="address-radio form-group">
-                    <input type="radio" name="address" id="radio1" value="${response[i]['AddressId']}
+                    <input type="radio" name="address" id="radio1" value="${response[i]['AddressLine1']}
                     " ${checked}>
     
                     <div class="radio-labels">

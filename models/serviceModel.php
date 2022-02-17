@@ -58,6 +58,13 @@ class serviceModel{
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
     }
+    
+    function getServiceRequestAddress($table,$address){
+        $stmt = $this->conn->prepare("SELECT * FROM $table where AddressLine1 = ?");
+        $stmt->execute([$address]);
+        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $record;
+    }
 
     function extraServiceRequest($table,$data){
         $sql = "INSERT INTO $table (ServiceRequestId,ServiceExtraId) values (:ServiceRequestId,:ServiceExtraId)";

@@ -16,45 +16,43 @@
                     </div>
                     <div class="form-group">
                         <div class="login-email">
-                        <?php 
-                            if(isset($_COOKIE['email']) && isset($_COOKIE['pass']) && isset($_COOKIE['remember-me'])){
-                        ?>
-                            <input type="email" name="email" id="uname" placeholder="Email" value="<?php echo $_COOKIE['email'];?>" required>
-                            <img src="assets/images/user-login-icon.png" alt="">
+                            <?php
+                            if (isset($_COOKIE['email']) && isset($_COOKIE['pass']) && isset($_COOKIE['remember-me'])) {
+                            ?>
+                                <input type="email" name="email" id="uname" placeholder="Email" value="<?php echo $_COOKIE['email']; ?>" required>
+                                <img src="assets/images/user-login-icon.png" alt="">
                         </div>
 
                         <div class="login-password">
-                            <input type="password" name="pass" id="pass" placeholder="Password" value="<?php echo $_COOKIE['pass'];?>" required>
+                            <input type="password" name="pass" id="pass" placeholder="Password" value="<?php echo $_COOKIE['pass']; ?>" required>
                             <img src="assets/images/password-icon.png" alt="">
                         </div>
 
                         <div class="remember-me">
-                            <input type="checkbox" name="remember" id="remember-me" value="1" class="form-check-input" <?php echo $_COOKIE['remember-me'];?>>
+                            <input type="checkbox" name="remember" id="remember-me" value="1" class="form-check-input" <?php echo $_COOKIE['remember-me']; ?>>
                             <label for="form-check-label">Remember Me</label>
                         </div>
 
-                        <?php }else{?>
-                            <input type="email" name="email" id="uname" placeholder="Email" value="" required>
-                            <img src="assets/images/user-login-icon.png" alt="">
-                        </div>
+                    <?php } else { ?>
+                        <input type="email" name="email" id="uname" placeholder="Email" value="" required>
+                        <img src="assets/images/user-login-icon.png" alt="">
+                    </div>
 
-                        <div class="login-password">
-                            <input type="password" name="pass" id="pass" placeholder="Password" value="" required>
-                            <img src="assets/images/password-icon.png" alt="">
-                        </div>
+                    <div class="login-password">
+                        <input type="password" name="pass" id="pass" placeholder="Password" value="" required>
+                        <img src="assets/images/password-icon.png" alt="">
+                    </div>
 
-                        <div class="remember-me">
-                            <input type="checkbox" name="remember" id="remember-me" value="1" class="form-check-input" >
-                            <label for="form-check-label">Remember Me</label>
+                    <div class="remember-me">
+                        <input type="checkbox" name="remember" id="remember-me" value="1" class="form-check-input">
+                        <label for="form-check-label">Remember Me</label>
 
-                            <?php }?>
+                    <?php } ?>
 
                     </div>
 
                     <div class="btn-login">
                         <button type="submit" id="btn-login" name="submit">Login</button>
-                        <!-- <input type="submit" name="submit" value="Login"> -->
-                        <!-- <a id="loginBtn" class="btn btn-primary"></a> -->
                     </div>
                 </form>
             </div>
@@ -77,7 +75,8 @@ include 'forget-pass-modal.php';
 
 <script>
     $(document).ready(function() {
-        $('#btn-login').click(function(e) {
+        $(document).on('click', '#btn-login', function(e) {
+
             var email = $('#uname').val();
             var pass = $('#pass').val();
             var remember;
@@ -108,11 +107,11 @@ include 'forget-pass-modal.php';
                 },
                 dataType: 'JSON',
                 success: function(response) {
+                   
                     res = JSON.parse(JSON.stringify(response));
                     if (response.status) {
                         console.log(response);
-                        <?php $link = $_SERVER['HTTP_REFERER']; ?>
-                        window.location.href = '<?php $link; ?>';
+                        window.location.href = '<?= "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>';
                     } else {
                         $('.response-text').css('display', 'block');
                         $('.text-danger').html(res);

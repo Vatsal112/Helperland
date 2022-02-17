@@ -54,7 +54,7 @@ class userModel{
     }
 
     function checkIdPass($mail){
-        $stmt= $this->conn->prepare("SELECT UserId,FirstName, Email,Password,Status FROM User WHERE Email = ?");
+        $stmt= $this->conn->prepare("SELECT UserId, FirstName, Email,UserTypeId, Password, Status FROM User WHERE Email = ?");
         $stmt->execute([$mail]);
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
