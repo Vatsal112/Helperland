@@ -64,6 +64,16 @@
         color: white;
         font-size: 28px;
     }
+    .noti-user-icons .user-icon .sp-down-arrow {
+        padding-left: 15px;
+    }
+    .main-screen .navbar-nav .notification-icon span {
+        top: 80%;
+        left: 46%;
+    }
+    .main-screen .navbar-nav .dropdown-menu {
+        position: absolute;
+    }
     .login-rounded-btn {
         text-align: center;
         margin-left: auto;

@@ -58,11 +58,19 @@ class serviceModel{
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
     }
+
+    function getServiceAddress( $userId,$date,$addressId){
+        $sql = "SELECT * FROM useraddress where AddressLine1 IN (SELECT SRA.AddressLine1 FROM `servicerequestaddress` SRA JOIN servicerequest SR ON SR.ServiceRequestId = SRA.ServiceRequestId WHERE SR.UserId = ? AND SR.ServiceStartDate LIKE ?) and AddressId = ?";
+        $stmt=$this->conn->prepare($sql);
+        $stmt->execute([$userId,'%'.$date.'%',$addressId]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
     
     function getServiceRequestAddress($table,$address){
-        $stmt = $this->conn->prepare("SELECT * FROM $table where AddressLine1 = ?");
-        $stmt->execute([$address]);
-        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = $this->conn->prepare("SELECT AddressId, UserId FROM $table where AddressId = $address");
+        $stmt->execute();
+        $record = $stmt->fetch(PDO::FETCH_ASSOC);
         return $record;
     }
 

@@ -63,7 +63,7 @@ class serviceController
         if (!preg_match("/^[a-zA-Z ]*$/", $sname)) {
             $this->Err =  "Only letters and white space allowed in Street name field" . "<br>";
         }
-        if (!preg_match('/^[0-9]{3}+$/', $hnum)) {
+        if (!preg_match('/^[0-9]{0,3}+$/', $hnum)) {
             $this->Err = "Only Numbers are allowed in house number field." . "<br>";
         }
         if (!preg_match('/^[0-9]{10}+$/', $phone)) {
@@ -79,7 +79,7 @@ class serviceController
 
             $address = [
                 'UserId' => $_SESSION['userId'],
-                'AddressLine1' => $data['streetName'] . ", " . $data['houseNum'] . " " . $data['city'] . " " . $data['postalCode'],
+                'AddressLine1' => $data['streetName'] . " " . $data['houseNum'] . ", " . $data['city'] . " " . $data['postalCode'],
                 'City' => $data['city'],
                 'PostalCode' => $data['postalCode'],
                 'IsDefault' => 0,
@@ -101,58 +101,69 @@ class serviceController
         }
     }
 
-    function validateAddress(){
-        if(isset($_POST)){
+    function validateAddress()
+    {
+        if (isset($_POST)) {
             $addressData = $_POST['data'];
-            $address = $this->model->getServiceRequestAddress('servicerequestaddress',$addressData['addressLine']);
- 
-            echo "<pre>";
-            print_r($addressData['date']."<br>");
-            print_r($addressData['addressLine']."<br>");
-            print_r($address);
+
+            $address = $this->model->getServiceRequestAddress('useraddress', $addressData['addressId']);
+
+            $serviceReq = $this->model->getServiceAddress($address['UserId'], $addressData['date'], $address['AddressId']);
+            if (count($serviceReq) > 0) {
+                $this->Err = $this->Err . "Another service request has been logged for this address on this date. Please select a different date.";
+                echo json_encode($this->Err);
+            } else {
+                echo json_encode('Success');
+            }
         }
     }
 
     function submitServiceReq()
     {
         if (isset($_POST)) {
+           
             $data = $_POST['serviceData'];
 
             $serviceId = mt_rand(1000, 9999);
 
-            // $serviceData = [
-            //     "UserId" => $_SESSION['userId'],
-            //     "ServiceId" => $serviceId,
-            //     "ServiceStartDate" => $data['serviceDate'],
-            //     "ZipCode" => $data['ZipcodeValue'],
-            //     "ServiceHours" => $data['serviceHours'],
-            //     "SubTotal" => substr($data['totalCost'], 1),
-            //     "TotalCost" => substr($data['totalCost'], 1),
-            //     "Comments" => $data['comments'],
-            //     "PaymentDue" => 0,
-            //     "HasPets" => $data['pets'],
-            //     "Status" => 1,
-            //     "CreatedDate" => $data['serviceDate'],
-            //     "ModifiedDate" => $data['serviceDate'],
-            //     "Distance" => 0
-            // ];
 
-            // $serviceAddressData = $data['address'];
+            date_default_timezone_set("Asia/Calcutta");
+            $startdate = $data['serviceDate'];
+            $dateTime = date($startdate." ".'H:i:s');
 
-            // $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
-            // $address = $this->model->addServiceAddress('servicerequestaddress',$lastId,$serviceAddressData);
-            // $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
+            $serviceData = [
+                "UserId" => $_SESSION['userId'],
+                "ServiceId" => $serviceId,
+                "ServiceStartDate" => $dateTime,
+                "ZipCode" => $data['ZipcodeValue'],
+                "ServiceHours" => $data['serviceHours'],
+                "SubTotal" => substr($data['totalCost'], 1),
+                "TotalCost" => substr($data['totalCost'], 1),
+                "Comments" => $data['comments'],
+                "PaymentDue" => 0,
+                "HasPets" => $data['pets'],
+                "Status" => 1,
+                "CreatedDate" => $dateTime,
+                "ModifiedDate" => $dateTime,
+                "Distance" => 0
+            ];
 
-            // if (isset($data['extraService'])) {
-            //     $extraService = implode("", $data['extraService']);
-            //     $extraServiceData = [
-            //         "ServiceRequestId" => $lastId,
-            //         "ServiceExtraId" => $extraService
-            //     ];
-            //     $extraServiceReq = $this->model->extraServiceRequest('servicerequestextra', $extraServiceData);
-            // }
+            $serviceAddressData = $data['address'];
 
-            // echo json_encode($getReq);
+            $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
+            $address = $this->model->addServiceAddress('servicerequestaddress', $lastId, $serviceAddressData);
+            $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
+
+            if (isset($data['extraService'])) {
+                $extraService = implode("", $data['extraService']);
+                $extraServiceData = [
+                    "ServiceRequestId" => $lastId,
+                    "ServiceExtraId" => $extraService
+                ];
+                $extraServiceReq = $this->model->extraServiceRequest('servicerequestextra', $extraServiceData);
+            }
+
+            echo json_encode($getReq);
         }
     }
 }

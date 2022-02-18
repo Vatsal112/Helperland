@@ -286,6 +286,9 @@ $(document).ready(function() {
 
         if (pCode == "") {
             alert("enter postal code");
+        } else if ($("#postalCode-btn").val() == 2) {
+            alert('service provider can not book a service.');
+            window.location.href = 'http://localhost/Helperland';
         } else {
             $.ajax({
                 type: "POST",
@@ -395,7 +398,7 @@ $(document).ready(function() {
                     alert("Success");
                     $("#new-address").append(
                         `<div class="address-radio form-group">
-                                <input type="radio" name="address" id="radio2" value="${response['AddressLine1']}">
+                                <input type="radio" name="address" id="radio2" value="${response['AddressId']}">
                 
                                 <div class="radio-labels">
                                     <label for="radio2">Address:
@@ -419,16 +422,18 @@ $(document).ready(function() {
     $('#your-details-continue').click(function(e) {
         e.preventDefault();
         var address = '';
+        if ($(".response-text2").css("display", "block")) {
+            $(".response-text2").css("display", "none");
+        }
         $('.your-details-content input[type="radio"]:checked').each(function() {
             address = $(this).val();
         });
         let serviceDate = $("#service-date").val();
 
         let data = {
-            addressLine: address,
+            addressId: address,
             date: serviceDate
         };
-
 
         $.ajax({
             type: "POST",
@@ -438,53 +443,71 @@ $(document).ready(function() {
             },
             dataType: "JSON",
             success: function(response) {
-                alert(response);
-
-                changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
-                payment_img.setAttribute("src", "assets/images/payment-white.png");
+                res = JSON.parse(JSON.stringify(response));
+                if (res == "Success") {
+                    changeTabs(payment, paymentTabContent, your_detail, yourDetailsTabContent);
+                    payment_img.setAttribute("src", "assets/images/payment-white.png");
+                } else {
+                    $(".response-text2").css("display", "block");
+                    $(".text-danger").html(res);
+                }
             }
         });
     });
 
+    var booked = 0;
     $('#complete-booking-btn').click(function(e) {
-        e.preventDefault();
-        var address = '';
-        $('.your-details-content input[type="radio"]:checked').each(function() {
-            address = $(this).val();
-        });
-        let serviceData = {
-            ZipcodeValue: postalCode,
-            serviceDate: $("#service-date").val(),
-            serviceTime: $("#s-time").val(),
-            serviceHours: $("#s-hours").val(),
-            totalCost: $('#total-amt').text(),
-            extraService: checkboxes,
-            comments: $("#comments").val(),
-            pets: hasPets,
-            address: address
-        };
+        if (booked == 1) {
+            $('#complete-booking-modal').modal('show');
+            $('#img-circle').css('background', '#fff');
+            $('#booking-img').attr('src', 'assets/images/red-cross.png');
+            $('#book-msg').html("This service is already Booked.");
+            $('#s-id').css('display', 'none');
+        } else {
+            e.preventDefault();
+            var address = '';
+            $('.your-details-content input[type="radio"]:checked').each(function() {
+                address = $(this).val();
+            });
+            let serviceData = {
+                ZipcodeValue: postalCode,
+                serviceDate: $("#service-date").val(),
+                serviceTime: $("#s-time").val(),
+                serviceHours: $("#s-hours").val(),
+                totalCost: $('#total-amt').text(),
+                extraService: checkboxes,
+                comments: $("#comments").val(),
+                pets: hasPets,
+                address: address
+            };
 
-        $.ajax({
-            type: "POST",
-            url: "http://localhost/Helperland/?controller=service&function=submitServiceReq",
-            data: {
-                serviceData: serviceData
-            },
-            dataType: "JSON",
-            success: function(response) {
-                if (response) {
-                    $('#complete-booking-modal').modal('show');
-                    $('#service-id').html(response['ServiceId']);
-                    console.log('service booked');
+            $.ajax({
+                type: "POST",
+                url: "http://localhost/Helperland/?controller=service&function=submitServiceReq",
+                data: {
+                    serviceData: serviceData
+                },
+                dataType: "JSON",
+                success: function(response) {
+                    if (response) {
+                        booked = 1;
+                        $('#complete-booking-modal').modal('show');
+                        $('#service-id').html(response['ServiceId']);
+                        console.log('service booked');
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     $('#complete-booking-modal-ok-btn').click(function(e) {
         $('#complete-booking-modal').modal('hide');
         window.location.href = "http://localhost/Helperland/?controller=home&function=bookService"
     });
+    $('#complete-booking-modal-ok-btn').modal({
+        backdrop: 'static',
+        keyboard: false
+    })
 });
 let showAddressDialog = () => {
     const addressDialog = document.getElementById("address-dialog");
@@ -516,7 +539,7 @@ function addAddress(response) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
             $(".user-address").append(
                 `<div class="address-radio form-group">
-                    <input type="radio" name="address" id="radio1" value="${response[i]['AddressLine1']}
+                    <input type="radio" name="address" id="radio1" value="${response[i]['AddressId']}
                     " ${checked}>
     
                     <div class="radio-labels">
@@ -689,12 +712,26 @@ function cardInfo() {
     let check4 = document.getElementById("check4").checked;
     let check5 = document.getElementById("check5").checked;
     let sHour = serviceHour[serviceHour.selectedIndex].value;
-    let currentDate = new Date().toISOString().slice(0, 10);
 
     let optionBed = bed.options[bed.selectedIndex];
     let optionBath = bath.options[bath.selectedIndex];
     let optionTime = sTime.options[sTime.selectedIndex];
     let optionHour = serviceHour[serviceHour.selectedIndex];
+
+    let selTime = parseInt(optionTime.value);
+    let selHour = parseInt(optionHour.value);
+
+    let total = selTime + selHour;
+
+    if (total >= 21) {
+        $('#error-total-time').html("Could not completed the service request, because service booking request is must be completed within 21:00 time");
+        $('#secondTabContinue-btn').prop('disabled', true);
+        $('#secondTabContinue-btn').css('cursor', 'no-drop');
+    } else {
+        $('#error-total-time').html("");
+        $('#secondTabContinue-btn').prop('disabled', false);
+        $('#secondTabContinue-btn').css('cursor', 'pointer');
+    }
 
     document.getElementById("s-date").innerHTML = serviceDate;
     document.getElementById("s-date2").innerHTML = serviceDate;

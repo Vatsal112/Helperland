@@ -1,3 +1,11 @@
+<?php
+    if(isset($_SESSION)){
+        if($_SESSION['userType']==2){
+            echo "<script>alert('service provider can not book a service');</script>";
+            echo "<script>window.location.href='$arr[base_url]';</script>";
+        }
+    }
+?>
 <div class="service-banner-img">
     <img src="assets/images/book-service-banner.jpg" alt="">
 </div>
@@ -11,6 +19,7 @@ include 'popup-modal/login-modal.php';
 
 <!-- Book service page sidebar for mobile screen start -->
 <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
+
     $now = time();
     if ($now > $_SESSION['expire']) {
         echo "<script>alert('Session is expired');</script>";
@@ -22,7 +31,7 @@ include 'popup-modal/login-modal.php';
     <section class="sidebar" id="sidebar">
         <div class="username">
             <p>Welcome, </p>
-            <b><?php echo $_SESSION['userName'];?></b>
+            <b><?php echo $_SESSION['userName']; ?></b>
         </div>
         <nav class="navigation">
             <div class="nav flex-column nav-tab" aria-orientation="vertical">
@@ -144,7 +153,7 @@ include 'popup-modal/login-modal.php';
                                 <div class="form-group mt-2">
                                     <input type="number" class="form-control" id="input-postalCode" placeholder="Postal Code">
                                     <div class="btn-availability">
-                                        <button type="submit" id="postalCode-btn">Check Availability</button>
+                                        <button type="submit" id="postalCode-btn" value="<?php $_SESSION['userType']?>">Check Availability</button>
                                     </div>
                                 </div>
                             </div>
@@ -179,17 +188,26 @@ include 'popup-modal/login-modal.php';
                                         <div class="service-datetime-input">
                                             <input type="date" name="" id="service-date" min="<?php echo date('Y-m-d'); ?>" onchange="cardInfo()">
                                             <select name="" id="s-time" onchange="cardInfo()">
-                                                <option value="08:00 AM">08:00 AM</option>
-                                                <option value="08:30 AM">08:30 AM</option>
-                                                <option value="09:00 AM">09:00 AM</option>
-                                                <option value="09:30 AM">09:30 AM</option>
-                                                <option value="10:00 AM">10:00 AM</option>
-                                                <option value="10:30 AM">10:30 AM</option>
-                                                <option value="11:00 AM">11:00 AM</option>
-                                                <option value="11:30 AM">11:30 AM</option>
-                                                <option value="12:00 PM">12:00 PM</option>
-                                                <option value="12:30 PM">12:30 PM</option>
-                                                <option value="01:00 PM">01:00 PM</option>
+                                                <option value="08:00">08:00 AM</option>
+                                                <option value="08:30">08:30 AM</option>
+                                                <option value="09:00">09:00 AM</option>
+                                                <option value="09:30">09:30 AM</option>
+                                                <option value="10:00">10:00 AM</option>
+                                                <option value="10:30">10:30 AM</option>
+                                                <option value="11:00">11:00 AM</option>
+                                                <option value="11:30">11:30 AM</option>
+                                                <option value="12:00">12:00 PM</option>
+                                                <option value="12:30">12:30 PM</option>
+                                                <option value="13:00">13:00 PM</option>
+                                                <option value="13:30">13:30 PM</option>
+                                                <option value="14:00">14:00 PM</option>
+                                                <option value="14:30">14:30 PM</option>
+                                                <option value="15:00">15:00 PM</option>
+                                                <option value="15:30">15:30 PM</option>
+                                                <option value="16:00">16:00 PM</option>
+                                                <option value="16:30">16:30 PM</option>
+                                                <option value="17:00">17:00 PM</option>
+                                                <option value="17:30">17:30 PM</option>
                                             </select>
                                         </div>
                                     </div>
@@ -222,6 +240,8 @@ include 'popup-modal/login-modal.php';
                                         </div>
                                     </div>
                                 </div>
+
+                                <p class="text-danger" id="error-total-time"></p>
 
 
                                 <div class="extra-services">
@@ -290,6 +310,9 @@ include 'popup-modal/login-modal.php';
                     <div class="tab-pane fade" id="your-details-tab" role="tabpanel" aria-labelledby="your-details">
                         <div class="your-details-content">
                             <span>Enter your contact details, so we can serve you in better way!</span>
+                            <div class="response-text2">
+                                <p id="response" class="text-danger"></p>
+                            </div>
                             <form method="POST">
 
                                 <div class="user-address" id="user-address">
@@ -435,11 +458,11 @@ include 'popup-modal/login-modal.php';
                                         </div>
                                         <div class="modal-body">
                                             <div class="logout-modal-content">
-                                                <div class="logout-green-circle">
-                                                    <img src="assets/images/ic-check.png" alt="">
+                                                <div class="logout-green-circle" id="img-circle">
+                                                    <img src="assets/images/ic-check.png" alt="" id="booking-img">
                                                 </div>
-                                                <h5>Booking has been successfully submitted</h5>
-                                                <p class="text-center">Service Request Id: <span class="s-id" id="service-id">8303</span></p>
+                                                <h5 id="book-msg">Booking has been successfully submitted</h5>
+                                                <p class="text-center" id="s-id">Service Request Id: <span class="s-id" id="service-id">8303</span></p>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
