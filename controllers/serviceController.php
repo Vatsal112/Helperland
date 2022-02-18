@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require 'phpmailer/mail.php';
 class serviceController
 {
     function __construct()
@@ -15,12 +16,25 @@ class serviceController
         if (isset($_POST)) {
             $result = $this->model->validateZipCode('zipcode', $_POST['postalCode']);
 
-            if ($result) {
-                echo json_encode($result);
-            } else {
-                $this->Err = $this->Err . 'Zipcode not found';
-                echo json_encode($this->Err);
-            }
+            $sp = $this->model->getServiceProviderDetails('user');
+
+            $emails = ['vatsaldendpara007@gmail.com','gajjarvineet21@gmail.com'];
+            $body = "hello";
+
+            // $mail = implode(",",$email);
+            
+            sendmail($emails,'test',$body,'');
+
+            // foreach($sp as $s){
+            //     echo $s['Email'];
+            // }
+
+            // if ($result) {
+            //     echo json_encode($result);
+            // } else {
+            //     $this->Err = $this->Err . 'Zipcode not found';
+            //     echo json_encode($this->Err);
+            // }
         } else {
             echo 'error occurred!! try again...';
         }

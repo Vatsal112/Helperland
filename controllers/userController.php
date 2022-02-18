@@ -163,7 +163,7 @@ class userController
                 $ins = $this->model->insert_Sp('user', $array);
                 $enc_id = password_hash($ins, PASSWORD_DEFAULT);
                 $body = "<p>Click on link to activate your account: <a href ='http://localhost/helperland/?controller=user&function=verifyAccount&id=$ins'>http://localhost/helperland/?controller=user&function=verifyAccount&id=$enc_id</a></p>";
-                sendmail($array['email'], 'Account Activation', $body, '');
+                sendmail([$array['email']], 'Account Activation', $body, '');
                 echo json_encode("We have send an account activation link for your account kindly check your mail.");
                 return $ins;
             } else {
