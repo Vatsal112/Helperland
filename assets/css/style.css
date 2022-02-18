@@ -80,10 +80,6 @@ body {
     color: white !important;
 }
 
-.dropdown-toggle:hover {
-    color: yellow !important;
-}
-
 .main-screen .banner-svgs {
     position: absolute;
     bottom: 10%;
@@ -109,7 +105,7 @@ body {
 
 .main-screen .dropdown-menu {
     right: 10px;
-    margin-top: 5px !important;
+    top: 60px !important;
 }
 
 .main-text {
@@ -146,6 +142,18 @@ body {
     align-items: center;
 }
 
+.main-screen .navbar-nav .notification-icon span {
+    position: absolute;
+    right: 7.5%;
+    top: 30%;
+    color: white;
+    height: 23px;
+    width: 20px;
+    text-align: center;
+    background-color: red;
+    border-radius: 50%;
+}
+
 .mainscreen-btn {
     width: 225px;
     height: 54px;
@@ -159,6 +167,14 @@ body {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.main-screen .noti-user-icons .user-icon button {
+    background-color: transparent;
+}
+
+.main-screen .noti-user-icons .dropdown-toggle::after {
+    display: none;
 }
 
 .banner-svgs .svgs {
@@ -452,7 +468,8 @@ body {
 }
 
 .status-message,
-.response-text {
+.response-text1,
+.response-text2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -463,18 +480,21 @@ body {
     display: none;
 }
 
-.response-text {
+.response-text1,
+.response-text2 {
     background-color: #fcdfe1;
     display: none;
 }
 
 .status-message p,
-.response-text p {
+.response-text1 p,
+.response-text2 p {
     margin-bottom: 0;
 }
 
 .status-message i,
-.response-text i {
+.response-text1 i,
+.response-text2 i {
     cursor: pointer;
 }
 
@@ -694,7 +714,7 @@ body {
 
 /*---------- Prices Section -----------*/
 
-.prices-banner .prices-banner-img img {
+.prices-banner-img img {
     margin-top: 2rem;
     max-width: 100%;
 }
@@ -857,10 +877,9 @@ body {
 
 /*----------- Contact Page ---------------*/
 
-.contact-banner .prices-banner-img img,
-.book-service-banner .banner-img img {
-    margin-top: 3.7rem;
-    max-width: 100%;
+.contact-banner .prices-banner-img img {
+    margin-top: 3.7rem !important;
+    max-width: 100% !important;
 }
 
 .contact-info {
@@ -941,12 +960,13 @@ body {
     font-weight: bold;
 }
 
-.map {
-    position: relative;
-}
 
-.map-img img {
-    max-width: 100%;
+/* .map {
+    position: relative;
+} */
+
+.googleMap iframe {
+    width: 100%;
     margin-top: 4rem;
     margin-bottom: 2rem;
 }
@@ -1155,6 +1175,11 @@ body {
 
 /* --------------sp-dashboard---------------- */
 
+.service-banner-img img {
+    max-width: 100%;
+    margin-top: 2.2rem;
+}
+
 .upcoming-service-banner .navbar,
 .customer-screen-banner .navbar {
     z-index: 11;
@@ -1171,7 +1196,8 @@ body {
  } */
 
 .upcoming-service-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::before,
-.customer-screen-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::before {
+.customer-screen-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::before,
+.main-screen .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::before {
     position: absolute;
     top: 0;
     content: "";
@@ -1188,7 +1214,8 @@ body {
 }
 
 .upcoming-service-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::after,
-.customer-screen-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::after {
+.customer-screen-banner .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::after,
+.main-screen .navbar-expand-lg .navbar-nav .dropdown .dropdown-menu::after {
     position: absolute;
     top: 0;
     content: "";
@@ -1207,7 +1234,9 @@ body {
 
 .upcoming-service-banner .faq-nav .navbar-nav,
 .upcoming-service-banner .faq-nav .navbar-nav .noti-user-icons,
-.customer-screen-banner .faq-nav .navbar-nav .noti-user-icons {
+.customer-screen-banner .faq-nav .navbar-nav .noti-user-icons,
+.main-screen .navbar-nav .noti-user-icons,
+.main-screen .navbar-nav {
     display: flex;
     align-items: center;
 }
@@ -1215,8 +1244,8 @@ body {
 .upcoming-service-banner .faq-nav .navbar-nav .notification-icon span,
 .customer-screen-banner .faq-nav .navbar-nav .notification-icon span {
     position: absolute;
-    right: 7%;
-    top: 3.5%;
+    right: 8%;
+    top: 5.5%;
     color: white;
     height: 23px;
     width: 20px;
@@ -1269,7 +1298,8 @@ body {
 }
 
 .upcoming-service-banner .faq-nav .noti-user-icons .notification-icon,
-.customer-screen-banner .faq-nav .noti-user-icons .notification-icon {
+.customer-screen-banner .faq-nav .noti-user-icons .notification-icon,
+.main-screen .noti-user-icons .notification-icon {
     border-left: 1px solid white;
     border-right: 1px solid white;
 }
@@ -1284,6 +1314,7 @@ body {
     outline: none;
     border: none;
     margin-right: 10px;
+    margin-left: 10px;
 }
 
 .noti-user-icons .user-icon .sp-down-arrow {
@@ -2705,6 +2736,7 @@ body {
     text-align: center;
     font-size: 18px;
     position: relative;
+    pointer-events: none;
 }
 
 .booking-tabs .nav-tabs .nav-link img {
@@ -2740,6 +2772,10 @@ body {
 .tab-content .payment-tab-content span {
     color: #4f4f4f;
     font-weight: 600;
+}
+
+.btn-sm-payment-summary button {
+    display: none;
 }
 
 .tab-content .setup-service-content .form-group {
@@ -3167,7 +3203,8 @@ body {
     font-weight: 600;
 }
 
-.main-content .your-details-content .address-radio .radio-text {
+.main-content .your-details-content .address-radio .radio-text,
+.main-content .your-details-content .address-radio .radio-text-phone {
     color: #646464;
     font-weight: normal;
 }

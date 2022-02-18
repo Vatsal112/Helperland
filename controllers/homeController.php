@@ -50,5 +50,11 @@ class homeController {
         include 'views/header.php';
         include 'views/popup-modal/new-password.php';
     }
+    function bookService(){
+        $title='Book a Service';
+        include 'common.php';
+        include 'views/header.php';
+        include 'views/book-service.php';
+    }
     
 }

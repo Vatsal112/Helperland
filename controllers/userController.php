@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'phpmailer/mail.php';
 
 class userController
@@ -13,7 +14,7 @@ class userController
 
     function submit_contactForm()
     {
-        if (isset($_POST['submit'])) {
+        if (isset($_POST)) {
             $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&status=1';
 
             $array = [
@@ -25,12 +26,18 @@ class userController
                 'message' => $_POST['msg-area'],
                 'createdOn' => date('Y-m-d H:i:s'),
             ];
-            // $this->validateFields($array['firstname'], $array['lastname'],$array['phone']);
-            // $this->validatePhone($array['phone']);
+
             $this->validateContactMessage($array['message']);
 
-            if (sizeof($this->Err) > 0) {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . implode(",", $this->Err));
+            if (!preg_match("/^[a-zA-Z ]*$/", $array['firstname']) && !preg_match("/^[a-zA-Z ]*$/", $array['lastname'])) {
+                $this->Err =  "Only letters and white space allowed in name field" . "<br>";
+            }
+            if (!preg_match('/^[0-9]{10}+$/', $array['phone'])) {
+                $this->Err = $this->Err  . "phone number size must be 10." . "<br>";
+            }
+
+            if (!$this->Err == '') {
+                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . $this->Err);
             } else {
                 $ins = $this->model->insert_Contactus('contactus', $array);
                 header('Location: ' . $arr['base_url']);
@@ -60,8 +67,8 @@ class userController
     function validateContactMessage($array)
     {
         if (!preg_match("/^[a-zA-Z ]*$/", $array)) {
-            $Err['Error'] =  "Only letters and white space allowed in Message field." . "</br>";
-            echo json_encode($Err);
+            $this->Err = $this->Err . "Only letters and white space allowed in Message field." . "</br>";
+
         }
     }
 
@@ -196,9 +203,23 @@ class userController
 
             $pass = password_verify($password, $records['Password']);
 
-            if ($pass == 1 && $records['Status'] == 1) {
-                echo json_encode("Successfully Login.");
-                // echo "<script>window.location.href = 'http://localhost/Helperland';</script>";
+            if ($pass == 1 && $records['Status'] == 1 ) {
+
+               if(isset($_POST['remember'])){
+                   setcookie('email',$_POST['email'],time()+(86400*7));
+                   setcookie('pass',$_POST['pass'],time()+(86400*7));
+                   setcookie('remember-me','checked',time()+(86400*7));
+               }
+                $_SESSION['islogin']=true;
+                $_SESSION['userId'] = $records['UserId'];  
+                $_SESSION['userName'] = $records['FirstName'];
+                $_SESSION['userType'] = $records['UserTypeId'];
+                $_SESSION['start'] = time();
+                $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
+                $res["status"] = true;
+                $res["message"] = "Successfully Login.";
+                $res["loginToken"] = session_id();
+                echo json_encode($res); 
             } else if ($pass == 1 && $records['Status'] == 0) {
                 $this->Err = $this->Err .  "You have not confirmed your account yet. Please check you inbox and verify your id.";
                 echo json_encode($this->Err);
@@ -245,5 +266,10 @@ class userController
                 echo "Password Changed Successfully";
             }
         }
+    }
+
+    function userLogout(){
+        unset($_SESSION['islogin']);
+        echo 'success';
     }
 }
