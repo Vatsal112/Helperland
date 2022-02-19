@@ -16,25 +16,12 @@ class serviceController
         if (isset($_POST)) {
             $result = $this->model->validateZipCode('zipcode', $_POST['postalCode']);
 
-            $sp = $this->model->getServiceProviderDetails('user');
-
-            $emails = ['vatsaldendpara007@gmail.com','gajjarvineet21@gmail.com'];
-            $body = "hello";
-
-            // $mail = implode(",",$email);
-            
-            sendmail($emails,'test',$body,'');
-
-            // foreach($sp as $s){
-            //     echo $s['Email'];
-            // }
-
-            // if ($result) {
-            //     echo json_encode($result);
-            // } else {
-            //     $this->Err = $this->Err . 'Zipcode not found';
-            //     echo json_encode($this->Err);
-            // }
+            if ($result) {
+                echo json_encode($result);
+            } else {
+                $this->Err = $this->Err . 'Zipcode not found';
+                echo json_encode($this->Err);
+            }
         } else {
             echo 'error occurred!! try again...';
         }
@@ -139,6 +126,7 @@ class serviceController
             $data = $_POST['serviceData'];
 
             $serviceId = mt_rand(1000, 9999);
+          
 
 
             date_default_timezone_set("Asia/Calcutta");
@@ -167,6 +155,12 @@ class serviceController
             $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
             $address = $this->model->addServiceAddress('servicerequestaddress', $lastId, $serviceAddressData);
             $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
+            $sp = $this->model->getServiceProviderDetails('user');
+             
+             foreach($sp as $s){
+                 $body = "Dear Service Provider : ".$s['FirstName']."<br>"."New service request is arrived for you if you want to proceed then click on this link.";
+                 sendmail($s['Email'],'New Service',$body,'');
+             }
 
             if (isset($data['extraService'])) {
                 $extraService = implode("", $data['extraService']);
