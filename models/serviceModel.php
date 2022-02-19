@@ -87,4 +87,11 @@ class serviceModel{
         $stmt->execute();
         return $this->conn->lastInsertId(); 
     }
+
+    function getServiceProviderDetails($table){
+        $stmt = $this->conn->prepare("SELECT * FROM $table where UserTypeId = 2");
+        $stmt->execute();
+        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $record;
+    }
 }

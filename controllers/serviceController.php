@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require 'phpmailer/mail.php';
 class serviceController
 {
     function __construct()
@@ -125,6 +126,7 @@ class serviceController
             $data = $_POST['serviceData'];
 
             $serviceId = mt_rand(1000, 9999);
+          
 
 
             date_default_timezone_set("Asia/Calcutta");
@@ -153,6 +155,12 @@ class serviceController
             $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
             $address = $this->model->addServiceAddress('servicerequestaddress', $lastId, $serviceAddressData);
             $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
+            $sp = $this->model->getServiceProviderDetails('user');
+             
+             foreach($sp as $s){
+                 $body = "Dear Service Provider : ".$s['FirstName']."<br>"."New service request is arrived for you if you want to proceed then click on this link.";
+                 sendmail($s['Email'],'New Service',$body,'');
+             }
 
             if (isset($data['extraService'])) {
                 $extraService = implode("", $data['extraService']);
