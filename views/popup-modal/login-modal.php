@@ -111,7 +111,11 @@ include 'forget-pass-modal.php';
                     res = JSON.parse(JSON.stringify(response));
                     if (response.status) {
                         console.log(response);
-                        window.location.href = '<?= "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>';
+                        if(response.type == 2){
+                            window.location.href = "http://localhost/Helperland/?controller=home&function=servicerDashboard";
+                        }else{
+                            window.location.href = "http://localhost/Helperland/?controller=home&function=customerDashboard";
+                        }
                     } else {
                         $('.response-text').css('display', 'block');
                         $('.text-danger').html(res);

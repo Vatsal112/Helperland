@@ -18,90 +18,9 @@ include 'popup-modal/login-modal.php';
 <!-- Book service page banner end -->
 
 <!-- Book service page sidebar for mobile screen start -->
-<?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire'])) {
-
-    $now = time();
-    if ($now > $_SESSION['expire']) {
-        echo "<script>alert('Session is expired');</script>";
-        unset($_SESSION['islogin']);
-        echo "<script>window.location.href='$arr[base_url]';</script>";
-    }
+ <?php 
+    include 'views/sidebar.php';
 ?>
-
-    <section class="sidebar" id="sidebar">
-        <div class="username">
-            <p>Welcome, </p>
-            <b><?php echo $_SESSION['userName']; ?></b>
-        </div>
-        <nav class="navigation">
-            <div class="nav flex-column nav-tab" aria-orientation="vertical">
-                <a class="nav-link" href="">Dashboard</a>
-                <a class="nav-link" href="">Service History</a>
-                <a class="nav-link" href="">Service Schedule</a>
-                <a class="nav-link" href="">Favourite Pros</a>
-                <a class="nav-link" href="">Invoices</a>
-                <a class="nav-link" href="">Notification</a>
-                <a class="nav-link" href="">My Settings</a>
-                <a class="nav-link" data-target="#logout-modal" data-toggle="modal">Logout</a>
-            </div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="">Book Now</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Prices.html">Prices & Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Warranty</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
-
-            <div class="sidebar-social-icons">
-                <i class="fa fa-facebook fb-icon"></i>
-                <i class="fa fa-instagram insta-icon"></i>
-            </div>
-        </nav>
-    </section>
-<?php } else { ?>
-    <section class="sidebar" id="sidebar">
-        <div class="book-service-sidebar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" href="" onclick="closeSideBar()">Book Now</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="Prices.html" onclick="closeSideBar()">Prices & Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="" onclick="closeSideBar()">Warranty</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="" onclick="closeSideBar()">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html" onclick="closeSideBar()">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#login-modal" onclick="closeSideBar()">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sp-reg.html" onclick="closeSideBar()">Become a Helper</a>
-                </li>
-            </ul>
-
-            <div class="sidebar-social-icons">
-                <i class="fa fa-facebook fb-icon"></i>
-                <i class="fa fa-instagram insta-icon"></i>
-            </div>
-        </div>
-    </section>
-<?php } ?>
 <!-- Book service page sidebar for mobile screen end -->
 
 <!-- Book service page content start -->
@@ -188,26 +107,26 @@ include 'popup-modal/login-modal.php';
                                         <div class="service-datetime-input">
                                             <input type="date" name="" id="service-date" min="<?php echo date('Y-m-d'); ?>" onchange="cardInfo()">
                                             <select name="" id="s-time" onchange="cardInfo()">
-                                                <option value="08:00">08:00 AM</option>
-                                                <option value="08:30">08:30 AM</option>
-                                                <option value="09:00">09:00 AM</option>
-                                                <option value="09:30">09:30 AM</option>
-                                                <option value="10:00">10:00 AM</option>
-                                                <option value="10:30">10:30 AM</option>
-                                                <option value="11:00">11:00 AM</option>
-                                                <option value="11:30">11:30 AM</option>
-                                                <option value="12:00">12:00 PM</option>
-                                                <option value="12:30">12:30 PM</option>
-                                                <option value="13:00">13:00 PM</option>
-                                                <option value="13:30">13:30 PM</option>
-                                                <option value="14:00">14:00 PM</option>
-                                                <option value="14:30">14:30 PM</option>
-                                                <option value="15:00">15:00 PM</option>
-                                                <option value="15:30">15:30 PM</option>
-                                                <option value="16:00">16:00 PM</option>
-                                                <option value="16:30">16:30 PM</option>
-                                                <option value="17:00">17:00 PM</option>
-                                                <option value="17:30">17:30 PM</option>
+                                                <option value="8">08:00 AM</option>
+                                                <option value="8.5">08:30 AM</option>
+                                                <option value="9">09:00 AM</option>
+                                                <option value="9.5">09:30 AM</option>
+                                                <option value="10">10:00 AM</option>
+                                                <option value="10.5">10:30 AM</option>
+                                                <option value="11">11:00 AM</option>
+                                                <option value="11.5">11:30 AM</option>
+                                                <option value="12">12:00 PM</option>
+                                                <option value="12.5">12:30 PM</option>
+                                                <option value="13">13:00 PM</option>
+                                                <option value="13.5">13:30 PM</option>
+                                                <option value="14">14:00 PM</option>
+                                                <option value="14.5">14:30 PM</option>
+                                                <option value="15">15:00 PM</option>
+                                                <option value="15.5">15:30 PM</option>
+                                                <option value="16">16:00 PM</option>
+                                                <option value="16.5">16:30 PM</option>
+                                                <option value="17">17:00 PM</option>
+                                                <option value="17.5">17:30 PM</option>
                                             </select>
                                         </div>
                                     </div>
@@ -449,29 +368,9 @@ include 'popup-modal/login-modal.php';
                             </div>
                         </div>
                         <!-- Book service page complete booking modal start -->
-                        <div class="modal fade logout-modal" id="complete-booking-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-part">
-                                        <div class="modal-header d-block">
-                                            <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="logout-modal-content">
-                                                <div class="logout-green-circle" id="img-circle">
-                                                    <img src="assets/images/ic-check.png" alt="" id="booking-img">
-                                                </div>
-                                                <h5 id="book-msg">Booking has been successfully submitted</h5>
-                                                <p class="text-center" id="s-id">Service Request Id: <span class="s-id" id="service-id">8303</span></p>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn-logout-ok" id="complete-booking-modal-ok-btn" data-dismiss="modal">Ok</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php 
+                            include 'popup-modal/complete-booking-modal.php';
+                        ?>
                         <!-- Book service page complete booking modal end -->
                     </div>
                     <!-- Book service page main tab payments end -->

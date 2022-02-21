@@ -103,7 +103,7 @@ class userController
                 $ins = $this->model->insert_Customer('user', $array);
                 $enc_id = password_hash($ins, PASSWORD_DEFAULT);
                 $body = "<p>Click on link to activate your account: <a href ='http://localhost/helperland/?controller=user&function=verifyAccount&id=$ins'>http://localhost/helperland/?controller=user&function=verifyAccount&id=$enc_id</a></p>";
-                sendmail($array['email'], 'Account Activation', $body, '');
+                sendmail([$array['email']], 'Account Activation', $body, '');
                 echo json_encode("We have send an account activation link for your account kindly check your mail.");
             } else {
                 echo json_encode($this->Err);
@@ -163,7 +163,7 @@ class userController
                 $ins = $this->model->insert_Sp('user', $array);
                 $enc_id = password_hash($ins, PASSWORD_DEFAULT);
                 $body = "<p>Click on link to activate your account: <a href ='http://localhost/helperland/?controller=user&function=verifyAccount&id=$ins'>http://localhost/helperland/?controller=user&function=verifyAccount&id=$enc_id</a></p>";
-                sendmail($array['email'], 'Account Activation', $body, '');
+                sendmail([$array['email']], 'Account Activation', $body, '');
                 echo json_encode("We have send an account activation link for your account kindly check your mail.");
                 return $ins;
             } else {
@@ -219,6 +219,7 @@ class userController
                 $res["status"] = true;
                 $res["message"] = "Successfully Login.";
                 $res["loginToken"] = session_id();
+                $res['type'] = $records['UserTypeId'];
                 echo json_encode($res); 
             } else if ($pass == 1 && $records['Status'] == 0) {
                 $this->Err = $this->Err .  "You have not confirmed your account yet. Please check you inbox and verify your id.";
@@ -241,7 +242,7 @@ class userController
             if ($records > 0) {
 
                 $body = "<p>Click on link to change your password: <a href ='http://localhost/helperland/?controller=home&function=changePassword&id=$records[UserId]'>http://localhost/helperland/?controller=home&function=changePassword&id=$records[Password]</a></p>";
-                sendmail($_POST['email'], 'Forget Password', $body, '');
+                sendmail([$_POST['email']], 'Forget Password', $body, '');
                 echo json_encode("An email has been sent to your account. Click on the link in received email to reset the password.");
             } else {
                 $this->Err = $this->Err . "Email not exits";
@@ -269,6 +270,7 @@ class userController
     }
 
     function userLogout(){
+        $_SESSION['islogin'] = false;
         unset($_SESSION['islogin']);
         echo 'success';
     }

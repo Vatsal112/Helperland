@@ -53,7 +53,7 @@ session_start();
                 <header>
                     <nav class="faq-nav navbar navbar-expand-lg fixed-top" id="faq-navbar">
 
-                        <a class="navbar-brand" href="index.html"><img src="assets/images/logo-small.png" alt="" class="logo" id="faq-nav"></a>
+                        <a class="navbar-brand" href="index.php"><img src="assets/images/logo-small.png" alt="" class="logo" id="faq-nav"></a>
                         <div class="notification-icon-smallscreen">
                             <nav class="navbar">
                                 <ul class="navbar-nav">
@@ -99,9 +99,9 @@ session_start();
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>"  onclick="removeActive(event)">My Dashborad</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" id="pills-settings-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>"  onclick="removeActive(event)">My Setting</a>
                                             <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
                                         </div>
                                     </div>
@@ -117,7 +117,7 @@ session_start();
                 <header>
                     <nav class="faq-nav navbar navbar-expand-lg fixed-top" id="faq-navbar">
 
-                        <a class="navbar-brand" href="index.html"><img src="assets/images/logo-small.png" alt="" class="logo" id="faq-nav"></a>
+                        <a class="navbar-brand" href="index.php"><img src="assets/images/logo-small.png" alt="" class="logo" id="faq-nav"></a>
                         <div class="notification-icon-smallscreen">
                             <nav class="navbar">
                                 <ul class="navbar-nav">
@@ -160,9 +160,9 @@ session_start();
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Dashborad</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" id="pills-settings-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Setting</a>
                                             <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
                                         </div>
                                     </div>

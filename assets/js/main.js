@@ -297,8 +297,8 @@ $(document).ready(function() {
                 dataType: "JSON",
                 success: function(response) {
                     res = JSON.parse(JSON.stringify(response));
-                    if (response) {
-                        postalCode = response["ZipcodeValue"];
+                    if (response.status) {
+                        postalCode = response["ZipCodeValue"];
 
                         for (let i = 0; i < perCleaning.length; i++) {
                             perCleaning[i].innerHTML = "$54";

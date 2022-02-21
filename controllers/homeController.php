@@ -56,5 +56,20 @@ class homeController {
         include 'views/header.php';
         include 'views/book-service.php';
     }
+
+    function customerDashboard(){
+        $title='Customer Dashboard';
+        include 'common.php';
+        include 'views/header.php';
+        include 'views/customer-dashboard.php';
+    }
+
+    
+    function servicerDashboard(){
+        $title='Servicer Dashboard';
+        include 'common.php';
+        include 'views/header.php';
+        include 'views/upcoming-service.php';
+    }
     
 }

@@ -17,9 +17,11 @@ class serviceController
             $result = $this->model->validateZipCode('zipcode', $_POST['postalCode']);
 
             if ($result) {
-                echo json_encode($result);
+                $resp['status'] =  true;
+                $resp['ZipCodeValue'] = $result['ZipcodeValue'];
+                echo json_encode($resp);
             } else {
-                $this->Err = $this->Err . 'Zipcode not found';
+                $this->Err = $this->Err . 'We are not providing service in this area. We will notify you if any helper would start working near your area.';
                 echo json_encode($this->Err);
             }
         } else {
@@ -122,21 +124,21 @@ class serviceController
     function submitServiceReq()
     {
         if (isset($_POST)) {
-           
+            $emails = [];
             $data = $_POST['serviceData'];
 
             $serviceId = mt_rand(1000, 9999);
-          
 
-
-            date_default_timezone_set("Asia/Calcutta");
-            $startdate = $data['serviceDate'];
-            $dateTime = date($startdate." ".'H:i:s');
+            $startDate = $data["serviceDate"];
+            $cleaningStartTime = $data["serviceTime"];
+            $date = new DateTime($startDate);
+            $date->setTime(floor($cleaningStartTime), floor($cleaningStartTime) == $cleaningStartTime ? "00" : (("0." . substr($cleaningStartTime, 2) * 60) * 100));
+            $cleaningStartDate = $date->format('Y-m-d H:i:s');
 
             $serviceData = [
                 "UserId" => $_SESSION['userId'],
                 "ServiceId" => $serviceId,
-                "ServiceStartDate" => $dateTime,
+                "ServiceStartDate" => $cleaningStartDate,
                 "ZipCode" => $data['ZipcodeValue'],
                 "ServiceHours" => $data['serviceHours'],
                 "SubTotal" => substr($data['totalCost'], 1),
@@ -145,8 +147,8 @@ class serviceController
                 "PaymentDue" => 0,
                 "HasPets" => $data['pets'],
                 "Status" => 1,
-                "CreatedDate" => $dateTime,
-                "ModifiedDate" => $dateTime,
+                "CreatedDate" => $cleaningStartDate,
+                "ModifiedDate" => $cleaningStartDate,
                 "Distance" => 0
             ];
 
@@ -156,11 +158,13 @@ class serviceController
             $address = $this->model->addServiceAddress('servicerequestaddress', $lastId, $serviceAddressData);
             $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
             $sp = $this->model->getServiceProviderDetails('user');
-             
-             foreach($sp as $s){
-                 $body = "Dear Service Provider : ".$s['FirstName']."<br>"."New service request is arrived for you if you want to proceed then click on this link.";
-                 sendmail($s['Email'],'New Service',$body,'');
-             }
+
+
+            foreach ($sp as $s) {
+                array_push($emails, $s['Email']);
+            }
+            $body = "New service request " . $getReq['ServiceId'] . " is arrived for you.";
+            sendmail($emails, 'New Service', $body, '');
 
             if (isset($data['extraService'])) {
                 $extraService = implode("", $data['extraService']);
