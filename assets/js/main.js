@@ -421,6 +421,7 @@ $(document).ready(function() {
 
     $('#your-details-continue').click(function(e) {
         e.preventDefault();
+
         var address = '';
         if ($(".response-text2").css("display", "block")) {
             $(".response-text2").css("display", "none");
@@ -464,6 +465,7 @@ $(document).ready(function() {
             $('#book-msg').html("This service is already Booked.");
             $('#s-id').css('display', 'none');
         } else {
+            $('#complete-booking-btn').prop('disabled', true);
             e.preventDefault();
             var address = '';
             $('.your-details-content input[type="radio"]:checked').each(function() {
@@ -507,7 +509,7 @@ $(document).ready(function() {
     $('#complete-booking-modal-ok-btn').modal({
         backdrop: 'static',
         keyboard: false
-    })
+    });
 });
 let showAddressDialog = () => {
     const addressDialog = document.getElementById("address-dialog");

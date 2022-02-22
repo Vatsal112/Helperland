@@ -9,6 +9,8 @@
     include 'controllers/custDashboardController.php';
     $ser = new custDashboardController();
     $services = $ser->newServices();
+    $address = $ser->getAddress($services);
+    $extra = $ser->getExtraServices($services);
     ?>
     <!--customer screen banner end-->
 
@@ -67,20 +69,124 @@
                                     <tbody>
                                         <?php
                                         foreach ($services as $s) {
-                                            $id = $s['ServiceId'];
-                                            $sDate = $s['ServiceStartDate'];
+                                            if ($s['Status'] == 1) {
+                                                $id = $s['ServiceId'];
+                                                $datetime = new DateTime($s['ServiceStartDate']);
+                                                $sDate = $datetime->format('Y-m-d');
+                                                $sTime = $datetime->format('H:i');
+                                                $sHours = $s['ServiceHours'];
+                                                $time = (strtotime($sTime) + (60 * 60 * $sHours));
+                                                $endtime = date('H:i', $time);
+                                                $payment = $s['TotalCost'];
+                                                $comments = $s['Comments'];
+                                                $pets = $s['HasPets'];
                                         ?>
-                                            <tr>
+                                                <tr>
 
-                                                <td><?php echo $id; ?></td>
-                                            <?php } ?>
+                                                    <td><?php echo $id; ?></td>
+
+                                                    <td>
+                                                        <div class="service-info service-modal-toggler" data-target="#current-service-modal" data-toggle="modal"  data-dismiss="modal" data-service='<?php echo json_encode($s); ?>'>
+                                                            <div class="service-datetime-icons">
+                                                                <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
+                                                                <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
+
+                                                                <?php
+                                                                include 'popup-modal/current-service-modal.php';
+                                                                ?>
+                                                            </div>
+                                                            <div class="service-datetime-texts">
+                                                                <a href="#"><strong><?php echo $sDate; ?></strong></a>
+                                                                <a href="#">
+                                                                    <p><?php echo $sTime . "-" . $endtime; ?></p>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment-content">
+                                                            <b>$<?php echo $payment; ?></b>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="btn-reschedule" data-toggle="modal" data-target="#reschedule-modal">Reschedule</button>
+                                                            <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLongTitle">Reschedule Service Request</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <span>Select new date & time</span>
+                                                                            <div class="select-date-time">
+                                                                                <div class="form-group">
+                                                                                    <input type="date" name="" id="" class="date-picker">
+                                                                                    <select name="" id="">
+                                                                                        <option value="">08:00</option>
+                                                                                        <option value="">08:30</option>
+                                                                                        <option value="">09:00</option>
+                                                                                        <option value="">09:30</option>
+                                                                                        <option value="">10:00</option>
+                                                                                        <option value="">10:30</option>
+                                                                                        <option value="">11:00</option>
+                                                                                        <option value="">11:30</option>
+                                                                                        <option value="">12:00</option>
+                                                                                        <option value="">12:30</option>
+                                                                                        <option value="">01:00</option>
+                                                                                        <option value="">01:30</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn-modal-accept">Update</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn-cancel" data-target="#cancel-modal" data-toggle="modal">Cancel</button>
+                                                            <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Service Request</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <span>Why you want to cancel the service request?</span>
+                                                                            <div class="form-group">
+                                                                                <textarea name=""></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn-modal-accept">Cancel</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                        <?php }
+                                        } ?>
+                                        <tr>
+                                            <td>123456</td>
                                             <td>
                                                 <div class="service-info">
                                                     <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <!--customer screen dashboard modal start-->
-                                                        <div class="modal fade" id="current-service-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
+                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
+                                                        <div class="modal fade" id="current-service-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-part">
@@ -96,27 +202,53 @@
                                                                         </div>
 
                                                                         <div class="modal-body">
-                                                                            <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                            <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                            <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
+                                                                            <div class="modal-information">
+                                                                                <span class="body-text"><b>Service Id:</b> 8803.</span>
+                                                                                <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
+                                                                                <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
 
-                                                                            <div class="customer-details">
+                                                                                <div class="customer-details">
 
-                                                                                <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
-                                                                                <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
+                                                                                    <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
+                                                                                    <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
+                                                                                    <span class="body-text"><b>Phone:</b> +41 2244889910</span>
+                                                                                    <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
 
+                                                                                </div>
+
+                                                                                <div class="customer-details">
+                                                                                    <b>Comments</b>
+                                                                                    <p class="mb-0 ">hello</p>
+
+                                                                                    <div class="pets">
+                                                                                        <img src="assets/images/included.png" alt=" ">
+                                                                                        <p>I have Pets at home.</p>
+                                                                                    </div>
+
+                                                                                </div>
                                                                             </div>
 
-                                                                            <div class="customer-details">
-                                                                                <b>Comments</b>
-                                                                                <p class="mb-0 ">hello</p>
+                                                                            <div class="modal-sp-details">
+                                                                                <h4>Service Provider Details</h4>
+                                                                                <div class="sp-content">
+                                                                                    <div class="sp-avatar">
+                                                                                        <img src="assets/images/avatar-hat.png" alt="">
+                                                                                        <p class="mt-1">16 cleanings</p>
+                                                                                    </div>
+                                                                                    <div class="sp-name-rating">
+                                                                                        <b>John Doe</b>
+                                                                                        <div class="sp-rating">
+                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                                                            <img src="assets/images/grey-small-star.png" alt="">
 
-                                                                                <div class="pets">
-                                                                                    <img src="assets/images/included.png" alt=" ">
-                                                                                    <p>I have Pets at home.</p>
+                                                                                        </div>
+                                                                                        <span>3.67</span>
+                                                                                    </div>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -129,18 +261,32 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--customer screen dashboard modal end-->
                                                     </div>
                                                     <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal">
+                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><strong>09/04/2018</strong></a>
+                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2">
                                                             <p>12:00 - 18:00</p>
                                                         </a>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
-
+                                                <div class="sp-content">
+                                                    <div class="sp-avatar">
+                                                        <img src="assets/images/avatar-hat.png" alt="">
+                                                    </div>
+                                                    <div class="sp-name-rating">
+                                                        <b>John Doe</b>
+                                                        <div class="sp-rating">
+                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                            <img src="assets/images/yellow-small-star.png" alt="">
+                                                            <img src="assets/images/grey-small-star.png" alt="">
+                                                            <span>3.67</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="payment-content">
@@ -212,187 +358,7 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            </tr>
-                                            <tr>
-                                                <td>123456</td>
-                                                <td>
-                                                    <div class="service-info">
-                                                        <div class="service-datetime-icons">
-                                                            <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                            <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                            <div class="modal fade" id="current-service-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-part">
-                                                                            <div class="modal-header d-block">
-                                                                                <div class="d-flex align-items-center">
-                                                                                    <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                    <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                                <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                            </div>
-
-                                                                            <div class="modal-body">
-                                                                                <div class="modal-information">
-                                                                                    <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                                    <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                                    <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
-
-                                                                                    <div class="customer-details">
-
-                                                                                        <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                        <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
-                                                                                        <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                        <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-
-                                                                                    </div>
-
-                                                                                    <div class="customer-details">
-                                                                                        <b>Comments</b>
-                                                                                        <p class="mb-0 ">hello</p>
-
-                                                                                        <div class="pets">
-                                                                                            <img src="assets/images/included.png" alt=" ">
-                                                                                            <p>I have Pets at home.</p>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                </div>
-
-                                                                                <div class="modal-sp-details">
-                                                                                    <h4>Service Provider Details</h4>
-                                                                                    <div class="sp-content">
-                                                                                        <div class="sp-avatar">
-                                                                                            <img src="assets/images/avatar-hat.png" alt="">
-                                                                                            <p class="mt-1">16 cleanings</p>
-                                                                                        </div>
-                                                                                        <div class="sp-name-rating">
-                                                                                            <b>John Doe</b>
-                                                                                            <div class="sp-rating">
-                                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                                <img src="assets/images/grey-small-star.png" alt="">
-
-                                                                                            </div>
-                                                                                            <span>3.67</span>
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-modal-accept">
-                                                                                    <img src="assets/images/reschedule-icon-small.png" alt="">Reschedule</button>
-                                                                                <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="service-datetime-texts">
-                                                            <a href="#" data-toggle="modal" data-target="#current-service-modal2"><strong>09/04/2018</strong></a>
-                                                            <a href="#" data-toggle="modal" data-target="#current-service-modal2">
-                                                                <p>12:00 - 18:00</p>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="sp-content">
-                                                        <div class="sp-avatar">
-                                                            <img src="assets/images/avatar-hat.png" alt="">
-                                                        </div>
-                                                        <div class="sp-name-rating">
-                                                            <b>John Doe</b>
-                                                            <div class="sp-rating">
-                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                <img src="assets/images/grey-small-star.png" alt="">
-                                                                <span>3.67</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="payment-content">
-                                                        <b>87,50 &euro;</b>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="action-buttons">
-                                                        <button class="btn-reschedule" data-toggle="modal" data-target="#reschedule-modal">Reschedule</button>
-                                                        <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Reschedule Service Request</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <span>Select new date & time</span>
-                                                                        <div class="select-date-time">
-                                                                            <div class="form-group">
-                                                                                <input type="date" name="" id="" class="date-picker">
-                                                                                <select name="" id="">
-                                                                                    <option value="">08:00</option>
-                                                                                    <option value="">08:30</option>
-                                                                                    <option value="">09:00</option>
-                                                                                    <option value="">09:30</option>
-                                                                                    <option value="">10:00</option>
-                                                                                    <option value="">10:30</option>
-                                                                                    <option value="">11:00</option>
-                                                                                    <option value="">11:30</option>
-                                                                                    <option value="">12:00</option>
-                                                                                    <option value="">12:30</option>
-                                                                                    <option value="">01:00</option>
-                                                                                    <option value="">01:30</option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn-modal-accept">Update</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <button class="btn-cancel" data-target="#cancel-modal" data-toggle="modal">Cancel</button>
-                                                        <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLongTitle">Cancel Service Request</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <span>Why you want to cancel the service request?</span>
-                                                                        <div class="form-group">
-                                                                            <textarea name=""></textarea>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn-modal-accept">Cancel</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                        </tr>
                                     </tbody>
                                 </table>
                                 <div class="row total-records">
@@ -400,31 +366,32 @@
                                         <div class="shown-records">
                                             <span>Show</span>
                                             <select name=" " id=" ">
-                                                <option value=" ">10</option>
-                                                <option value=" ">20</option>
-                                                <option value=" ">30</option>
+                                                <option value="5">5</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
                                             </select>
                                             <span>entries total record: <span>1</span></span>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-sm-12 col-lg-6">
-                                        <div class="navigate-page ">
+                                        <div class="navigate-page">
                                             <nav aria-label="Page navigation example">
-                                                <ul class="pagination ">
-                                                    <li class="page-item ">
-                                                        <a class="page-link " href="# " aria-label="Previous ">
-                                                            <span aria-hidden="true "><img src="assets/images/first-page.png" alt=""></span>
-                                                            <span class="sr-only ">Previous</span>
+                                                <ul class="pagination">
+                                                    <li class="page-item">
+                                                        <a class="page-link " href="# " aria-label="Previous">
+                                                            <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
+                                                            <span class="sr-only">Previous</span>
                                                         </a>
                                                     </li>
                                                     <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                    <li class="page-item "><a class="page-link active " href="# ">1</a></li>
-                                                    <li class="page-item "><a class="page-link " href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                    <li class="page-item ">
-                                                        <a class="page-link " href="# " aria-label="Next ">
-                                                            <span aria-hidden="true " class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
-                                                            <span class="sr-only ">Next</span>
+                                                    <li class="page-item "><a class="page-link active" href="# ">1</a></li>
+                                                    <li class="page-item "><a class="page-link" href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                    <li class="page-item">
+                                                        <a class="page-link " href="# " aria-label="Next">
+                                                            <span aria-hidden="true" class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
+                                                            <span class="sr-only">Next</span>
                                                         </a>
                                                     </li>
                                                 </ul>
@@ -1399,8 +1366,33 @@
                 </div>
             </div>
     </section>
-
     <!--footer start-->
+
+    <script>
+        $(document).ready(function() {
+
+            $(document).on("click", ".service-modal-toggler", function(e) {
+                var data = $(this).first().data('service');
+                $("#current-service-modal").data('service', data);
+                $("#current-service-modal").modal('show');
+
+            });
+
+            $(document).on('show.bs.modal', '#current-service-modal', function(e) {
+                // do something...
+                var data = $(this).data('service');
+                console.log(data);
+                
+            });
+
+            $(document).on('hidden.bs.modal', '#current-service-modal', function(e) {
+                // do something...
+                $(this).data(null);
+                $("#current-service-modal").modal('hide');
+            });
+        });
+    </script>
+
     <?php
     include 'views/footer.php';
     ?>
