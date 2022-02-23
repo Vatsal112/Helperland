@@ -27,21 +27,26 @@ class custDashboardModel{
         return $data;
     }
 
-    function getAddress($table,$services){
-        foreach($services as $s){
+    function getAddress($table,$sId){
+    
             $stmt = $this->conn->prepare("SELECT * FROM $table where ServiceRequestId = ?");
-            $stmt->execute([$s['ServiceRequestId']]);
+            $stmt->execute([$sId]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             return $data;
-        }
     }
     
-    function getExtraServices($table,$services){
-        foreach($services as $s){
+    function getExtraServices($table,$sId){
+      
             $stmt = $this->conn->prepare("SELECT * FROM $table where ServiceRequestId = ?");
-            $stmt->execute([$s['ServiceRequestId']]);
+            $stmt->execute([$sId]);
             $data = $stmt->fetch(PDO::FETCH_ASSOC);
             return $data;
-        }
+    }
+
+    function getDashboardData($table,$sId){
+        $stmt = $this->conn->prepare("SELECT * FROM $table where ServiceId = ?");
+        $stmt->execute([$sId]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data;
     }
 }

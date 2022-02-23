@@ -9,8 +9,6 @@
     include 'controllers/custDashboardController.php';
     $ser = new custDashboardController();
     $services = $ser->newServices();
-    $address = $ser->getAddress($services);
-    $extra = $ser->getExtraServices($services);
     ?>
     <!--customer screen banner end-->
 
@@ -70,6 +68,9 @@
                                         <?php
                                         foreach ($services as $s) {
                                             if ($s['Status'] == 1) {
+
+                                                $address = $ser->getAddress($s['ServiceRequestId']);
+                                                $extra = $ser->getExtraServices($s['ServiceRequestId']);
                                                 $id = $s['ServiceId'];
                                                 $datetime = new DateTime($s['ServiceStartDate']);
                                                 $sDate = $datetime->format('Y-m-d');
@@ -82,11 +83,10 @@
                                                 $pets = $s['HasPets'];
                                         ?>
                                                 <tr>
-
-                                                    <td><?php echo $id; ?></td>
+                                                    <td class="s-id"><?php echo $id; ?></td>
 
                                                     <td>
-                                                        <div class="service-info service-modal-toggler" data-target="#current-service-modal" data-toggle="modal"  data-dismiss="modal" data-service='<?php echo json_encode($s); ?>'>
+                                                        <div class="service-info service-modal-toggler" data-service='<?php echo json_encode($s); ?>' data-address='<?php echo json_encode($address); ?>' data-extra='<?php echo json_encode($extra); ?>'>
                                                             <div class="service-datetime-icons">
                                                                 <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
                                                                 <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
@@ -176,7 +176,9 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                
                                                 </tr>
+                                                
                                         <?php }
                                         } ?>
                                         <tr>
@@ -1368,30 +1370,53 @@
     </section>
     <!--footer start-->
 
+    <script src="assets/js/custDashboard.js"></script>
     <script>
-        $(document).ready(function() {
+        // <?php 
+        //     include 'assets/js/custDashboard.js';
+        // ?>
 
-            $(document).on("click", ".service-modal-toggler", function(e) {
-                var data = $(this).first().data('service');
-                $("#current-service-modal").data('service', data);
-                $("#current-service-modal").modal('show');
 
-            });
+        // $(document).on("click", ".service-modal-toggler", function(e) {
+        //     var data = $(this).first().data('service');
+        //     var address = $(this).first().data('address');
+        //     var extra = $(this).first().data('extra');
+        //     $("#current-service-modal").data('service', data);
+        //     $("#current-service-modal").data('address', address);
+        //     $("#current-service-modal").data('extra', extra);
+        //     $("#current-service-modal").modal('show');
 
-            $(document).on('show.bs.modal', '#current-service-modal', function(e) {
-                // do something...
-                var data = $(this).data('service');
-                console.log(data);
-                
-            });
+        // });
 
-            $(document).on('hidden.bs.modal', '#current-service-modal', function(e) {
-                // do something...
-                $(this).data(null);
-                $("#current-service-modal").modal('hide');
-            });
-        });
+        // $(document).on('show.bs.modal', '#current-service-modal', function(e) {
+        //     var data = $(this).data('service');
+        //     var address = $(this).data('address');
+        //     var extra = $(this).data('extra');
+
+        //     console.log(data);
+        //     // alert(data.ServiceStartDate)
+
+        //     $('#sid').html(data.UserId);
+        //     console.log(address);
+        //     console.log(extra);
+
+
+        // });
+
+        // $(document).on('hidden.bs.modal', '#current-service-modal', function(e) {
+        //     $(this).data(null);
+        //     $("#current-service-modal").modal('hide');
+        // });
+     
     </script>
+        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+function showLoader(){
+  $.LoadingOverlay("show",{
+    background  : "rgba(0, 0, 0, 0.7)"
+  });
+}
+$.LoadingOverlay("hide"); -->
 
     <?php
     include 'views/footer.php';
