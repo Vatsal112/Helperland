@@ -74,4 +74,9 @@ class custDashboardController
 
         echo json_encode($service);
     }
+
+    function getServicerData($spId){
+        $data = $this->model->getServicerData('user',$spId);
+        return $data;
+    }
 }

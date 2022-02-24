@@ -33,7 +33,7 @@ class serviceModel{
     }
 
     function newAddress($table,$address){
-        $sql = "INSERT INTO $table (UserId,AddressLine1,City,PostalCode,IsDefault,IsDeleted,Mobile) values(:UserId,:AddressLine1,:City,:PostalCode,:IsDefault,:IsDeleted,:Mobile)";
+        $sql = "INSERT INTO $table (UserId,AddressLine1,City,PostalCode,IsDefault,IsDeleted,Mobile,Email) values(:UserId,:AddressLine1,:City,:PostalCode,:IsDefault,:IsDeleted,:Mobile,:Email)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($address);
         return $this->conn->lastInsertId();
@@ -82,7 +82,7 @@ class serviceModel{
     }
 
     function addServiceAddress($table, $serviceRequestId,$addressId){
-        $sql = "INSERT INTO $table (ServiceRequestId, AddressLine1, City, State, PostalCode, Mobile) SELECT $serviceRequestId, AddressLine1, City, State, PostalCode, Mobile FROM useraddress WHERE AddressId=$addressId";
+        $sql = "INSERT INTO $table (ServiceRequestId, AddressLine1, City, State, PostalCode, Mobile,Email) SELECT $serviceRequestId, AddressLine1, City, State, PostalCode, Mobile,Email FROM useraddress WHERE AddressId=$addressId";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute();
         return $this->conn->lastInsertId(); 

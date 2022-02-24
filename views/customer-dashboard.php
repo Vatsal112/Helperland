@@ -67,7 +67,7 @@
                                     <tbody>
                                         <?php
                                         foreach ($services as $s) {
-                                            if ($s['Status'] == 1) {
+                                            if ($s['Status'] == 1 || $s['Status'] == 2) {
 
                                                 $address = $ser->getAddress($s['ServiceRequestId']);
                                                 $extra = $ser->getExtraServices($s['ServiceRequestId']);
@@ -81,12 +81,15 @@
                                                 $payment = $s['TotalCost'];
                                                 $comments = $s['Comments'];
                                                 $pets = $s['HasPets'];
+
+
+
                                         ?>
                                                 <tr>
                                                     <td class="s-id"><?php echo $id; ?></td>
 
                                                     <td>
-                                                        <div class="service-info service-modal-toggler" data-service='<?php echo json_encode($s); ?>' data-address='<?php echo json_encode($address); ?>' data-extra='<?php echo json_encode($extra); ?>'>
+                                                        <div class="service-info service-modal-toggler">
                                                             <div class="service-datetime-icons">
                                                                 <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
                                                                 <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
@@ -104,7 +107,29 @@
                                                         </div>
                                                     </td>
                                                     <td>
+                                                        <?php
+                                                        if ($s['ServiceProviderId'] == null) { ?>
 
+                                                        <?php } else {
+                                                            $spData = $ser->getServicerData($s['ServiceProviderId']);
+                                                        ?>
+                                                            <div class="sp-content">
+                                                                <div class="sp-avatar">
+                                                                    <img src="assets/images/avatar-hat.png" alt="">
+                                                                </div>
+                                                                <div class="sp-name-rating">
+                                                                    <b class="spName"><?php echo $spData['FirstName'] . " " . $spData['LastName']; ?></b>
+                                                                    <div class="sp-rating">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/grey-small-star.png" alt="">
+                                                                        <span>3.67</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
                                                     </td>
                                                     <td>
                                                         <div class="payment-content">
@@ -176,191 +201,12 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                
+
                                                 </tr>
-                                                
+
                                         <?php }
                                         } ?>
-                                        <tr>
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <div class="modal fade" id="current-service-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-part">
-                                                                        <div class="modal-header d-block">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                            <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                        </div>
 
-                                                                        <div class="modal-body">
-                                                                            <div class="modal-information">
-                                                                                <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                                <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                                <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
-
-                                                                                <div class="customer-details">
-
-                                                                                    <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                    <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
-                                                                                    <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                    <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-
-                                                                                </div>
-
-                                                                                <div class="customer-details">
-                                                                                    <b>Comments</b>
-                                                                                    <p class="mb-0 ">hello</p>
-
-                                                                                    <div class="pets">
-                                                                                        <img src="assets/images/included.png" alt=" ">
-                                                                                        <p>I have Pets at home.</p>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="modal-sp-details">
-                                                                                <h4>Service Provider Details</h4>
-                                                                                <div class="sp-content">
-                                                                                    <div class="sp-avatar">
-                                                                                        <img src="assets/images/avatar-hat.png" alt="">
-                                                                                        <p class="mt-1">16 cleanings</p>
-                                                                                    </div>
-                                                                                    <div class="sp-name-rating">
-                                                                                        <b>John Doe</b>
-                                                                                        <div class="sp-rating">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/grey-small-star.png" alt="">
-
-                                                                                        </div>
-                                                                                        <span>3.67</span>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-modal-accept">
-                                                                                <img src="assets/images/reschedule-icon-small.png" alt="">Reschedule</button>
-                                                                            <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#current-service-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="sp-content">
-                                                    <div class="sp-avatar">
-                                                        <img src="assets/images/avatar-hat.png" alt="">
-                                                    </div>
-                                                    <div class="sp-name-rating">
-                                                        <b>John Doe</b>
-                                                        <div class="sp-rating">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/grey-small-star.png" alt="">
-                                                            <span>3.67</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="payment-content">
-                                                    <b>87,50 &euro;</b>
-                                                </div>
-                                            </td>
-
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button class="btn-reschedule" data-toggle="modal" data-target="#reschedule-modal">Reschedule</button>
-                                                    <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Reschedule Service Request</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span>Select new date & time</span>
-                                                                    <div class="select-date-time">
-                                                                        <div class="form-group">
-                                                                            <input type="date" name="" id="" class="date-picker">
-                                                                            <select name="" id="">
-                                                                                <option value="">08:00</option>
-                                                                                <option value="">08:30</option>
-                                                                                <option value="">09:00</option>
-                                                                                <option value="">09:30</option>
-                                                                                <option value="">10:00</option>
-                                                                                <option value="">10:30</option>
-                                                                                <option value="">11:00</option>
-                                                                                <option value="">11:30</option>
-                                                                                <option value="">12:00</option>
-                                                                                <option value="">12:30</option>
-                                                                                <option value="">01:00</option>
-                                                                                <option value="">01:30</option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn-modal-accept">Update</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button class="btn-cancel" data-target="#cancel-modal" data-toggle="modal">Cancel</button>
-                                                    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Cancel Service Request</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <span>Why you want to cancel the service request?</span>
-                                                                    <div class="form-group">
-                                                                        <textarea name=""></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn-modal-accept">Cancel</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 <div class="row total-records">
@@ -389,7 +235,7 @@
                                                     </li>
                                                     <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                     <li class="page-item "><a class="page-link active" href="# ">1</a></li>
-                                                    <li class="page-item "><a class="page-link" href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                    <li class="page-item "><a class="page-link" href="#"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                     <li class="page-item">
                                                         <a class="page-link " href="# " aria-label="Next">
                                                             <span aria-hidden="true" class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
@@ -439,324 +285,101 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <!--customer screen service history modal start-->
-                                                        <div class="modal fade" id="cust-service-history-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-part">
-                                                                        <div class="modal-header d-block">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                            <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                        </div>
+                                        <?php
+                                        foreach ($services as $s) {
+                                            if ($s['Status'] == 3 || $s['Status'] == 4 || $s['Status']==5) {
 
-                                                                        <div class="modal-body">
-                                                                            <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                            <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                            <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
+                                                $address = $ser->getAddress($s['ServiceRequestId']);
+                                                $extra = $ser->getExtraServices($s['ServiceRequestId']);
+                                                $id = $s['ServiceId'];
+                                                $datetime = new DateTime($s['ServiceStartDate']);
+                                                $sDate = $datetime->format('Y-m-d');
+                                                $sTime = $datetime->format('H:i');
+                                                $sHours = $s['ServiceHours'];
+                                                $time = (strtotime($sTime) + (60 * 60 * $sHours));
+                                                $endtime = date('H:i', $time);
+                                                $payment = $s['TotalCost'];
+                                                $comments = $s['Comments'];
+                                                $pets = $s['HasPets'];
+                                        ?>
+                                                <tr>
+                                                    <td class="s-id"><?php echo $id; ?></td>
+                                                    <td>
+                                                        <div class="service-history-table" >
+                                                            <div class="service-info2">
+                                                                <div class="service-datetime-icons">
+                                                                    <a href="#" ><img src="assets/images/calender-icon.png" alt=" "></a>
+                                                                    <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
+                                                                    <!--customer screen service history modal start-->
+                                                                    <?php
+                                                                    include 'popup-modal/service-history-modal.php';
+                                                                    ?>
+                                                                    <!--customer screen service history modal end-->
 
-                                                                            <div class="customer-details">
-
-                                                                                <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
-                                                                                <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-
-                                                                            </div>
-
-                                                                            <div class="customer-details">
-                                                                                <b>Comments</b>
-                                                                                <p class="mb-0 ">hello</p>
-
-                                                                                <div class="pets">
-                                                                                    <img src="assets/images/included.png" alt=" ">
-                                                                                    <p>I have Pets at home.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-
+                                                                </div>
+                                                                <div class="service-datetime-texts">
+                                                                    <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><strong><?php echo $sDate; ?></strong></a>
+                                                                    <a href="#" data-toggle="modal" data-target="#cust-service-history-modal">
+                                                                        <p><?php echo $sTime . "-" . $endtime; ?></p>
+                                                                    </a>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!--customer screen service history modal end-->
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                        if ($s['ServiceProviderId'] == null) { ?>
 
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <div class="payment-content">
-                                                    <b>87,50 &euro;</b>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="status-completed">
-                                                    <span>Completed</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button class="btn-rate-sp" data-toggle="modal" data-target="#rate-sp-modal2">Rate SP</button>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <!--customer screen service history modal with sp info start-->
-
-                                                        <div class="modal fade" id="cust-service-history-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-part">
-                                                                        <div class="modal-header d-block">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                            <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                        </div>
-
-                                                                        <div class="modal-body">
-                                                                            <div class="modal-information">
-                                                                                <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                                <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                                <span class="body-text"><b>Net Amount:</b> <span class="payment">60,75 &euro;</span></span>
-
-                                                                                <div class="customer-details">
-
-                                                                                    <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                    <span class="body-text"><b>Billing Address:</b> Same as cleaning adress</span>
-                                                                                    <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                    <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-
-                                                                                </div>
-
-                                                                                <div class="customer-details">
-                                                                                    <b>Comments</b>
-                                                                                    <p class="mb-0 ">hello</p>
-
-                                                                                    <div class="pets">
-                                                                                        <img src="assets/images/included.png" alt=" ">
-                                                                                        <p>I have Pets at home.</p>
-                                                                                    </div>
-
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="modal-sp-details">
-                                                                                <h4>Service Provider Details</h4>
-                                                                                <div class="sp-content">
-                                                                                    <div class="sp-avatar">
-                                                                                        <img src="assets/images/avatar-hat.png" alt="">
-                                                                                        <p class="mt-1">16 cleanings</p>
-                                                                                    </div>
-                                                                                    <div class="sp-name-rating">
-                                                                                        <b>John Doe</b>
-                                                                                        <div class="sp-rating">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                            <img src="assets/images/grey-small-star.png" alt="">
-
-                                                                                        </div>
-                                                                                        <span>3.67</span>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-
+                                                        <?php } else {
+                                                            $spData = $ser->getServicerData($s['ServiceProviderId']);
+                                                        ?>
+                                                            <div class="sp-content">
+                                                                <div class="sp-avatar">
+                                                                    <img src="assets/images/avatar-hat.png" alt="">
+                                                                </div>
+                                                                <div class="sp-name-rating">
+                                                                    <b class="spName-sh"><?php echo $spData['FirstName'] . " " . $spData['LastName']; ?></b>
+                                                                    <div class="sp-rating">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/yellow-small-star.png" alt="">
+                                                                        <img src="assets/images/grey-small-star.png" alt="">
+                                                                        <span>3.67</span>
                                                                     </div>
-
                                                                 </div>
                                                             </div>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="payment-content">
+                                                            <b>$<?php echo $payment; ?></b>
                                                         </div>
-                                                        <!--customer screen service history modal with sp info end-->
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="sp-content">
-                                                    <div class="sp-avatar">
-                                                        <img src="assets/images/avatar-hat.png" alt="">
-                                                    </div>
-                                                    <div class="sp-name-rating">
-                                                        <b>John Doe</b>
-                                                        <div class="sp-rating">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/yellow-small-star.png" alt="">
-                                                            <img src="assets/images/grey-small-star.png" alt="">
-                                                            <span>3.67</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="payment-content">
-                                                    <b>87,50 &euro;</b>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="status-cancelled">
-                                                    <span>Cancelled</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button class="btn-rate-sp" data-toggle="modal" data-target="#rate-sp-modal2">Rate SP</button>
-                                                    <!--customer screen service history rate a sp modal start-->
-                                                    <div class="modal fade" id="rate-sp-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <div class="sp-content">
-                                                                        <div class="sp-avatar">
-                                                                            <img src="assets/images/avatar-hat.png" alt="">
-                                                                        </div>
-                                                                        <div class="sp-name-rating">
-                                                                            <b>John Doe</b>
-                                                                            <div class="sp-rating">
-                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                <img src="assets/images/yellow-small-star.png" alt="">
-                                                                                <img src="assets/images/grey-small-star.png" alt="">
-                                                                                <span>3.67</span>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <h5 class="modal-title">Rate your service provider</h5>
-
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="cust-rating">
-                                                                        <div class="types-of-rating">
-                                                                            <b>On time arrival</b>
-                                                                            <b>Friendly</b>
-                                                                            <b>Quality of service</b>
-                                                                        </div>
-
-                                                                        <div class="stars">
-                                                                            <div class="rating-stars">
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/grey-small-star.png" alt=""></a>
-                                                                            </div>
-                                                                            <div class="rating-stars">
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/grey-small-star.png" alt=""></a>
-                                                                            </div>
-                                                                            <div class="rating-stars">
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                                                                <a href=""><img src="assets/images/grey-small-star.png" alt=""></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="cust-feedback">
-                                                                        <p>Feedback on service provider</p>
-                                                                        <textarea></textarea>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn-modal-accept">Submit</button>
-                                                                </div>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($s['Status'] == 3) { ?>
+                                                            <div class="status-completed">
+                                                                <span>Completed</span>
                                                             </div>
+                                                        <?php } else if ($s['Status'] == 4) { ?>
+                                                            <div class="status-cancelled">
+                                                                <span>Cancelled</span>
+                                                            </div>
+                                                        <?php } else { ?>
+                                                            <div class="status-refund">
+                                                                <span>Refund</span>
+                                                            </div>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="btn-rate-sp" data-toggle="modal" data-target="#rate-sp-modal2">Rate SP</button>
+
                                                         </div>
-                                                    </div>
-                                                    <!--customer screen service history rate a sp modal end-->
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#cust-service-history-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <div class="payment-content">
-                                                    <b>87,50 &euro;</b>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="status-refund">
-                                                    <span>Refund</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="action-buttons">
-                                                    <button class="btn-rate-sp" data-toggle="modal" data-target="#rate-sp-modal2">Rate SP</button>
-
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                    </td>
+                                                </tr>
+                                        <?php }
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -1372,9 +995,10 @@
 
     <script src="assets/js/custDashboard.js"></script>
     <script>
-        // <?php 
-        //     include 'assets/js/custDashboard.js';
-        // ?>
+        // <?php
+            //     include 'assets/js/custDashboard.js';
+            // 
+            ?>
 
 
         // $(document).on("click", ".service-modal-toggler", function(e) {
@@ -1407,9 +1031,8 @@
         //     $(this).data(null);
         //     $("#current-service-modal").modal('hide');
         // });
-     
     </script>
-        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 function showLoader(){
   $.LoadingOverlay("show",{

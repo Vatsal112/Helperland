@@ -1441,7 +1441,8 @@ body {
     padding: 13px 15px;
 }
 
-.tab-content .service-info {
+.tab-content .service-info,
+.tab-content .service-info2 {
     display: flex;
     white-space: nowrap;
 }
@@ -1876,9 +1877,10 @@ body {
     margin-left: auto;
 }
 
-.service-history .service-history-table {
+
+/* .service-history .service-history-table {
     margin-top: 1rem;
-}
+} */
 
 .service-history .export-btn button {
     width: 70px;
@@ -2190,9 +2192,10 @@ body {
     border-radius: 50%;
 }
 
-.current-service-req-table .sp-content .sp-name-rating b {
+
+/* .current-service-req-table .sp-content .sp-name-rating b {
     margin-right: 50px;
-}
+} */
 
 .cust-service-history-table .sp-content .sp-name-rating b {
     margin-left: 8px;
@@ -2209,46 +2212,62 @@ body {
 }
 
 .current-service-req-table #current-service-modal2 .modal-sp-details,
-#cust-service-history-modal2 .modal-sp-details {
+#cust-service-history-modal2 .modal-sp-details,
+#cust-service-history-modal .modal-sp-details,
+#current-service-modal .modal-sp-details {
     border-left: 1px solid #dee2e6;
     padding: 0px 1.5rem;
 }
 
 #current-service-modal2 .modal-sp-details .sp-content .sp-rating,
-#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating {
+#current-service-modal .modal-sp-details .sp-content .sp-rating,
+#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating,
+#cust-service-history-modal .modal-sp-details .sp-content .sp-rating {
     display: flex;
     align-items: center;
 }
 
 #current-service-modal2 .sp-content .sp-name-rating b,
-#cust-service-history-modal2 .sp-content .sp-name-rating b {
+#current-service-modal .sp-content .sp-name-rating b,
+#cust-service-history-modal2 .sp-content .sp-name-rating b,
+#cust-service-history-modal .sp-content .sp-name-rating b {
     margin-left: 15px;
 }
 
 #current-service-modal2 .modal-sp-details .sp-content .sp-avatar img,
-#cust-service-history-modal2 .modal-sp-details .sp-content .sp-avatar img {
+#current-service-modal .modal-sp-details .sp-content .sp-avatar img,
+#cust-service-history-modal2 .modal-sp-details .sp-content .sp-avatar img,
+#cust-service-history-modal .modal-sp-details .sp-content .sp-avatar img {
     width: 80px;
 }
 
 #current-service-modal2 .modal-sp-details .sp-content .sp-rating img,
-#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating img {
+#current-service-modal .modal-sp-details .sp-content .sp-rating img,
+#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating img,
+#cust-service-history-modal .modal-sp-details .sp-content .sp-rating img {
     width: 25px;
     padding: 2.5px;
 }
 
 #current-service-modal2 .modal-sp-details .sp-content .sp-name-rating,
-#cust-service-history-modal2 .modal-sp-details .sp-content .sp-name-rating {
+#current-service-modal .modal-sp-details .sp-content .sp-name-rating,
+#cust-service-history-modal2 .modal-sp-details .sp-content .sp-name-rating,
+#cust-service-history-modal .modal-sp-details .sp-content .sp-name-rating {
     margin-left: 15px;
 }
 
 #current-service-modal2 .modal-sp-details .sp-content .sp-rating,
-#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating {
+#current-service-modal .modal-sp-details .sp-content .sp-rating,
+#cust-service-history-modal2 .modal-sp-details .sp-content .sp-rating,
+#cust-service-history-modal .modal-sp-details .sp-content .sp-rating {
     margin-left: 11px;
     padding-bottom: 5px;
 }
 
 #current-service-modal2 .sp-name-rating span,
-#cust-service-history-modal2 .sp-name-rating span {
+#current-service-modal .sp-name-rating span,
+#cust-service-history-modal2 .sp-name-rating span,
+#cust-service-history-modal .sp-name-rating span {
     margin-left: 15px;
 }
 

@@ -214,6 +214,7 @@ class userController
                 $_SESSION['userId'] = $records['UserId'];  
                 $_SESSION['userName'] = $records['FirstName'];
                 $_SESSION['userType'] = $records['UserTypeId'];
+                $_SESSION['userEmail'] = $records['Email'];
                 $_SESSION['start'] = time();
                 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
                 $res["status"] = true;

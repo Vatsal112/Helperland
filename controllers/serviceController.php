@@ -87,7 +87,8 @@ class serviceController
                 'PostalCode' => $data['postalCode'],
                 'IsDefault' => 0,
                 'IsDeleted' => 0,
-                'Mobile' => $data['phone']
+                'Mobile' => $data['phone'],
+                'Email'=>$_SESSION['userEmail']
             ];
             $this->validateFields($data['streetName'], $data['houseNum'], $data['phone']);
 

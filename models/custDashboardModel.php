@@ -49,4 +49,11 @@ class custDashboardModel{
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
+
+    function getServicerData($table,$spId){
+        $stmt = $this->conn->prepare("SELECT * FROM $table where UserId = ?");
+        $stmt->execute([$spId]);
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $data;
+    }
 }
