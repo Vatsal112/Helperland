@@ -115,8 +115,6 @@ $(document).ready(function() {
         var sId = $(this).parent().parent().find(".s-id").text();
         var label = "";
 
-        var spName = $("#spName").text();
-
         $.ajax({
             type: "POST",
             url: "http://localhost/Helperland/?controller=custDashboard&function=getDashboardData",
@@ -236,6 +234,7 @@ $(document).ready(function() {
 
                     </div>
                 </div>`);
+
                     $("#current-service-modal .modal-body").css({
                         display: "flex",
                         "justify-content": "space-between",
@@ -289,6 +288,7 @@ $(document).ready(function() {
                     </div>
                 </div>`);
                 }
+
                 $("#current-service-modal").modal("show");
                 $("#current-service-modal").modal("hide");
             },
@@ -413,7 +413,7 @@ $(document).ready(function() {
                 </div>`);
 
                     $("#cust-service-history-modal .modal-body").css({
-                        'display': "flex",
+                        display: "flex",
                         "justify-content": "space-between",
                     });
                 } else {
@@ -474,4 +474,24 @@ $(document).ready(function() {
             },
         });
     });
+
+
+    // $('#id').click(function(e) {
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: "POST",
+    //         url: showNextRecords(),
+    //         data: "data",
+    //         dataType: "dataType",
+    //         success: function(response) {
+    //             document.getElementById()
+    //         }
+    //     });
+    // });
 });
+
+function changeRowsPerPage(rowsPerPage) {}
+
+function showNextRecords() {
+
+}

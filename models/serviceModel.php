@@ -46,7 +46,7 @@ class serviceModel{
     }
 
     function newServiceRequest($table,$data){
-        $sql = "INSERT INTO $table (UserId,ServiceId,ServiceStartDate,ZipCode,ServiceHours,SubTotal,TotalCost,Comments,PaymentDue,HasPets,Status,CreatedDate,ModifiedDate,Distance) values(:UserId,:ServiceId,:ServiceStartDate,:ZipCode,:ServiceHours,:SubTotal,:TotalCost,:Comments,:PaymentDue,:HasPets,:Status,:CreatedDate,:ModifiedDate,:Distance)";
+        $sql = "INSERT INTO $table (UserId,ServiceId,ServiceStartDate,ZipCode,ServiceHours,SubTotal,TotalCost,Comments,PaymentDue,ServiceProviderId,HasPets,Status,CreatedDate,ModifiedDate,Distance) values(:UserId,:ServiceId,:ServiceStartDate,:ZipCode,:ServiceHours,:SubTotal,:TotalCost,:Comments,:PaymentDue,:ServiceProviderId,:HasPets,:Status,:CreatedDate,:ModifiedDate,:Distance)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($data);
         return $this->conn->lastInsertId();
@@ -71,6 +71,13 @@ class serviceModel{
         $stmt = $this->conn->prepare("SELECT AddressId, UserId FROM $table where AddressId = $address");
         $stmt->execute();
         $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $record;
+    }
+
+    function getFavSpData($table,$id){
+        $stmt = $this->conn->prepare("SELECT * FROM $table JOIN user on $table.TargetUserId = user.UserId");
+        $stmt->execute();
+        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $record;
     }
 

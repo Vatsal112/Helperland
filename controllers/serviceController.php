@@ -41,8 +41,11 @@ class serviceController
             } else {
                 $userId = $_SESSION['userId'];
                 $records = $this->model->getUserData('useraddress', $userId);
+                $isFavSp = $this->model->getFavSpData('favoriteandblocked', $userId);
 
-                if ($records) {
+                if ($isFavSp) {
+                    echo json_encode(array($records, $isFavSp));
+                } else {
                     echo json_encode($records);
                 }
             }
@@ -88,7 +91,7 @@ class serviceController
                 'IsDefault' => 0,
                 'IsDeleted' => 0,
                 'Mobile' => $data['phone'],
-                'Email'=>$_SESSION['userEmail']
+                'Email' => $_SESSION['userEmail']
             ];
             $this->validateFields($data['streetName'], $data['houseNum'], $data['phone']);
 
@@ -146,6 +149,7 @@ class serviceController
                 "TotalCost" => substr($data['totalCost'], 1),
                 "Comments" => $data['comments'],
                 "PaymentDue" => 0,
+                "ServiceProviderId"=>$data['spId'],
                 "HasPets" => $data['pets'],
                 "Status" => 1,
                 "CreatedDate" => $cleaningStartDate,
@@ -153,8 +157,48 @@ class serviceController
                 "Distance" => 0
             ];
 
+            if($data['spId']==null){
+                $serviceData = [
+                    "UserId" => $_SESSION['userId'],
+                    "ServiceId" => $serviceId,
+                    "ServiceStartDate" => $cleaningStartDate,
+                    "ZipCode" => $data['ZipcodeValue'],
+                    "ServiceHours" => $data['serviceHours'],
+                    "SubTotal" => substr($data['totalCost'], 1),
+                    "TotalCost" => substr($data['totalCost'], 1),
+                    "Comments" => $data['comments'],
+                    "PaymentDue" => 0,
+                    "ServiceProviderId"=>null,
+                    "HasPets" => $data['pets'],
+                    "Status" => 1,
+                    "CreatedDate" => $cleaningStartDate,
+                    "ModifiedDate" => $cleaningStartDate,
+                    "Distance" => 0
+                ];
+            }else{
+                $serviceData = [
+                    "UserId" => $_SESSION['userId'],
+                    "ServiceId" => $serviceId,
+                    "ServiceStartDate" => $cleaningStartDate,
+                    "ZipCode" => $data['ZipcodeValue'],
+                    "ServiceHours" => $data['serviceHours'],
+                    "SubTotal" => substr($data['totalCost'], 1),
+                    "TotalCost" => substr($data['totalCost'], 1),
+                    "Comments" => $data['comments'],
+                    "PaymentDue" => 0,
+                    "ServiceProviderId"=>$data['spId'],
+                    "HasPets" => $data['pets'],
+                    "Status" => 1,
+                    "CreatedDate" => $cleaningStartDate,
+                    "ModifiedDate" => $cleaningStartDate,
+                    "Distance" => 0
+                ];
+            }
+
             $serviceAddressData = $data['address'];
 
+            $spData = $this->model->getUserData('user',$data['spId']);
+            
             $lastId = $this->model->newServiceRequest('servicerequest', $serviceData);
             $address = $this->model->addServiceAddress('servicerequestaddress', $lastId, $serviceAddressData);
             $getReq = $this->model->getServiceRequest('servicerequest', $lastId);
@@ -164,8 +208,14 @@ class serviceController
             foreach ($sp as $s) {
                 array_push($emails, $s['Email']);
             }
-            $body = "New service request " . $getReq['ServiceId'] . " is arrived for you.";
-            sendmail($emails, 'New Service', $body, '');
+
+            if ($data['spId'] == '') {
+                $body = "New service request " . $getReq['ServiceId'] . " is arrived for you.";
+                sendmail($emails, 'New Service', $body, '');
+            }else{
+                $body = $getReq['ServiceId']." this service is assigned to you.";
+                sendmail([$spData[0]['Email']], 'New Service', $body, '');
+            }
 
             if (isset($data['extraService'])) {
                 $extraService = implode("", $data['extraService']);

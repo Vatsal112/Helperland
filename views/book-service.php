@@ -1,10 +1,10 @@
 <?php
-    if(isset($_SESSION)){
-        if($_SESSION['userType']==2){
-            echo "<script>alert('service provider can not book a service');</script>";
-            echo "<script>window.location.href='$arr[base_url]';</script>";
-        }
+if (isset($_SESSION)) {
+    if ($_SESSION['userType'] == 2) {
+        echo "<script>alert('service provider can not book a service');</script>";
+        echo "<script>window.location.href='$arr[base_url]';</script>";
     }
+}
 ?>
 <div class="service-banner-img">
     <img src="assets/images/book-service-banner.jpg" alt="">
@@ -18,8 +18,8 @@ include 'popup-modal/login-modal.php';
 <!-- Book service page banner end -->
 
 <!-- Book service page sidebar for mobile screen start -->
- <?php 
-    include 'views/sidebar.php';
+<?php
+include 'views/sidebar.php';
 ?>
 <!-- Book service page sidebar for mobile screen end -->
 
@@ -72,7 +72,7 @@ include 'popup-modal/login-modal.php';
                                 <div class="form-group mt-2">
                                     <input type="number" class="form-control" id="input-postalCode" placeholder="Postal Code">
                                     <div class="btn-availability">
-                                        <button type="submit" id="postalCode-btn" value="<?php $_SESSION['userType']?>">Check Availability</button>
+                                        <button type="submit" id="postalCode-btn" value="<?php $_SESSION['userType'] ?>">Check Availability</button>
                                     </div>
                                 </div>
                             </div>
@@ -306,17 +306,15 @@ include 'popup-modal/login-modal.php';
                                         </div>
                                     </div>
                                 </div>
-                                <!-- 
-                                    <div class="favourite-sp">
-                                        <span>Your Favourite Service Providers</span>
-                                        <p class="radio-text">you can choose your favourite service provider from the below list.</p>
 
-                                        <div class="fav-sp-info">
-                                            <img src="assets/images/avatar-hat.png" alt="">
-                                            <span class="sp-name">Sandip Patel</span>
-                                            <button type="button">Select</button>
-                                        </div>
-                                    </div> -->
+                                <div class="favourite-sp">
+                                    <span>Your Favourite Service Providers</span>
+                                    <p class="radio-text">you can choose your favourite service provider from the below list.</p>
+
+                                    <div class="sp-radio">
+                                        
+                                    </div>
+                                </div>
 
                                 <div class="btn-continue">
                                     <button type="button" id="your-details-continue">Continue</button>
@@ -368,8 +366,8 @@ include 'popup-modal/login-modal.php';
                             </div>
                         </div>
                         <!-- Book service page complete booking modal start -->
-                        <?php 
-                            include 'popup-modal/complete-booking-modal.php';
+                        <?php
+                        include 'popup-modal/complete-booking-modal.php';
                         ?>
                         <!-- Book service page complete booking modal end -->
                     </div>

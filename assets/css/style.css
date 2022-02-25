@@ -3276,10 +3276,36 @@ body {
     color: white;
 }
 
-.main-content .your-details-content .favourite-sp,
 .main-content .your-details-content .favourite-sp .fav-sp-info span {
     margin-top: 1rem;
     display: block;
+}
+
+.main-content .your-details-content .favourite-sp {
+    display: none;
+    margin-top: 1rem;
+}
+
+.your-details-content .favourite-sp input[type="radio"] {
+    -webkit-appearance: none !important;
+    appearance: none;
+    background: url("assets/images/avatar-hat.png") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+}
+
+.your-details-content .sp-radio {
+    display: flex;
+    align-items: center;
+}
+
+.your-details-content .favourite-sp input[type="radio"]:checked {
+    border: 2px solid #146371;
+    border-radius: 50%;
+    background-size: cover;
 }
 
 .main-content .your-details-content .favourite-sp .fav-sp-info {
@@ -3306,7 +3332,6 @@ body {
     outline: none;
     background: transparent;
     padding: 0.5rem;
-    width: 60%;
     margin-top: 0.5rem;
 }
 

@@ -64,7 +64,7 @@
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tbody">
                                         <?php
                                         foreach ($services as $s) {
                                             if ($s['Status'] == 1 || $s['Status'] == 2) {
@@ -86,7 +86,9 @@
 
                                         ?>
                                                 <tr>
-                                                    <td class="s-id"><?php echo $id; ?></td>
+                                                    <td class="s-id"><?php echo $id;
+                                                                        echo $startIndex;
+                                                                        echo $endIndex; ?></td>
 
                                                     <td>
                                                         <div class="service-info service-modal-toggler">
@@ -213,7 +215,7 @@
                                     <div class="col-md-6 col-sm-12 col-lg-6">
                                         <div class="shown-records">
                                             <span>Show</span>
-                                            <select name=" " id=" ">
+                                            <select name=" " id="dashboard-table-rows-per-page" onchange="changeRowsPerPage(this.value)">
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
                                                 <option value="20">20</option>
@@ -228,7 +230,7 @@
                                             <nav aria-label="Page navigation example">
                                                 <ul class="pagination">
                                                     <li class="page-item">
-                                                        <a class="page-link " href="# " aria-label="Previous">
+                                                        <a id="id" class="page-link " href="#" aria-label="Previous">
                                                             <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
                                                             <span class="sr-only">Previous</span>
                                                         </a>
@@ -287,7 +289,7 @@
                                     <tbody>
                                         <?php
                                         foreach ($services as $s) {
-                                            if ($s['Status'] == 3 || $s['Status'] == 4 || $s['Status']==5) {
+                                            if ($s['Status'] == 3 || $s['Status'] == 4 || $s['Status'] == 5) {
 
                                                 $address = $ser->getAddress($s['ServiceRequestId']);
                                                 $extra = $ser->getExtraServices($s['ServiceRequestId']);
@@ -305,10 +307,10 @@
                                                 <tr>
                                                     <td class="s-id"><?php echo $id; ?></td>
                                                     <td>
-                                                        <div class="service-history-table" >
+                                                        <div class="service-history-table">
                                                             <div class="service-info2">
                                                                 <div class="service-datetime-icons">
-                                                                    <a href="#" ><img src="assets/images/calender-icon.png" alt=" "></a>
+                                                                    <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
                                                                     <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
                                                                     <!--customer screen service history modal start-->
                                                                     <?php
@@ -327,7 +329,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                    <?php
+                                                        <?php
                                                         if ($s['ServiceProviderId'] == null) { ?>
 
                                                         <?php } else {
@@ -992,8 +994,8 @@
             </div>
     </section>
     <!--footer start-->
-
     <script src="assets/js/custDashboard.js"></script>
+
     <script>
         // <?php
             //     include 'assets/js/custDashboard.js';
