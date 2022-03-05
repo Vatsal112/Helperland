@@ -50,45 +50,31 @@
 
         <div class="contact-form">
 
-            <form action="<?php echo $arr['base_url'] . '?controller=user&function=submit_contactForm'; ?>" method="POST">
-
-                <?php
-
-                if (isset($_GET['status']) == 1) {
-                    echo "<div class='status-message' style='display:flex;'>";
-                    echo "<p class='text-success'>Your reposne is successfully submitted! We will get back to you soon.</p>";
-                    echo "<a  onclick='hideMessage()'><i class='fa fa-close'></i></a>";
-                    echo "</div>";
-                }
-
-                if (isset($_GET['message']) && $_GET['message'] != '') {
-                    foreach (explode(",", $_GET['message']) as $e) {
-                        echo "<div class='response-text' style='display:block;'>";
-                        echo "<p class='text-danger'>";
-                        echo $e;
-                        echo "</p>";
-                        echo "</div>";
-                    }
-                }
-                ?>
-
+            <form method="POST">
+                <div class='status-message'>
+                    <p class='text-success' id="text-ok2"></p>
+                    
+                </div>
+                <div class="response-text">
+                   
+                </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
-                        <input type="text" class="form-control names" value="" name="firstname" placeholder="First name" onfocusout="showMessage(this.id)" id="fname" required>
+                        <input type="text" class="form-control names" id="contact-fname" value="" name="firstname" placeholder="First name" id="fname" required>
 
-                        <p class="text-danger msg-text mb-0"></p>
+                        
 
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <input type="text" class="form-control names" name="lastname" onfocusout="showMessage(this.id)" placeholder="Last name" id="lname" required>
-                        <p class="text-danger msg-text mb-0"></p>
+                        <input type="text" class="form-control names" name="lastname" id="contact-lname" placeholder="Last name" id="lname" required>
+                      
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <input type="email" class="form-control" id="email" onfocusout="showMessage(this.id)" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
-                            <p class="text-danger msg-text mb-0"></p>
+                            <input type="email" class="form-control" id="contact-email" aria-describedby="emailHelp" placeholder="Enter email" name="email" required>
+
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -96,17 +82,17 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">+91</div>
                             </div>
-                            <input type="number" maxlength="10" class="form-control phone" onfocusout="showMessage(this.id)" name="phone" id="phone" placeholder="Mobile number" required>
+                            <input type="number" maxlength="10" class="form-control phone" name="phone" id="contact-phone" placeholder="Mobile number" required>
 
                         </div>
-                        <p class="text-danger msg-text mb-0"></p>
+                      
                     </div>
 
                 </div>
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 subject-selection">
-                        <select name="subject-select" class="subject-select">
+                        <select name="subject-select" class="subject-select" id="contact-subject">
                             <option value="General">General</option>
                             <option value="Inquiry">Inquiry</option>
                             <option value="Renewal">renewal</option>
@@ -117,14 +103,13 @@
 
                 <div class="row">
                     <div class="col-md-12 col-sm-12 form-group">
-                        <textarea name="msg-area" id="contact-msg" onfocusout="showMessage(this.id)" class="msg-textarea form-control" placeholder="Message" required></textarea>
-                        <p class="text-danger mb-0" id="textarea-msg"></p>
+                        <textarea name="msg-area" id="contact-msg" class="msg-textarea form-control" placeholder="Message" required></textarea>
+                      
                     </div>
                 </div>
 
                 <div class="submit">
-                    <button type="submit" name="submit" class="form-submit">Submit</button>
-                    <!-- <input type="submit" value="submit" name="submit" id="submit"> -->
+                    <button type="submit" name="submit" class="form-submit" id="contactus-submit">Submit</button>
                 </div>
 
             </form>
@@ -135,11 +120,53 @@
 
 <section class="map">
     <div class="googleMap">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d80662.4942729429!2d7.076017238758908!3d50.81814219143823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1644903952282!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d80662.4942729429!2d7.076017238758908!3d50.81814219143823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1644903952282!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
 </section>
 <!--********* contact get-in-touch section end************-->
 
+<script>
+    $('#contactus-submit').click(function (e) { 
+        e.preventDefault();
+
+        if ($('.status-message').css('display', 'flex')) {
+            $('.status-message').css('display', 'none')
+        }
+
+        if ($('.response-text').css('display', 'block')) {
+            $('.response-text').css('display', 'none')
+        }
+        var data = {
+            "Firstname": $('#contact-fname').val(),
+            "Lastname": $('#contact-lname').val(),
+            "Email": $('#contact-email').val(),
+            "Phone": $('#contact-phone').val(),
+            "Subject": $("#contact-subject").val(),
+            "Message": $('#contact-msg').val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/Helperland/?controller=user&function=submit_contactForm",
+            data: {
+                data
+            },
+            dataType: "json",
+            success: function(response) {
+                res = JSON.parse(JSON.stringify(response));
+                if (res == "Success") {
+                    $('.text-success').html("Your Response is submitted succesfully we will get back to you soon.");
+                    $('.status-message').css('display', 'flex');
+                    console.log(res);
+                } else {
+                    $('.response-text').css('display', 'block');
+                    $('.text-danger').html(res);
+
+                    console.log(res);
+                }
+            }
+        });
+     });
+</script>
 <?php
 include 'footer.php';
 ?>

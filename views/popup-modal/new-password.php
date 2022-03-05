@@ -1,14 +1,40 @@
-<div class="container">
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $title; ?></title>
+    <style>
+        <?php
+        include 'assets/css/style.css';
+        include 'assets/css/responsive.css';
+        ?>
+    </style>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div class="container">
     <div class="new-password">
         <form method="post">
             <div class='status-message'>
-                <p class='text-success' id="text-ok
-                "></p>
-                <a onclick='hideMessage()'><i class='fa fa-close'></i></a>
+                <p class='text-success' id="text-success2"></p>
             </div>
             <div class="response-text">
-                <p id="response3" class="text-danger"></p>
+                <p id="response-error" class="text-danger"></p>
             </div>
             <div class="form-group">
                 <label for="new-pass">New Password</label>
@@ -21,16 +47,18 @@
             </div>
 
             <div class="btn-save">
-                <button type="submit" id="btn-save">Save</button>
+                <button type="button" id="btn-save">Save</button>
             </div>
         </form>
     </div>
 </div>
+</body>
+</html>
 
 
-<script>
-    $(document).ready(function() {
+<script>        
         $('#btn-save').click(function(e) {
+            e.preventDefault();
             var new_pass = $('#new-pass').val();
             var cpass = $('#c-pass').val();
             e.preventDefault();
@@ -44,6 +72,7 @@
             }
 
             $.ajax({
+               
                 type: "post",
                 url: "http://localhost/Helperland/?controller=user&function=validateNewPassword&parameter=" + <?php echo $_GET['id']; ?>,
                 data: {
@@ -51,25 +80,25 @@
                     cpass: cpass
                 },
                 success: function(response) {
+                    res= JSON.parse(response);
 
-                    if (response == "Password must be at least 8 characters in length and must contain at least one number, one upper case letter, one lower case letter and one special character.") {
-                        $('.response-text').css('display', 'block');
-                        $('#response3').html(response);
-                        console.log(response);
-                    }else if(response == "Password does not matched."){
-                        $('.response-text').css('display', 'block');
-                        $('#response3').html(response);
-                        console.log(response);
-                    } else{
-                        $('.text-success').html(response);
-                        $('.status-message').css('display', 'flex');
+                    if (res == "Success") {
+                        $('.status-message').css('display', 'block');
+                        $('#text-success2').html("Password Updated Successfully.");
                         $('.form-group').css('display','none');
                         $('.btn-save').css('display','none');
-                        console.log(response);
+                        console.log(res);
+
+                        setTimeout(function(){
+                            window.location.href = 'http://localhost/Helperland/';
+                        },2000);
+                    }else{
+                        $('.response-text').css('display', 'block');
+                        $('#response-error').html(res); 
+                        console.log(res);
                     }
 
                 }
             });
         });
-    });
 </script>
