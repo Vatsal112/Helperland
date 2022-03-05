@@ -188,7 +188,7 @@ class serviceController
                     "PaymentDue" => 0,
                     "ServiceProviderId"=>$data['spId'],
                     "HasPets" => $data['pets'],
-                    "Status" => 1,
+                    "Status" => 2,
                     "CreatedDate" => $cleaningStartDate,
                     "ModifiedDate" => $cleaningStartDate,
                     "Distance" => 0

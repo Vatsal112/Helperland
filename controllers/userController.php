@@ -15,33 +15,34 @@ class userController
     function submit_contactForm()
     {
         if (isset($_POST)) {
-            $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&status=1';
-
+            $data = $_POST['data'];
             $array = [
-                'firstname' => $_POST['firstname'],
-                'lastname' => $_POST['lastname'],
-                'email' => $_POST['email'],
-                'phone' => $_POST['phone'],
-                'subject' => $_POST['subject-select'],
-                'message' => $_POST['msg-area'],
+                'firstname' => $data['Firstname'],
+                'lastname' => $data['Lastname'],
+                'email' => $data['Email'],
+                'phone' => $data['Phone'],
+                'subject' => $data['Subject'],
+                'message' => $data['Message'],
                 'createdOn' => date('Y-m-d H:i:s'),
             ];
 
             $this->validateContactMessage($array['message']);
 
             if (!preg_match("/^[a-zA-Z ]*$/", $array['firstname']) && !preg_match("/^[a-zA-Z ]*$/", $array['lastname'])) {
-                $this->Err =  "Only letters and white space allowed in name field" . "<br>";
+                $this->Err = $this->Err  . "Only letters and white space allowed in name field" . "<br>";
+
             }
             if (!preg_match('/^[0-9]{10}+$/', $array['phone'])) {
                 $this->Err = $this->Err  . "phone number size must be 10." . "<br>";
+       
             }
-
-            if (!$this->Err == '') {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . $this->Err);
-            } else {
+            if($this->Err==''){
                 $ins = $this->model->insert_Contactus('contactus', $array);
-                header('Location: ' . $arr['base_url']);
-                return $ins;
+                if($ins){
+                    echo json_encode("Success");
+                }
+            }else{
+                echo json_encode($this->Err);
             }
         } else {
             echo 'error occured!! try again';
@@ -262,10 +263,14 @@ class userController
 
             $hash = $this->checkPasswordStrength($pass);
 
-            $updatePass = $this->model->updatePassword('user', $hash, $id);
+            if($this->Err == ''){
+                $updatePass = $this->model->updatePassword('user', $hash, $id);
 
-            if ($updatePass == true) {
-                echo "Password Changed Successfully";
+                if ($updatePass == true) {
+                    echo json_encode("Success");
+                }
+            }else{
+                echo json_encode($this->Err);
             }
         }
     }

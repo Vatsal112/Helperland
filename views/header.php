@@ -24,7 +24,8 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js" integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 
 </head>
@@ -58,7 +59,6 @@ session_start();
                             <nav class="navbar">
                                 <ul class="navbar-nav">
                                     <li class="nav-item notification-icon d-flex">
-                                        <span>2</span>
                                         <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                                     </li>
                                 </ul>
@@ -86,7 +86,7 @@ session_start();
                                 </li>
                                 <div class="noti-user-icons">
                                     <li class="nav-item notification-icon d-flex">
-                                        <span>2</span>
+                                       
                                         <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                                     </li>
                                     <div class="dropdown user-icon d-flex align-items-center">
@@ -99,9 +99,9 @@ session_start();
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>"  onclick="removeActive(event)">My Dashborad</a>
+                                            <a class="dropdown-item" id="v-pills-dashboard-tab">My Dashborad</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>"  onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" >My Setting</a>
                                             <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
                                         </div>
                                     </div>
@@ -122,7 +122,6 @@ session_start();
                             <nav class="navbar">
                                 <ul class="navbar-nav">
                                     <li class="nav-item notification-icon d-flex">
-                                        <span>2</span>
                                         <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                                     </li>
                                 </ul>
@@ -147,7 +146,7 @@ session_start();
                                 </li>
                                 <div class="noti-user-icons">
                                     <li class="nav-item notification-icon d-flex">
-                                        <span>2</span>
+                                        
                                         <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                                     </li>
                                     <div class="dropdown user-icon d-flex align-items-center">
@@ -162,7 +161,7 @@ session_start();
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" id="v-pills-dashboard-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Dashborad</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
                                             <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
                                         </div>
                                     </div>
@@ -203,7 +202,7 @@ session_start();
                             </li>
 
                             <li class="nav-item rounded-btn helper">
-                                <a class=" nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=sp-reg'; ?>" target="blank">Become a Helper</a>
+                                <a class=" nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=spReg'; ?>" target="blank">Become a Helper</a>
                             </li>
                         </ul>
                     </div>

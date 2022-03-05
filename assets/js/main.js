@@ -11,6 +11,12 @@ document.addEventListener("scroll", () => {
     }
 });
 
+var settingTab = document.getElementById('pills-settings-tab');
+settingTab.setAttribute('href', '#')
+settingTab.addEventListener('click', function() {
+    window.location.href = "http://localhost/Helperland/?controller=home&function=customerDashboard&parameter=pills-settings-tab";
+});
+
 function privacy_policy_btn() {
     $(".privacy-policy-sec").css("display", "none");
 }
@@ -592,8 +598,10 @@ function addAddress(response) {
     if (flag == true) {
         for (let i = 0; i < response.length; i++) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
-            $(".user-address").append(
-                `<div class="address-radio form-group">
+
+            if (response[i].IsDeleted == 0) {
+                $(".user-address").append(
+                    `<div class="address-radio form-group">
                     <input type="radio" name="address" id="radio1" value="${response[i]['AddressId']}
                     " ${checked}>
     
@@ -606,7 +614,8 @@ function addAddress(response) {
                         </label>
                     </div>
                 </div>`
-            );
+                );
+            }
             flag = false;
         }
     }

@@ -47,7 +47,6 @@ class homeController {
     function changePassword(){
         $title='Reset Password';
         include 'common.php';
-        include 'views/header.php';
         include 'views/popup-modal/new-password.php';
     }
     function bookService(){

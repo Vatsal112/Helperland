@@ -1,19 +1,28 @@
-    <!--customer screen banner start-->
+    <?php 
+        $toggle="";
+        if(isset($_GET['parameter'])){
+            $toggle =$_GET['parameter'];
+        }
+    ?>
+
     <?php
     if (isset($_SESSION['islogin']) == false) {
         echo "<script>alert('you must have to login first before accessing this page.');</script>";
         echo "<script>window.location.href='$arr[base_url]';</script>";
     }
     ?>
-    <?php
-    include 'controllers/custDashboardController.php';
-    $ser = new custDashboardController();
-    $services = $ser->newServices();
-    ?>
     <!--customer screen banner end-->
 
     <!--customer screen sidebar for mobile view start-->
     <?php
+    $j = 0;
+    $spStar = "";
+    include 'controllers/custDashboardController.php';
+    $dashboard = new custDashboardController();
+    $customerData = $dashboard->loadCustomerData();
+    $customerAddress = $dashboard->loadCustomerAddress();
+    $getFavSp = $dashboard->getFavSp();
+    $ratings = $dashboard->getFavSpRatings();
     include 'views/sidebar.php';
     ?>
 
@@ -23,9 +32,11 @@
 
     <section class="welcome-user">
         <div class="welcome-text">
+            <input type="hidden" value="<?php echo $toggle;?>" id="toggle-id">
             <h2>Welcome, <?php echo $_SESSION['userName']; ?></h2>
         </div>
     </section>
+
 
     <!--customer screen welcome area end-->
 
@@ -35,7 +46,7 @@
             <div class="row main-content">
                 <div class="col-sm-5 col-md-2 col-lg-3">
                     <div class="nav flex-column nav-tab v-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
+                        <a class="nav-link" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
                         <a class="nav-link" id="v-pills-service-history-tab" data-toggle="pill" href="#v-pills-service-history" role="tab" aria-controls="v-pills-service-history" aria-selected="true">Service History</a>
                         <a class="nav-link" id="v-pills-service-sche-tab" data-toggle="pill" href="#v-pills-service-sche" role="tab" aria-controls="v-pills-service-sche" aria-selected="false">Service Schedule</a>
                         <a class="nav-link" id="v-pills-favourite-pros-tab" data-toggle="pill" href="#v-pills-favourite-pros" role="tab" aria-controls="v-pills-favourite-pros" aria-selected="false">Favourite Pros</a>
@@ -50,7 +61,7 @@
                         <div class="tab-pane fade show active dashboard" id="v-pills-dashboard" role="tabpanel" aria-labelledby="v-pills-dashboard-tab">
                             <div class="current-service-req">
                                 <h5>Current Service Request</h5>
-                                <button>Add New Service Request</button>
+                                <button onclick=window.location.href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>">Add New Service Request</button>
                             </div>
                             <!--customer screen dashboard table start-->
                             <div class="table-responsive-sm current-service-req-table">
@@ -65,181 +76,39 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
-                                        <?php
-                                        foreach ($services as $s) {
-                                            if ($s['Status'] == 1 || $s['Status'] == 2) {
-
-                                                $address = $ser->getAddress($s['ServiceRequestId']);
-                                                $extra = $ser->getExtraServices($s['ServiceRequestId']);
-                                                $id = $s['ServiceId'];
-                                                $datetime = new DateTime($s['ServiceStartDate']);
-                                                $sDate = $datetime->format('Y-m-d');
-                                                $sTime = $datetime->format('H:i');
-                                                $sHours = $s['ServiceHours'];
-                                                $time = (strtotime($sTime) + (60 * 60 * $sHours));
-                                                $endtime = date('H:i', $time);
-                                                $payment = $s['TotalCost'];
-                                                $comments = $s['Comments'];
-                                                $pets = $s['HasPets'];
-
-
-
-                                        ?>
-                                                <tr>
-                                                    <td class="s-id"><?php echo $id;
-                                                                        echo $startIndex;
-                                                                        echo $endIndex; ?></td>
-
-                                                    <td>
-                                                        <div class="service-info service-modal-toggler">
-                                                            <div class="service-datetime-icons">
-                                                                <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                                <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
-
-                                                                <?php
-                                                                include 'popup-modal/current-service-modal.php';
-                                                                ?>
-                                                            </div>
-                                                            <div class="service-datetime-texts">
-                                                                <a href="#"><strong><?php echo $sDate; ?></strong></a>
-                                                                <a href="#">
-                                                                    <p><?php echo $sTime . "-" . $endtime; ?></p>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($s['ServiceProviderId'] == null) { ?>
-
-                                                        <?php } else {
-                                                            $spData = $ser->getServicerData($s['ServiceProviderId']);
-                                                        ?>
-                                                            <div class="sp-content">
-                                                                <div class="sp-avatar">
-                                                                    <img src="assets/images/avatar-hat.png" alt="">
-                                                                </div>
-                                                                <div class="sp-name-rating">
-                                                                    <b class="spName"><?php echo $spData['FirstName'] . " " . $spData['LastName']; ?></b>
-                                                                    <div class="sp-rating">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/grey-small-star.png" alt="">
-                                                                        <span>3.67</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <div class="payment-content">
-                                                            <b>$<?php echo $payment; ?></b>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        <div class="action-buttons">
-                                                            <button class="btn-reschedule" data-toggle="modal" data-target="#reschedule-modal">Reschedule</button>
-                                                            <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLongTitle">Reschedule Service Request</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <span>Select new date & time</span>
-                                                                            <div class="select-date-time">
-                                                                                <div class="form-group">
-                                                                                    <input type="date" name="" id="" class="date-picker">
-                                                                                    <select name="" id="">
-                                                                                        <option value="">08:00</option>
-                                                                                        <option value="">08:30</option>
-                                                                                        <option value="">09:00</option>
-                                                                                        <option value="">09:30</option>
-                                                                                        <option value="">10:00</option>
-                                                                                        <option value="">10:30</option>
-                                                                                        <option value="">11:00</option>
-                                                                                        <option value="">11:30</option>
-                                                                                        <option value="">12:00</option>
-                                                                                        <option value="">12:30</option>
-                                                                                        <option value="">01:00</option>
-                                                                                        <option value="">01:30</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn-modal-accept">Update</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <button class="btn-cancel" data-target="#cancel-modal" data-toggle="modal">Cancel</button>
-                                                            <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLongTitle">Cancel Service Request</h5>
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <span>Why you want to cancel the service request?</span>
-                                                                            <div class="form-group">
-                                                                                <textarea name=""></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn-modal-accept">Cancel</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
-
-                                        <?php }
-                                        } ?>
 
                                     </tbody>
+
                                 </table>
                                 <div class="row total-records">
                                     <div class="col-md-6 col-sm-12 col-lg-6">
                                         <div class="shown-records">
                                             <span>Show</span>
-                                            <select name=" " id="dashboard-table-rows-per-page" onchange="changeRowsPerPage(this.value)">
+                                            <select id="dashboard-table-rows-per-page" onchange="changeRowsPerPage(this.value); getPendingServiceRequests()">
                                                 <option value="5">5</option>
                                                 <option value="10">10</option>
-                                                <option value="20">20</option>
-                                                <option value="30">30</option>
+                                                <option value="15">15</option>
+                                                <!-- <option value="">30</option> -->
                                             </select>
-                                            <span>entries total record: <span>1</span></span>
+                                            <span>entries total record: <span id="service-request-total-records">1</span></span>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 col-sm-12 col-lg-6">
                                         <div class="navigate-page">
                                             <nav aria-label="Page navigation example">
-                                                <ul class="pagination">
+                                                <ul class="pagination" id="current-service-pagiation">
                                                     <li class="page-item">
-                                                        <a id="id" class="page-link " href="#" aria-label="Previous">
+                                                        <a class="page-link " href="#" id="pendingRequestFirstPage" aria-label="Previous">
                                                             <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
                                                             <span class="sr-only">Previous</span>
                                                         </a>
                                                     </li>
-                                                    <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                    <li class="page-item "><a class="page-link active" href="# ">1</a></li>
-                                                    <li class="page-item "><a class="page-link" href="#"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                    <li class="page-item "><a class="page-link " href="# " id="btn-previous"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                    <li class="page-item "><a class="page-link active" href="# " id="currentPage">1</a></li>
+                                                    <li class="page-item "><a class="page-link" id="btn-next" href="#"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                     <li class="page-item">
-                                                        <a class="page-link " href="# " aria-label="Next">
+                                                        <a class="page-link " href="# " aria-label="Next" id="pendingRequestLastPage">
                                                             <span aria-hidden="true" class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
                                                             <span class="sr-only">Next</span>
                                                         </a>
@@ -267,7 +136,7 @@
                                     <div class="shown-records payment-and-export">
                                         <h5>Service History</h5>
                                         <div class="export-btn">
-                                            <button type="button">Export</button>
+                                            <button type="button" onclick="exportTableToCSV('service-history')">Export</button>
                                         </div>
                                     </div>
                                 </div>
@@ -286,102 +155,7 @@
                                             <th scope="col">Rate SP</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php
-                                        foreach ($services as $s) {
-                                            if ($s['Status'] == 3 || $s['Status'] == 4 || $s['Status'] == 5) {
-
-                                                $address = $ser->getAddress($s['ServiceRequestId']);
-                                                $extra = $ser->getExtraServices($s['ServiceRequestId']);
-                                                $id = $s['ServiceId'];
-                                                $datetime = new DateTime($s['ServiceStartDate']);
-                                                $sDate = $datetime->format('Y-m-d');
-                                                $sTime = $datetime->format('H:i');
-                                                $sHours = $s['ServiceHours'];
-                                                $time = (strtotime($sTime) + (60 * 60 * $sHours));
-                                                $endtime = date('H:i', $time);
-                                                $payment = $s['TotalCost'];
-                                                $comments = $s['Comments'];
-                                                $pets = $s['HasPets'];
-                                        ?>
-                                                <tr>
-                                                    <td class="s-id"><?php echo $id; ?></td>
-                                                    <td>
-                                                        <div class="service-history-table">
-                                                            <div class="service-info2">
-                                                                <div class="service-datetime-icons">
-                                                                    <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                                    <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                                    <!--customer screen service history modal start-->
-                                                                    <?php
-                                                                    include 'popup-modal/service-history-modal.php';
-                                                                    ?>
-                                                                    <!--customer screen service history modal end-->
-
-                                                                </div>
-                                                                <div class="service-datetime-texts">
-                                                                    <a href="#" data-toggle="modal" data-target="#cust-service-history-modal"><strong><?php echo $sDate; ?></strong></a>
-                                                                    <a href="#" data-toggle="modal" data-target="#cust-service-history-modal">
-                                                                        <p><?php echo $sTime . "-" . $endtime; ?></p>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        if ($s['ServiceProviderId'] == null) { ?>
-
-                                                        <?php } else {
-                                                            $spData = $ser->getServicerData($s['ServiceProviderId']);
-                                                        ?>
-                                                            <div class="sp-content">
-                                                                <div class="sp-avatar">
-                                                                    <img src="assets/images/avatar-hat.png" alt="">
-                                                                </div>
-                                                                <div class="sp-name-rating">
-                                                                    <b class="spName-sh"><?php echo $spData['FirstName'] . " " . $spData['LastName']; ?></b>
-                                                                    <div class="sp-rating">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/yellow-small-star.png" alt="">
-                                                                        <img src="assets/images/grey-small-star.png" alt="">
-                                                                        <span>3.67</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <div class="payment-content">
-                                                            <b>$<?php echo $payment; ?></b>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <?php if ($s['Status'] == 3) { ?>
-                                                            <div class="status-completed">
-                                                                <span>Completed</span>
-                                                            </div>
-                                                        <?php } else if ($s['Status'] == 4) { ?>
-                                                            <div class="status-cancelled">
-                                                                <span>Cancelled</span>
-                                                            </div>
-                                                        <?php } else { ?>
-                                                            <div class="status-refund">
-                                                                <span>Refund</span>
-                                                            </div>
-                                                        <?php } ?>
-                                                    </td>
-                                                    <td>
-                                                        <div class="action-buttons">
-                                                            <button class="btn-rate-sp" data-toggle="modal" data-target="#rate-sp-modal2">Rate SP</button>
-
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                        <?php }
-                                        } ?>
+                                    <tbody id="cust-service-history">
                                     </tbody>
                                 </table>
                             </div>
@@ -392,12 +166,13 @@
                                 <div class="col-md-6 col-sm-12 col-lg-6">
                                     <div class="shown-records">
                                         <span>Show</span>
-                                        <select name=" " id=" ">
-                                            <option value=" ">10</option>
-                                            <option value=" ">20</option>
-                                            <option value=" ">30</option>
+                                        <select name=" " id="sh-table-rows-per-page" onchange="changeRowsPerPageServiceHistory(this.value); getServiceHistoryData()">
+
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
                                         </select>
-                                        <span>entries total record: <span>1</span></span>
+                                        <span>entries total record: <span id="service-history-total-record-count">1</span></span>
                                     </div>
                                 </div>
 
@@ -406,14 +181,14 @@
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination ">
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Previous ">
-                                                        <span aria-hidden="true "><img src="assets/images/first-page.png" alt=""></span>
-                                                        <span class="sr-only ">Previous</span>
+                                                    <a class="page-link " href="# " aria-label="Previous">
+                                                        <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
+                                                        <span class="sr-only">Previous</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                <li class="page-item "><a class="page-link active " href="# ">1</a></li>
-                                                <li class="page-item "><a class="page-link " href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item"><a class="page-link" href="#" id="serviceHistory-btnPrevious"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item "><a class="page-link active " href="# " id="service-history-pageno">1</a></li>
+                                                <li class="page-item "><a class="page-link " href="# " id="serviceHistory-btnNext"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                 <li class="page-item ">
                                                     <a class="page-link " href="# " aria-label="Next ">
                                                         <span aria-hidden="true " class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
@@ -440,55 +215,65 @@
                                 <h5>Favourite Pros</h5>
                             </div>
                             <div class="favourite-sp">
+                                <?php
+                                foreach ($getFavSp as $favsp) {
+                                    $totalCleaning = 0;
+                                    foreach ($ratings as $favSpRating) {
+                                        if($favSpRating['Status']==4){
+                                            $totalCleaning++;
+                                        }
+                                        $rating = $favSpRating['Ratings'];
+                                        for ($i = 0; $i < floor($rating); $i++) {
+                                            $j++;
+                                            $spStar .= "<i class='fa fa-star checked'></i>";
+                                        }
+                                        if (floor($rating) < $favSpRating['Ratings']) {
+                                            $j++;
+                                            $spStar .= "<i class='fa fa-star-half-o checked'></i>";
+                                        }
+                                        if ($j < 5) {
+                                            for ($k = 0; $k < 5 - $j; $k++) {
+                                                $spStar .= "<i class='fa fa-star-o'></i>";
+                                            }
+                                        }
 
-                                <div class="card">
-                                    <div class="card-image">
-                                        <img src="assets/images/avatar-hat.png" alt="">
-                                    </div>
-                                    <h5>First Customer</h5>
-                                    <div class="rating-stars">
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/grey-small-star.png" alt=""></a>
-                                        <span>0</span>
-                                    </div>
-                                    <p class="text-center">0 cleaning</p>
-                                    <div class="favourite-pro-btns">
-                                        <div class="btn-remove">
-                                            <button type="button">Remove</button>
+                                ?>
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="assets/images/avatar-hat.png" alt="">
+                                            </div>
+                                            <h5><?php echo $favsp['FirstName'] . " " . $favsp['LastName'] ?></h5>
+                                            <div class="rating-stars">
+
+                                                <span><?php echo $favSpRating['Ratings']; ?></span>
+                                            </div>
+                                            <p class="text-center"><?php echo $totalCleaning;?> cleaning</p>
+                                            <div class="favourite-pro-btns">
+                                                <?php
+                                                if ($favsp['IsFavorite'] == 1) {
+                                                ?>
+                                                    <div class="btn-remove">
+                                                        <button type="submit" id="btn-remove-from-favsp" class="remove-favsp" onclick="removeFromFav()">Unfavourite</button>
+                                                    </div>
+                                                <?php }else{?>
+                                                    <div class="btn-favourite">
+                                                        <button type="submit" id="btn-add-favsp" onclick="addFavSp()" class="add-favsp">Favourite</button>
+                                                    </div>
+                                                <?php } ?>
+
+                                                <?php if($favsp['IsBlocked']==1){?>
+                                                    <div class="btn-unblock">
+                                                        <button type="button" id="btn-unblock-favsp" onclick="unblockSp()">Unblock</button>
+                                                    </div>
+                                                <?php }else{?>
+                                                    <div class="btn-block">
+                                                        <button type="button" id="btn-block-favsp" onclick="blockSp()">Block</button>
+                                                    </div>
+                                                <?php }?>
+                                            </div>
                                         </div>
-                                        <div class="btn-block">
-                                            <button type="button">Block</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-image">
-                                        <div class="card-image">
-                                            <img src="assets/images/avatar-car.png" alt="">
-                                        </div>
-                                    </div>
-                                    <h5>First Customer</h5>
-                                    <div class="rating-stars">
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/yellow-small-star.png" alt=""></a>
-                                        <a href=""><img src="assets/images/grey-small-star.png" alt=""></a>
-                                        <span>3.67</span>
-                                    </div>
-                                    <p class="text-center">16 cleaning</p>
-                                    <div class="favourite-pro-btns">
-                                        <div class="btn-remove">
-                                            <button type="button">Remove</button>
-                                        </div>
-                                        <div class="btn-block">
-                                            <button type="button">Block</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php }
+                                } ?>
                             </div>
                             <div class="row total-records">
                                 <div class="col-md-6 col-sm-12 col-lg-6">
@@ -591,12 +376,19 @@
                                 <!--customer screen dropdown my setting in My details tab content start-->
                                 <div class="tab-pane fade show active" id="nav-my-details" role="tabpanel" aria-labelledby="nav-my-details-tab">
                                     <div class="details">
+                                        <div class='status-message'>
+                                            <p class='text-success' id="text-ok3"></p>
+                                        </div>
+                                        <div class="response-text">
+                                            <p id="response3" class="text-danger mb-0"></p>
+                                        </div>
                                         <div class="row">
                                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 spaces">
+
                                                 <form action=" ">
-                                                    <div class="form-group ">
-                                                        <label for="firstname ">First name</label>
-                                                        <input type="email " class="form-control form-control-lg " id="firstname ">
+                                                    <div class="form-group">
+                                                        <label for="firstname">First name</label>
+                                                        <input type="text" class="form-control form-control-lg" id="customer-firstname" value="<?php echo $customerData['FirstName']; ?>">
                                                     </div>
                                                 </form>
                                             </div>
@@ -604,15 +396,15 @@
                                                 <form action=" ">
                                                     <div class="form-group ">
                                                         <label for="lastname ">Last name</label>
-                                                        <input type="email " class="form-control form-control-lg " id="lastname ">
+                                                        <input type="text" class="form-control form-control-lg " id="customer-lastname" value="<?php echo $customerData['LastName']; ?>">
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 spaces">
                                                 <form action=" ">
                                                     <div class="form-group ">
-                                                        <label for="email ">E-mail address</label>
-                                                        <input type="email " class="form-control form-control-lg " id="email " value="abc@yopmail.com " disabled>
+                                                        <label for="email">E-mail address</label>
+                                                        <input type="email" class="form-control form-control-lg " id="customer-email" value="<?php echo $customerData['Email']; ?>" disabled>
                                                     </div>
                                                 </form>
                                             </div>
@@ -625,118 +417,239 @@
                                                         <label for="phone">Phone number</label>
                                                         <div class="input-group-prepend ">
                                                             <div class="input-group-text ">+91</div>
-                                                            <input type="tel " class="form-control phone-no" id="phone" placeholder="Phone number" required>
+                                                            <input type="tel " class="form-control phone-no" id="customer-phone" placeholder="Phone number" value="<?php echo $customerData['Mobile']; ?>" required>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 dob spaces">
-                                                <label for=" ">Date of birth</label>
-                                                <div class="dob-fields ">
-                                                    <form action=" " class="day ">
-                                                        <div class="form-group ">
-                                                            <select class="form-control-lg date-select " id="date ">
-                                                                <option>01</option>
-                                                                <option>02</option>
-                                                                <option>03</option>
-                                                                <option>04</option>
-                                                                <option>05</option>
-                                                                <option>06</option>
-                                                                <option>07</option>
-                                                                <option>08</option>
-                                                                <option>09</option>
-                                                                <option>10</option>
-                                                                <option>11</option>
-                                                                <option>12</option>
-                                                                <option>13</option>
-                                                                <option>14</option>
-                                                                <option>15</option>
-                                                                <option>16</option>
-                                                                <option>17</option>
-                                                                <option>18</option>
-                                                                <option>19</option>
-                                                                <option>20</option>
-                                                                <option>21</option>
-                                                                <option>22</option>
-                                                                <option>23</option>
-                                                                <option>24</option>
-                                                                <option>25</option>
-                                                                <option>26</option>
-                                                                <option>27</option>
-                                                                <option>28</option>
-                                                                <option>29</option>
-                                                                <option>30</option>
-                                                                <option>31</option>
-                                                            </select>
-                                                        </div>
-                                                    </form>
-                                                    <form action=" " class="month ">
-                                                        <div class="form-group ">
-                                                            <select class="form-control-lg " id="month ">
-                                                                <option>January</option>
-                                                                <option>February</option>
-                                                                <option>March</option>
-                                                                <option>April</option>
-                                                                <option>May</option>
-                                                                <option>June</option>
-                                                                <option>July</option>
-                                                                <option>August</option>
-                                                                <option>September</option>
-                                                                <option>October</option>
-                                                                <option>November</option>
-                                                                <option>December</option>
-                                                            </select>
-                                                        </div>
-                                                    </form>
-                                                    <form action=" " class="year">
-                                                        <div class="form-group">
-                                                            <select class="form-control-lg" id="year">
-                                                                <option>1982</option>
-                                                                <option>1983</option>
-                                                                <option>1984</option>
-                                                                <option>1985</option>
-                                                                <option>1986</option>
-                                                                <option>1987</option>
-                                                                <option>1988</option>
-                                                                <option>1989</option>
-                                                                <option>1990</option>
-                                                                <option>1991</option>
-                                                                <option>1992</option>
-                                                                <option>1993</option>
-                                                                <option>1994</option>
-                                                                <option>1995</option>
-                                                                <option>1996</option>
-                                                                <option>1997</option>
-                                                                <option>1998</option>
-                                                                <option>1999</option>
-                                                                <option>2000</option>
-                                                                <option>2001</option>
-                                                                <option>2002</option>
-                                                                <option>2003</option>
-                                                                <option>2004</option>
-                                                                <option>2005</option>
-                                                                <option>2006</option>
-                                                                <option>2007</option>
-                                                                <option>2008</option>
-                                                                <option>2009</option>
-                                                                <option>2010</option>
-                                                                <option>2011</option>
-                                                                <option>2012</option>
-                                                                <option>2013</option>
-                                                                <option>2014</option>
-                                                                <option>2015</option>
-                                                                <option>2016</option>
-                                                                <option>2017</option>
-                                                                <option>2018</option>
-                                                                <option>2019</option>
-                                                                <option>2020</option>
-                                                                <option>2021</option>
-                                                                <option>2022</option>
-                                                            </select>
-                                                        </div>
-                                                    </form>
+
+                                            <?php
+                                            if ($customerData['DateOfBirth'] != null) {
+                                                $dob = explode("-", $customerData['DateOfBirth']);
+                                                $dob[2] = substr($dob[2], 0, 2);
+                                                $month = date("F", mktime(0, 0, 0, $dob[1]));
+                                            ?>
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 dob spaces">
+                                                    <label for=" ">Date of birth</label>
+                                                    <div class="dob-fields ">
+                                                        <form action=" " class="day ">
+                                                            <div class="form-group ">
+                                                                <select class="form-control-lg date-select" id="customer-date">
+
+                                                                    <option value="<?php echo $dob[2]; ?>"><?php echo $dob[2]; ?></option>
+                                                                    <option value="01">01</option>
+                                                                    <option value="02">02</option>
+                                                                    <option value="03">03</option>
+                                                                    <option value="04">04</option>
+                                                                    <option value="05">05</option>
+                                                                    <option value="06">06</option>
+                                                                    <option value="07">07</option>
+                                                                    <option value="08">08</option>
+                                                                    <option value="09">09</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                    <option value="13">13</option>
+                                                                    <option value="14">14</option>
+                                                                    <option value="15">15</option>
+                                                                    <option value="16">16</option>
+                                                                    <option value="17">17</option>
+                                                                    <option value="18">18</option>
+                                                                    <option value="19">19</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="21">21</option>
+                                                                    <option value="22">22</option>
+                                                                    <option value="23">23</option>
+                                                                    <option value="24">24</option>
+                                                                    <option value="25">25</option>
+                                                                    <option value="26">26</option>
+                                                                    <option value="27">27</option>
+                                                                    <option value="28">28</option>
+                                                                    <option value="29">29</option>
+                                                                    <option value="30">30</option>
+                                                                    <option value="31">31</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                        <form action=" " class="month ">
+                                                            <div class="form-group ">
+                                                                <select class="form-control-lg " id="customer-month">
+                                                                    <option value="<?php echo $dob[1]; ?>"><?php echo $month; ?></option>
+                                                                    <option value="01">January</option>
+                                                                    <option value="02">February</option>
+                                                                    <option value="03">March</option>
+                                                                    <option value="04">April</option>
+                                                                    <option value="05">May</option>
+                                                                    <option value="06">June</option>
+                                                                    <option value="07">July</option>
+                                                                    <option value="08">August</option>
+                                                                    <option value="09">September</option>
+                                                                    <option value="10">October</option>
+                                                                    <option value="11">November</option>
+                                                                    <option value="12">December</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                        <form action=" " class="year">
+                                                            <div class="form-group">
+                                                                <select class="form-control-lg" id="customer-year">
+                                                                    <option value="<?php echo $dob[0]; ?>"><?php echo $dob[0]; ?></option>
+                                                                    <option value="1982">1982</option>
+                                                                    <option value="1983">1983</option>
+                                                                    <option value="1984">1984</option>
+                                                                    <option value="1985">1985</option>
+                                                                    <option value="1986">1986</option>
+                                                                    <option value="1987">1987</option>
+                                                                    <option value="1988">1988</option>
+                                                                    <option value="1989">1989</option>
+                                                                    <option value="1990">1990</option>
+                                                                    <option value="1991">1991</option>
+                                                                    <option value="1992">1992</option>
+                                                                    <option value="1993">1993</option>
+                                                                    <option value="1994">1994</option>
+                                                                    <option value="1995">1995</option>
+                                                                    <option value="1996">1996</option>
+                                                                    <option value="1997">1997</option>
+                                                                    <option value="1998">1998</option>
+                                                                    <option value="1999">1999</option>
+                                                                    <option value="2000">2000</option>
+                                                                    <option value="2001">2001</option>
+                                                                    <option value="2002">2002</option>
+                                                                    <option value="2003">2003</option>
+                                                                    <option value="2004">2004</option>
+                                                                    <option value="2005">2005</option>
+                                                                    <option value="2006">2006</option>
+                                                                    <option value="2007">2007</option>
+                                                                    <option value="2008">2008</option>
+                                                                    <option value="2009">2009</option>
+                                                                    <option value="2010">2010</option>
+                                                                    <option value="2011">2011</option>
+                                                                    <option value="2012">2012</option>
+                                                                    <option value="2013">2013</option>
+                                                                    <option value="2014">2014</option>
+                                                                    <option value="2015">2015</option>
+                                                                    <option value="2016">2016</option>
+                                                                    <option value="2017">2017</option>
+                                                                    <option value="2018">2018</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2021">2021</option>
+                                                                    <option value="2022">2022</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            <?php } else { ?>
+                                                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-4 dob spaces">
+                                                    <label for=" ">Date of birth</label>
+                                                    <div class="dob-fields ">
+                                                        <form action=" " class="day ">
+                                                            <div class="form-group ">
+                                                                <select class="form-control-lg date-select" id="customer-date">
+
+                                                                    <option value="01">01</option>
+                                                                    <option value="02">02</option>
+                                                                    <option value="03">03</option>
+                                                                    <option value="04">04</option>
+                                                                    <option value="05">05</option>
+                                                                    <option value="06">06</option>
+                                                                    <option value="07">07</option>
+                                                                    <option value="08">08</option>
+                                                                    <option value="09">09</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                    <option value="13">13</option>
+                                                                    <option value="14">14</option>
+                                                                    <option value="15">15</option>
+                                                                    <option value="16">16</option>
+                                                                    <option value="17">17</option>
+                                                                    <option value="18">18</option>
+                                                                    <option value="19">19</option>
+                                                                    <option value="20">20</option>
+                                                                    <option value="21">21</option>
+                                                                    <option value="22">22</option>
+                                                                    <option value="23">23</option>
+                                                                    <option value="24">24</option>
+                                                                    <option value="25">25</option>
+                                                                    <option value="26">26</option>
+                                                                    <option value="27">27</option>
+                                                                    <option value="28">28</option>
+                                                                    <option value="29">29</option>
+                                                                    <option value="30">30</option>
+                                                                    <option value="31">31</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                        <form action=" " class="month ">
+                                                            <div class="form-group ">
+                                                                <select class="form-control-lg " id="customer-month">
+                                                                    <option value="01">January</option>
+                                                                    <option value="02">February</option>
+                                                                    <option value="03">March</option>
+                                                                    <option value="04">April</option>
+                                                                    <option value="05">May</option>
+                                                                    <option value="06">June</option>
+                                                                    <option value="07">July</option>
+                                                                    <option value="08">August</option>
+                                                                    <option value="09">September</option>
+                                                                    <option value="10">October</option>
+                                                                    <option value="11">November</option>
+                                                                    <option value="12">December</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                        <form action=" " class="year">
+                                                            <div class="form-group">
+                                                                <select class="form-control-lg" id="customer-year">
+                                                                    <option value="1982">1982</option>
+                                                                    <option value="1983">1983</option>
+                                                                    <option value="1984">1984</option>
+                                                                    <option value="1985">1985</option>
+                                                                    <option value="1986">1986</option>
+                                                                    <option value="1987">1987</option>
+                                                                    <option value="1988">1988</option>
+                                                                    <option value="1989">1989</option>
+                                                                    <option value="1990">1990</option>
+                                                                    <option value="1991">1991</option>
+                                                                    <option value="1992">1992</option>
+                                                                    <option value="1993">1993</option>
+                                                                    <option value="1994">1994</option>
+                                                                    <option value="1995">1995</option>
+                                                                    <option value="1996">1996</option>
+                                                                    <option value="1997">1997</option>
+                                                                    <option value="1998">1998</option>
+                                                                    <option value="1999">1999</option>
+                                                                    <option value="2000">2000</option>
+                                                                    <option value="2001">2001</option>
+                                                                    <option value="2002">2002</option>
+                                                                    <option value="2003">2003</option>
+                                                                    <option value="2004">2004</option>
+                                                                    <option value="2005">2005</option>
+                                                                    <option value="2006">2006</option>
+                                                                    <option value="2007">2007</option>
+                                                                    <option value="2008">2008</option>
+                                                                    <option value="2009">2009</option>
+                                                                    <option value="2010">2010</option>
+                                                                    <option value="2011">2011</option>
+                                                                    <option value="2012">2012</option>
+                                                                    <option value="2013">2013</option>
+                                                                    <option value="2014">2014</option>
+                                                                    <option value="2015">2015</option>
+                                                                    <option value="2016">2016</option>
+                                                                    <option value="2017">2017</option>
+                                                                    <option value="2018">2018</option>
+                                                                    <option value="2019">2019</option>
+                                                                    <option value="2020">2020</option>
+                                                                    <option value="2021">2021</option>
+                                                                    <option value="2022">2022</option>
+                                                                </select>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
                                         </div>
 
                                         <div class="row">
@@ -745,13 +658,13 @@
                                                     <p>My Preferred Language</p>
                                                 </div>
                                                 <div class="form-group language-select">
-                                                    <select name="" id="">
-                                                        <option value="">English</option>
-                                                        <option value="">Hindi</option>
+                                                    <select name="" id="customer-language">
+                                                        <option value="1">English</option>
+                                                        <option value="2">Hindi</option>
                                                     </select>
                                                 </div>
                                                 <div class="btn-save">
-                                                    <button type="button">Save</button>
+                                                    <button type="button" onclick="customerMyDetails()">Save</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -770,99 +683,35 @@
                                                         <th scope="col">Actions</th>
                                                     </tr>
                                                 </thead>
+
+
                                                 <tbody>
-                                                    <tr>
-                                                        <td class="address-phone-data">
-                                                            <b>Address: </b><span>Koenigstrasse 112, 99879 Tambach-Dietharz</span><br>
-                                                            <b>Phone number: </b><span>8844775532</span>
-                                                        </td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#edit-addr-modal"><img src="assets/images/edit-icon.png" alt=""></a>
-                                                            <a data-toggle="modal" data-target="#delete-addr-modal"><img src="assets/images/delete-icon.png" alt=""></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="address-phone-data">
-                                                            <b>Address: </b><span>Koenigstrasse 112, 99879 Tambach-Dietharz</span><br>
-                                                            <b>Phone number: </b><span>8844775532</span>
-                                                        </td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#edit-addr-modal"><img src="assets/images/edit-icon.png" alt=""></a>
-                                                            <a data-toggle="modal" data-target="#delete-addr-modal"><img src="assets/images/delete-icon.png" alt=""></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="address-phone-data">
-                                                            <b>Address: </b><span>Koenigstrasse 112, 99879 Tambach-Dietharz</span><br>
-                                                            <b>Phone number: </b><span>8844775532</span>
-                                                        </td>
-                                                        <td>
-                                                            <a data-toggle="modal" data-target="#edit-addr-modal"><img src="assets/images/edit-icon.png" alt=""></a>
-                                                            <a data-toggle="modal" data-target="#delete-addr-modal"><img src="assets/images/delete-icon.png" alt=""></a>
-                                                        </td>
-                                                    </tr>
+                                                    <?php
+                                                    foreach ($customerAddress as $address) {
+                                                        if ($address['IsDeleted'] == 0) {
+                                                    ?>
+                                                            <tr>
+                                                                <td class="address-phone-data">
+                                                                    <input type="hidden" value="<?php echo $address['AddressId'] ?>" id="delete-address-id">
+                                                                    <b>Address: </b><span><?php echo $address['AddressLine1']; ?></span><br>
+                                                                    <b>Phone number: </b><span><?php echo $address['Mobile']; ?></span>
+                                                                </td>
+                                                                <td>
+                                                                    <a data-toggle="modal" data-target="#edit-addr-modal" onclick='editAddress(<?php echo json_encode($address); ?>)' data-dismiss="modal"><img src="assets/images/edit-icon.png" alt=""></a>
+                                                                    <a data-toggle="modal" data-target="#delete-addr-modal" data-dismiss="modal" onclick='deleteAddressModal(<?php echo json_encode($address["AddressId"]); ?>)'><img src="assets/images/delete-icon.png" alt=""></a>
+                                                                </td>
+                                                            </tr>
+                                                    <?php }
+                                                    } ?>
                                                 </tbody>
                                             </table>
                                         </div>
 
                                         <div class="add-new-addr-btn">
-                                            <button type="button" data-toggle="modal" data-target="#add-addr-modal">Add New Address</button>
+                                            <button type="button" data-toggle="modal" data-target="#add-addr-modal" data-dismiss="modal">Add New Address</button>
                                         </div>
-
                                         <!--customer screen my address tab edit address modal start-->
                                         <div class="modal fade" id="edit-addr-modal" tabindex="-1" role="dialog" aria-labelledby="edit-addr-modal" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLongTitle">Edit Address</h4>
-
-                                                        <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="edit-details">
-                                                            <div class="address-fields">
-                                                                <div class="street-name">
-                                                                    <label for="street">Street Name</label>
-                                                                    <input type="text" name="" id="street" class="form-control" value="Koenigstrasse">
-                                                                </div>
-                                                                <div class="house-no">
-                                                                    <label for="house">House Number</label>
-                                                                    <input type="text" name="" id="house" class="form-control" value="112">
-                                                                </div>
-                                                            </div>
-                                                            <div class="postalcode-city">
-                                                                <div class="postalcode">
-                                                                    <label for="postalcode">Postal Code</label>
-                                                                    <input type="tel" name="" id="postalcode" class="form-control" value="99897">
-                                                                </div>
-                                                                <div class="city">
-                                                                    <label for="city">City</label>
-                                                                    <select name="" id="city">
-                                                                        <option value="">Tambach-Dietharz</option>
-                                                                        <option value="">Tambach-Dietharz</option>
-                                                                        <option value="">Tambach-Dietharz</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="edit-phone">
-                                                                <form action=" ">
-                                                                    <label for="phone">Phone number</label>
-                                                                    <div class="input-group-prepend">
-
-                                                                        <div class="input-group-text ">+91</div>
-                                                                        <input type="tel " class="form-control phone-no" id="phone" placeholder="Phone number" value="8844775532" required>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-
-                                                            <button type="button" class="btn-edit">Edit</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!--customer screen my address tab edit address modal end-->
 
@@ -877,27 +726,31 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="edit-details">
+                                                            <div class='status-message'>
+                                                                <p class='text-success' id="text-ok5"></p>
+                                                            </div>
+                                                            <div class="response-text">
+                                                                <p id="response5" class="text-danger mb-0"></p>
+                                                            </div>
                                                             <div class="address-fields">
                                                                 <div class="street-name">
                                                                     <label for="street">Street Name</label>
-                                                                    <input type="text" name="" id="street" class="form-control">
+                                                                    <input type="text" name="" id="new-street" class="form-control" required>
                                                                 </div>
                                                                 <div class="house-no">
                                                                     <label for="house">House Number</label>
-                                                                    <input type="text" name="" id="house" class="form-control">
+                                                                    <input type="text" name="" id="new-house" class="form-control" required>
                                                                 </div>
                                                             </div>
                                                             <div class="postalcode-city">
                                                                 <div class="postalcode">
                                                                     <label for="postalcode">Postal Code</label>
-                                                                    <input type="tel" name="" id="postalcode" class="form-control">
+                                                                    <input type="tel" name="" id="new-postalcode" class="form-control" oninput="getCity()" required>
                                                                 </div>
                                                                 <div class="city">
                                                                     <label for="city">City</label>
-                                                                    <select name="" id="city">
-                                                                        <option value="">Tambach-Dietharz</option>
-                                                                        <option value="">Tambach-Dietharz</option>
-                                                                        <option value="">Tambach-Dietharz</option>
+                                                                    <select name="" id="new-city" required>
+                                                                        <option value=""></option>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -908,13 +761,13 @@
                                                                     <div class="input-group-prepend">
 
                                                                         <div class="input-group-text ">+91</div>
-                                                                        <input type="tel " class="form-control phone-no" id="phone" placeholder="Phone number" required>
+                                                                        <input type="tel " class="form-control phone-no" id="new-phone" placeholder="Phone number" required>
                                                                     </div>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn-edit">Add</button>
+                                                            <button type="button" class="btn-edit" id="add-new-addr-btn" onclick="addNewAddress()">Add</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -924,22 +777,6 @@
 
                                         <!--customer screen my address tab delete address modal start-->
                                         <div class="modal fade" id="delete-addr-modal" tabindex="-1" role="dialog" aria-labelledby="delete-addr-modal" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title" id="exampleModalLongTitle">Delete Address</h4>
-
-                                                        <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p>Are you sure you want to delete this address?</p>
-
-                                                        <div class="btn-delete">
-                                                            <button type="button">Delete</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <!--customer screen my address tab delete address modal end-->
                                     </div>
@@ -948,12 +785,19 @@
                                 <!--customer screen dropdown my setting in My address tab content end-->
                                 <div class="tab-pane fade" id="nav-change-pass" role="tabpanel" aria-labelledby="nav-change-pass-tab">
                                     <div class="change-password">
+                                        <div class='status-message'>
+                                            <p class='text-success' id="text-ok6"></p>
+                                        </div>
+                                        <div class="response-text">
+                                            <p id="response6" class="text-danger mb-0"></p>
+                                        </div>
                                         <div class="row details">
                                             <div class="col-md-4 col-sm-12 spaces ">
+
                                                 <form action=" ">
                                                     <div class="form-group">
-                                                        <label for="old-pass ">Old password</label>
-                                                        <input type="password" class="form-control form-control-lg " id="old-pass ">
+                                                        <label for="old-pass">Old password</label>
+                                                        <input type="password" class="form-control form-control-lg " id="old-pass">
                                                     </div>
                                                 </form>
                                             </div>
@@ -962,8 +806,8 @@
                                             <div class="col-md-4 col-sm-12 spaces ">
                                                 <form action=" ">
                                                     <div class="form-group ">
-                                                        <label for="new-pass ">New password</label>
-                                                        <input type="password " class="form-control form-control-lg " id="new-pass ">
+                                                        <label for="new-pass">New password</label>
+                                                        <input type="password" class="form-control form-control-lg " id="new-pass">
                                                     </div>
                                                 </form>
                                             </div>
@@ -972,16 +816,16 @@
                                             <div class="col-md-4 col-sm-12 spaces ">
                                                 <form action=" ">
                                                     <div class="form-group ">
-                                                        <label for="confirm-pass ">Confirm password</label>
-                                                        <input type="password " class="form-control form-control-lg " id="confirm-pass ">
+                                                        <label for="confirm-pass">Confirm password</label>
+                                                        <input type="password" class="form-control form-control-lg " id="confirm-pass">
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
 
                                         <div class="row address-field ">
-                                            <div class="btn-setting-save ">
-                                                <button type="button ">Save</button>
+                                            <div class="btn-setting-save">
+                                                <button type="button" onclick="changePassword()" id="pass-save-btn">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -995,53 +839,86 @@
     </section>
     <!--footer start-->
     <script src="assets/js/custDashboard.js"></script>
-
     <script>
-        // <?php
-            //     include 'assets/js/custDashboard.js';
-            // 
-            ?>
-
-
-        // $(document).on("click", ".service-modal-toggler", function(e) {
-        //     var data = $(this).first().data('service');
-        //     var address = $(this).first().data('address');
-        //     var extra = $(this).first().data('extra');
-        //     $("#current-service-modal").data('service', data);
-        //     $("#current-service-modal").data('address', address);
-        //     $("#current-service-modal").data('extra', extra);
-        //     $("#current-service-modal").modal('show');
-
-        // });
-
-        // $(document).on('show.bs.modal', '#current-service-modal', function(e) {
-        //     var data = $(this).data('service');
-        //     var address = $(this).data('address');
-        //     var extra = $(this).data('extra');
-
-        //     console.log(data);
-        //     // alert(data.ServiceStartDate)
-
-        //     $('#sid').html(data.UserId);
-        //     console.log(address);
-        //     console.log(extra);
-
-
-        // });
-
-        // $(document).on('hidden.bs.modal', '#current-service-modal', function(e) {
-        //     $(this).data(null);
-        //     $("#current-service-modal").modal('hide');
-        // });
+        $('.favourite-sp .rating-stars').prepend("<?php echo $spStar; ?>");
     </script>
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-function showLoader(){
-  $.LoadingOverlay("show",{
-    background  : "rgba(0, 0, 0, 0.7)"
-  });
-}
-$.LoadingOverlay("hide"); -->
+    <script>
+        function editAddress(address) {
+            var addressLine = address['AddressLine1'].substr(0, address['AddressLine1'].indexOf(","));
+            var street = addressLine.split(/[ ,]+/);
+            $('#edit-addr-modal').html(`
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                    
+                                                        <h4 class="modal-title" id="exampleModalLongTitle">Edit Address</h4>
+
+                                                        <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    <div class='status-message'>
+                                                        <p class='text-success' id="text-ok4"></p>
+                                                    </div>
+                                                    <div class="response-text">
+                                                        <p id="response4" class="text-danger mb-0"></p>
+                                                    </div>
+                                                        <div class="edit-details">
+                                                            <div class="address-fields">
+                                                                <div class="street-name">
+                                                                    <input type="hidden" value="${address['AddressId']}" id="address-id">
+                                                                    <label for="street">Street Name</label>
+                                                                    <input type="text" name="" id="edited-street" class="form-control" value="${street[0]}">
+                                                                </div>
+                                                                <div class="house-no">
+                                                                    <label for="house">House Number</label>
+                                                                    <input type="text" name="" id="edited-houseno" class="form-control" value="${street[1]}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="postalcode-city">
+                                                                <div class="postalcode">
+                                                                    <label for="postalcode">Postal Code</label>
+                                                                    <input type="tel" name="" id="edited-postalcode" class="form-control" value="${address['PostalCode']}">
+                                                                </div>
+                                                                <div class="city">
+                                                                    <label for="city">City</label>
+                                                                    <select name="" id="edited-city">
+                                                                        <option value="${address['City']}">${address['City']}</option>
+                                                                        
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="edit-phone">
+                                                                <form action=" ">
+                                                                    <label for="phone">Phone number</label>
+                                                                    <div class="input-group-prepend">
+
+                                                                        <div class="input-group-text ">+91</div>
+                                                                        <input type="tel" class="form-control phone-no" id="edited-phone" placeholder="Phone number" value="${address['Mobile']}" required>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+
+                                                            <button type="button" class="btn-edit" id="edit-addr-btn" onclick="SubmitEditAddress()">Edit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+            `);
+
+            $('#edit-addr-modal').modal('show');
+
+            $(".close-btn").click(function() {
+                $("#edit-addr-modal").modal("hide");
+
+                $("body").removeClass("modal-open");
+                $(".modal-backdrop").remove();
+            });
+        }
+    </script>
+
 
     <?php
     include 'views/footer.php';
