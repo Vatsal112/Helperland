@@ -33,7 +33,7 @@ class serviceModel{
     }
 
     function newAddress($table,$address){
-        $sql = "INSERT INTO $table (UserId,AddressLine1,City,PostalCode,IsDefault,IsDeleted,Mobile) values(:UserId,:AddressLine1,:City,:PostalCode,:IsDefault,:IsDeleted,:Mobile)";
+        $sql = "INSERT INTO $table (UserId,AddressLine1,City,PostalCode,IsDefault,IsDeleted,Mobile,Email) values(:UserId,:AddressLine1,:City,:PostalCode,:IsDefault,:IsDeleted,:Mobile,:Email)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($address);
         return $this->conn->lastInsertId();
@@ -46,7 +46,7 @@ class serviceModel{
     }
 
     function newServiceRequest($table,$data){
-        $sql = "INSERT INTO $table (UserId,ServiceId,ServiceStartDate,ZipCode,ServiceHours,SubTotal,TotalCost,Comments,PaymentDue,HasPets,Status,CreatedDate,ModifiedDate,Distance) values(:UserId,:ServiceId,:ServiceStartDate,:ZipCode,:ServiceHours,:SubTotal,:TotalCost,:Comments,:PaymentDue,:HasPets,:Status,:CreatedDate,:ModifiedDate,:Distance)";
+        $sql = "INSERT INTO $table (UserId,ServiceId,ServiceStartDate,ZipCode,ServiceHours,SubTotal,TotalCost,Comments,PaymentDue,ServiceProviderId,HasPets,Status,CreatedDate,ModifiedDate,Distance) values(:UserId,:ServiceId,:ServiceStartDate,:ZipCode,:ServiceHours,:SubTotal,:TotalCost,:Comments,:PaymentDue,:ServiceProviderId,:HasPets,:Status,:CreatedDate,:ModifiedDate,:Distance)";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute($data);
         return $this->conn->lastInsertId();
@@ -74,6 +74,13 @@ class serviceModel{
         return $record;
     }
 
+    function getFavSpData($table,$id){
+        $stmt = $this->conn->prepare("SELECT * FROM $table JOIN user on $table.TargetUserId = user.UserId");
+        $stmt->execute();
+        $record = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $record;
+    }
+
     function extraServiceRequest($table,$data){
         $sql = "INSERT INTO $table (ServiceRequestId,ServiceExtraId) values (:ServiceRequestId,:ServiceExtraId)";
         $stmt= $this->conn->prepare($sql);
@@ -82,7 +89,7 @@ class serviceModel{
     }
 
     function addServiceAddress($table, $serviceRequestId,$addressId){
-        $sql = "INSERT INTO $table (ServiceRequestId, AddressLine1, City, State, PostalCode, Mobile) SELECT $serviceRequestId, AddressLine1, City, State, PostalCode, Mobile FROM useraddress WHERE AddressId=$addressId";
+        $sql = "INSERT INTO $table (ServiceRequestId, AddressLine1, City, State, PostalCode, Mobile,Email) SELECT $serviceRequestId, AddressLine1, City, State, PostalCode, Mobile,Email FROM useraddress WHERE AddressId=$addressId";
         $stmt= $this->conn->prepare($sql);
         $stmt->execute();
         return $this->conn->lastInsertId(); 

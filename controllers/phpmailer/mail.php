@@ -18,7 +18,7 @@
 
         $mail->setFrom('vatsaldendpara001@gmail.com', 'Helperland');
         //       // Add a recipient
-        $mail->addAddress($recipent);
+        // $mail->addAddress($recipent);
     
         // $mail->addReplyTo(Config::SMTP_EMAIL);
 
@@ -29,26 +29,26 @@
         $mail->Body    = $body;
         $mail->AltBody = $altbody;
       
-        //   foreach ($recipent as $user) {
-        //     $mail->addAddress($user);
+          foreach ($recipent as $user) {
+            $mail->addAddress($user);
           
-        //     try {
-        //         $mail->send();
-        //         echo "Message sent to: ({$user}) {$mail->ErrorInfo}\n";
-        //         $mail->clearAddresses();
-        //     } catch (Exception $e) {
-        //         echo "Mailer Error ({$user}) {$mail->ErrorInfo}\n";
-        //     }
-        // }
+            try {
+                $mail->send();
+                // echo "Message sent to: ({$user}) {$mail->ErrorInfo}\n";
+                $mail->clearAddresses();
+            } catch (Exception $e) {
+                echo "Mailer Error ({$user}) {$mail->ErrorInfo}\n";
+            }
+        }
  
         
           
-        //   $mail->smtpClose();
-        try {
-            $mail->send();
-        } catch (Exception $e) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        }
+          $mail->smtpClose();
+        // try {
+        //     $mail->send();
+        // } catch (Exception $e) {
+        //     echo "Mailer Error: " . $mail->ErrorInfo;
+        // }
 
     }
 

@@ -11,6 +11,12 @@ document.addEventListener("scroll", () => {
     }
 });
 
+var settingTab = document.getElementById('pills-settings-tab');
+settingTab.setAttribute('href', '#')
+settingTab.addEventListener('click', function() {
+    window.location.href = "http://localhost/Helperland/?controller=home&function=customerDashboard&parameter=pills-settings-tab";
+});
+
 function privacy_policy_btn() {
     $(".privacy-policy-sec").css("display", "none");
 }
@@ -297,8 +303,8 @@ $(document).ready(function() {
                 dataType: "JSON",
                 success: function(response) {
                     res = JSON.parse(JSON.stringify(response));
-                    if (response) {
-                        postalCode = response["ZipcodeValue"];
+                    if (response.status) {
+                        postalCode = response["ZipCodeValue"];
 
                         for (let i = 0; i < perCleaning.length; i++) {
                             perCleaning[i].innerHTML = "$54";
@@ -364,8 +370,51 @@ $(document).ready(function() {
             dataType: "JSON",
             success: function(response) {
                 res = JSON.parse(JSON.stringify(response));
+
                 if (response) {
-                    addAddress(response);
+                    // addAddress(response);
+
+                    if (response[0][1]) {
+                        // addAddress(response[0]);
+                        addAddress(response[0]);
+                        for (i = 0; i < response[1].length; i++) {
+                            if (response[1][i].Id != null) {
+                                $('.your-details-content .favourite-sp').css('display', 'block');
+                                $('.favourite-sp .sp-radio').append(`<div class="fav-sp-info">
+                                <input type="radio" name="fav-sp" class="sp-radio-1" id="fav-sp-radio${i}" value=${response[1][i].UserId}>
+                                <label for="fav-sp-radio${i}">
+                                    <span class="sp-name">${response[1][i].FirstName} ${response[1][i].LastName}</span>
+                                    <button type="button" class="select-fav-sp-1">Select</button>
+                                </label>
+                            </div>`);
+
+                            }
+
+                        }
+                        let data = document.querySelectorAll(".select-fav-sp-1");
+                        let ele = document.querySelectorAll(".sp-radio-1");
+
+                        for (let i = 0; i < data.length; i++) {
+
+                            data[i].addEventListener("click", () => {
+
+                                if (ele[i].hasAttribute('checked')) {
+                                    ele[i].removeAttribute("checked");
+                                    data[i].innerHTML = 'Select';
+                                } else {
+                                    for (let i = 0; i < data.length; i++) {
+                                        ele[i].removeAttribute("checked");
+                                        data[i].innerHTML = 'Select';
+                                    }
+                                    ele[i].setAttribute("checked", true);
+                                    data[i].innerHTML = 'Unselect';
+                                }
+                            });
+                        }
+                    } else {
+                        addAddress(response);
+                    }
+
                 } else {
                     $(".response-text2").css("display", "block");
                     $("#response2").html(res);
@@ -421,18 +470,21 @@ $(document).ready(function() {
 
     $('#your-details-continue').click(function(e) {
         e.preventDefault();
+
         var address = '';
         if ($(".response-text2").css("display", "block")) {
             $(".response-text2").css("display", "none");
         }
-        $('.your-details-content input[type="radio"]:checked').each(function() {
+        $('.your-details-content input[name="address"]:checked').each(function() {
             address = $(this).val();
         });
+
+
         let serviceDate = $("#service-date").val();
 
         let data = {
             addressId: address,
-            date: serviceDate
+            date: serviceDate,
         };
 
         $.ajax({
@@ -464,11 +516,19 @@ $(document).ready(function() {
             $('#book-msg').html("This service is already Booked.");
             $('#s-id').css('display', 'none');
         } else {
+            $('#complete-booking-btn').prop('disabled', true);
             e.preventDefault();
+
             var address = '';
+            var spId = '';
             $('.your-details-content input[type="radio"]:checked').each(function() {
                 address = $(this).val();
             });
+
+            $('.your-details-content input[name="fav-sp"]:checked').each(function() {
+                spId = $(this).val();
+            });
+
             let serviceData = {
                 ZipcodeValue: postalCode,
                 serviceDate: $("#service-date").val(),
@@ -478,7 +538,8 @@ $(document).ready(function() {
                 extraService: checkboxes,
                 comments: $("#comments").val(),
                 pets: hasPets,
-                address: address
+                address: address,
+                spId: spId
             };
 
             $.ajax({
@@ -507,7 +568,7 @@ $(document).ready(function() {
     $('#complete-booking-modal-ok-btn').modal({
         backdrop: 'static',
         keyboard: false
-    })
+    });
 });
 let showAddressDialog = () => {
     const addressDialog = document.getElementById("address-dialog");
@@ -537,8 +598,10 @@ function addAddress(response) {
     if (flag == true) {
         for (let i = 0; i < response.length; i++) {
             checked = response[i].IsDefault == 1 ? "checked" : "";
-            $(".user-address").append(
-                `<div class="address-radio form-group">
+
+            if (response[i].IsDeleted == 0) {
+                $(".user-address").append(
+                    `<div class="address-radio form-group">
                     <input type="radio" name="address" id="radio1" value="${response[i]['AddressId']}
                     " ${checked}>
     
@@ -551,7 +614,8 @@ function addAddress(response) {
                         </label>
                     </div>
                 </div>`
-            );
+                );
+            }
             flag = false;
         }
     }

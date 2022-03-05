@@ -15,33 +15,34 @@ class userController
     function submit_contactForm()
     {
         if (isset($_POST)) {
-            $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&status=1';
-
+            $data = $_POST['data'];
             $array = [
-                'firstname' => $_POST['firstname'],
-                'lastname' => $_POST['lastname'],
-                'email' => $_POST['email'],
-                'phone' => $_POST['phone'],
-                'subject' => $_POST['subject-select'],
-                'message' => $_POST['msg-area'],
+                'firstname' => $data['Firstname'],
+                'lastname' => $data['Lastname'],
+                'email' => $data['Email'],
+                'phone' => $data['Phone'],
+                'subject' => $data['Subject'],
+                'message' => $data['Message'],
                 'createdOn' => date('Y-m-d H:i:s'),
             ];
 
             $this->validateContactMessage($array['message']);
 
             if (!preg_match("/^[a-zA-Z ]*$/", $array['firstname']) && !preg_match("/^[a-zA-Z ]*$/", $array['lastname'])) {
-                $this->Err =  "Only letters and white space allowed in name field" . "<br>";
+                $this->Err = $this->Err  . "Only letters and white space allowed in name field" . "<br>";
+
             }
             if (!preg_match('/^[0-9]{10}+$/', $array['phone'])) {
                 $this->Err = $this->Err  . "phone number size must be 10." . "<br>";
+       
             }
-
-            if (!$this->Err == '') {
-                header('Location:' . $arr['base_url'] = 'http://localhost/helperland/?controller=home&function=contact&message=' . $this->Err);
-            } else {
+            if($this->Err==''){
                 $ins = $this->model->insert_Contactus('contactus', $array);
-                header('Location: ' . $arr['base_url']);
-                return $ins;
+                if($ins){
+                    echo json_encode("Success");
+                }
+            }else{
+                echo json_encode($this->Err);
             }
         } else {
             echo 'error occured!! try again';
@@ -103,7 +104,7 @@ class userController
                 $ins = $this->model->insert_Customer('user', $array);
                 $enc_id = password_hash($ins, PASSWORD_DEFAULT);
                 $body = "<p>Click on link to activate your account: <a href ='http://localhost/helperland/?controller=user&function=verifyAccount&id=$ins'>http://localhost/helperland/?controller=user&function=verifyAccount&id=$enc_id</a></p>";
-                sendmail($array['email'], 'Account Activation', $body, '');
+                sendmail([$array['email']], 'Account Activation', $body, '');
                 echo json_encode("We have send an account activation link for your account kindly check your mail.");
             } else {
                 echo json_encode($this->Err);
@@ -163,7 +164,7 @@ class userController
                 $ins = $this->model->insert_Sp('user', $array);
                 $enc_id = password_hash($ins, PASSWORD_DEFAULT);
                 $body = "<p>Click on link to activate your account: <a href ='http://localhost/helperland/?controller=user&function=verifyAccount&id=$ins'>http://localhost/helperland/?controller=user&function=verifyAccount&id=$enc_id</a></p>";
-                sendmail($array['email'], 'Account Activation', $body, '');
+                sendmail([$array['email']], 'Account Activation', $body, '');
                 echo json_encode("We have send an account activation link for your account kindly check your mail.");
                 return $ins;
             } else {
@@ -214,11 +215,13 @@ class userController
                 $_SESSION['userId'] = $records['UserId'];  
                 $_SESSION['userName'] = $records['FirstName'];
                 $_SESSION['userType'] = $records['UserTypeId'];
+                $_SESSION['userEmail'] = $records['Email'];
                 $_SESSION['start'] = time();
                 $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
                 $res["status"] = true;
                 $res["message"] = "Successfully Login.";
                 $res["loginToken"] = session_id();
+                $res['type'] = $records['UserTypeId'];
                 echo json_encode($res); 
             } else if ($pass == 1 && $records['Status'] == 0) {
                 $this->Err = $this->Err .  "You have not confirmed your account yet. Please check you inbox and verify your id.";
@@ -241,7 +244,7 @@ class userController
             if ($records > 0) {
 
                 $body = "<p>Click on link to change your password: <a href ='http://localhost/helperland/?controller=home&function=changePassword&id=$records[UserId]'>http://localhost/helperland/?controller=home&function=changePassword&id=$records[Password]</a></p>";
-                sendmail($_POST['email'], 'Forget Password', $body, '');
+                sendmail([$_POST['email']], 'Forget Password', $body, '');
                 echo json_encode("An email has been sent to your account. Click on the link in received email to reset the password.");
             } else {
                 $this->Err = $this->Err . "Email not exits";
@@ -260,15 +263,20 @@ class userController
 
             $hash = $this->checkPasswordStrength($pass);
 
-            $updatePass = $this->model->updatePassword('user', $hash, $id);
+            if($this->Err == ''){
+                $updatePass = $this->model->updatePassword('user', $hash, $id);
 
-            if ($updatePass == true) {
-                echo "Password Changed Successfully";
+                if ($updatePass == true) {
+                    echo json_encode("Success");
+                }
+            }else{
+                echo json_encode($this->Err);
             }
         }
     }
 
     function userLogout(){
+        $_SESSION['islogin'] = false;
         unset($_SESSION['islogin']);
         echo 'success';
     }

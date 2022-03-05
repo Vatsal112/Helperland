@@ -79,7 +79,6 @@ if (isset($_COOKIE['siteCookie'])) {
                                 </li>
                                 <div class="noti-user-icons" id="user-icon">
                                     <li class="nav-item notification-icon d-flex">
-                                        <span id="notification-count">2</span>
                                         <a class="nav-link" href="#"><img src="assets/images/icon-notification.png" alt=""></a>
                                     </li>
                                     <div class="dropdown user-icon d-flex align-items-center">
@@ -92,9 +91,9 @@ if (isset($_COOKIE['siteCookie'])) {
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+                                            <a class="dropdown-item" href="<?php echo $arr['base_url'] . '?controller=home&function=customerDashboard'; ?>" onclick="removeActive(event)">My Dashboard</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" href="#" id="pills-settings-tab" onclick="removeActive(event)">My Setting</a>
                                             <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
                                         </div>
                                     </div>
@@ -127,9 +126,9 @@ if (isset($_COOKIE['siteCookie'])) {
                                                 <p>Welcome, <b><?php echo $_SESSION['userName']; ?></b></p>
                                             </div>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" id="v-pills-dashboard-tab" href="#v-pills-dashboard" data-toggle="pill" role="tab" aria-labelledby="v-pills-dashboard" onclick="removeActive(event)">My Dashborad</a>
+                                            <a class="dropdown-item"  href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Dashboard</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item"   href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"   onclick="removeActive(event)">My Setting</a>
                                             <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
                                         </div>
                                     </div>
@@ -172,23 +171,9 @@ if (isset($_COOKIE['siteCookie'])) {
                 </div>
             </nav>
 
-            <div class="modal fade logout-modal" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle2" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="logout-modal-content">
-                                <div class="logout-green-circle">
-                                    <img src="assets/images/ic-check.png" alt="">
-                                </div>
-                                <h5>You have successfully logged out</h5>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn-logout-ok" data-dismiss="modal" id="btn-logout">Ok</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+                include 'popup-modal/logout-modal.php';
+            ?>
         </header>
         <!--********* Main Screen Banner Section start************-->
         <div class="main-text ">
@@ -487,12 +472,12 @@ if (isset($_COOKIE['siteCookie'])) {
             <div class="footer-content">
                 <a href="index.php" target="blank"><img src="assets/images/footer-logo.png " alt=" "></a>
                 <nav class="nav footer-nav justify-content-center">
-                    <a class="nav-link" href="index.php" target="blank">Home</a>
-                    <a class="nav-link " href="about.php" target="blank">About</a>
-                    <a class="nav-link " href="#" target="blank">Testimonials</a>
-                    <a class="nav-link " href="faq.php" target="blank">faqs</a>
-                    <a class="nav-link " href="# ">Insurance Policy</a>
-                    <a class="nav-link " href="# ">Impressum</a>
+                <a class="nav-link" href="index.php" target="blank">Home</a>
+                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=about'; ?>" target="blank">About</a>
+                <a class="nav-link " href="# ">Testimonials</a>
+                <a class="nav-link " href="<?php echo $arr['base_url'] . '?controller=home&function=faq'; ?>" target="blank">faqs</a>
+                <a class="nav-link " href="# ">Insurance Policy</a>
+                <a class="nav-link " href="# ">Impressum</a>
                 </nav>
                 <div class="footer-icon">
                     <i class="fa fa-facebook fb-icon "></i>
