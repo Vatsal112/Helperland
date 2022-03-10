@@ -6,10 +6,6 @@ let publicDashboardHeader = document.getElementById('v-pills-dashboard-tab');
 if (settingTab != undefined) {
     tabContent.classList.add('show', 'active');
     dashboardContent.classList.remove('show', 'active');
-    var data = {
-        "ServiceId": 1233,
-        "Value": 1
-    };
 }
 
 publicDashboardHeader.addEventListener('click', function() {
@@ -61,12 +57,27 @@ function getPendingServiceRequests() {
             endIndex,
         },
         success: function(response) {
+            var action = '';
             pendingRequestTotalRecords = response.length;
             let data = response.slice(startIndex, endIndex);
 
             $("#tbody").html("");
 
             for (let i = 0; i < data.length; i++) {
+
+                if (data[i].Status == 7 && data[i].ServiceProviderId != null) {
+                    action = `<div class="reschedule-msg"><p class='text-success mb-0' >You have rescheduled service request. Your SP will accept it soon.</p></div>`
+                } else {
+                    action = `<div class="action-buttons">
+                    <button class="btn-reschedule" data-toggle="modal" onclick="rescheduleService(${data[i].ServiceId})">Reschedule</button>
+                    <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    </div>
+                    <button class="btn-cancel" onclick='cancelServiceRequestModal${data[i].ServiceId})'>Cancel</button>
+                    <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> 
+                    </div>
+                </div>`;
+                }
+
                 if (data[i].ServiceProviderId == null) {
                     spcontent = "";
                 } else {
@@ -117,17 +128,8 @@ function getPendingServiceRequests() {
                     </div>
                 </td>
 
-                <td class="toggleButtonWithMsg">
-                <div class="action-buttons">
-                <button class="btn-reschedule" data-toggle="modal" onclick="rescheduleService(${data[i].ServiceId})">Reschedule</button>
-                <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    
-                </div>
-                <button class="btn-cancel" onclick='cancelServiceRequestModal${data[i].ServiceId})'>Cancel</button>
-                <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                   
-                </div>
-            </div>
+                <td>
+                    ${action}
                 </td>
 
             </tr>`);
@@ -153,7 +155,16 @@ function serviceInfo(sId) {
         },
         dataType: "JSON",
         success: function(response) {
+            var status = '';
             var include = "";
+
+            if (response.Status == 7 && response.ServiceProviderId != null) {
+                status = '';
+            } else {
+                status = `<button type="button" class="btn btn-modal-accept" data-toggle="modal" onclick="rescheduleService(${response.ServiceId})">
+                <img src="assets/images/reschedule-icon-small.png" alt="" ">Reschedule</button>
+            <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>`;
+            }
             if (response.HasPets == 0) {
                 include = "not-";
             } else {
@@ -256,9 +267,7 @@ function serviceInfo(sId) {
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-modal-accept" data-toggle="modal" onclick="rescheduleService(${response.ServiceId})">
-                                    <img src="assets/images/reschedule-icon-small.png" alt="">Reschedule</button>
-                                <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
+                               ${status}
                             </div>
                         </div>
 
@@ -337,15 +346,17 @@ function getServiceHistoryData() {
         },
         dataType: "JSON",
         success: function(response) {
-            let data = [];
-            var isDisable = "";
             count = Object.keys(response).length;
 
             for (i = 0; i < count - 4; i++) {
-                data.push(response[i].ServiceRequestId);
-                if (response[i].ServiceProviderId == null) {
+                let spcontent = '';
+                var isDisable = "";
+                var stars = '';
+                // data.push(response[i].ServiceRequestId);
+                if (response[i].ServiceProviderId === null) {
                     spcontent = "";
                 } else {
+                    stars = showRatings(response[i].SpRatings);
                     spcontent = `
                     <div class="sp-content">
                         <div class="sp-avatar">
@@ -354,6 +365,7 @@ function getServiceHistoryData() {
                         <div class="sp-name-rating">
                             <b class="spName-sh">${response[i].SpData.FirstName} ${response[i].SpData.LastName}</b>
                             <div class="sp-rating service-history-rating" id="">
+                                ${stars}
                                 <span>${response[i].SpRatings["Ratings"]}</span>
                             </div>
                         </div>
@@ -364,6 +376,7 @@ function getServiceHistoryData() {
                     serviceStatus = `<div class="status-completed">
                         <span>Completed</span>
                      </div>`;
+                    isDisable = "";
                 } else if (response[i].Status == 5) {
                     serviceStatus = `<div class="status-cancelled">
                     <span>Cancelled</span>
@@ -407,7 +420,7 @@ function getServiceHistoryData() {
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <button class="btn-rate-sp" onclick = "showRatingModal(${response[i].ServiceId})" data-target="#Ratesp" ${isDisable}>Rate SP</button>
+                        <button class="btn-rate-sp" onclick = "showRatingModal(${response[i].ServiceId},'${response[i].SpData.FirstName}','${response[i].SpData.LastName}')" data-target="#Ratesp" ${isDisable}>Rate SP</button>
                         <div class="modal fade" id="Ratesp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
                         </div>
@@ -416,8 +429,7 @@ function getServiceHistoryData() {
                 </td>
             </tr>`);
             }
-            serviceHistoryLastRecordIndex = data.sort((a, b) => b - a)[0];
-
+            // serviceHistoryLastRecordIndex = data.sort((a, b) => b - a)[0];
             serviceHistoryPageCount = Math.ceil(
                 response.total_count_service_history /
                 response.set_count_service_history
@@ -429,6 +441,28 @@ function getServiceHistoryData() {
             serviceHistoryNextPage = response.current_page_service_history + 1;
         },
     });
+}
+
+function showRatings(spRating) {
+    var ratingStars = '';
+    var k = 0;
+    if (spRating !== false) {
+        let roundValue = Math.floor(spRating.Ratings);
+        for (j = 0; j < roundValue; j++) {
+            k++;
+            ratingStars += `<i class='fa fa-star checked'></i>`;
+        }
+        if (roundValue < spRating.Ratings) {
+            k++;
+            ratingStars += `<i class='fa fa-star-half-o checked'></i>`;
+        }
+        if (k < 5) {
+            for (s = 0; s < 5 - k; s++) {
+                ratingStars += `<i class='fa fa-star'></i>`;
+            }
+        }
+    }
+    return ratingStars;
 }
 
 function serviceHistoryModal(sId) {
@@ -755,7 +789,7 @@ function rescheduleService(sId) {
             </div>
         </div>
         <div class='modal-footer'>
-            <button type='button' class='btn-modal-accept' onClick = "reschedule(${sId})">Update</button>
+            <button type='button' class='btn-modal-accept' id="btn-reschedule-service" onClick = "reschedule(${sId})">Update</button>
         </div>
         
         </div>
@@ -792,6 +826,8 @@ function reschedule(sId) {
         },
         dataType: "json",
         success: function(response) {
+            $('#btn-reschedule-service').attr('disabled', 'true');
+            $('btn-reschedule-service').css('cursor', 'not-allowed');
             res = JSON.parse(JSON.stringify(response));
             if (res == "Success") {
                 $(".text-success").html("Service Rescheduled Successfully");
@@ -872,8 +908,7 @@ function cancelServiceRequest(sId) {
     });
 }
 
-function showRatingModal(sId) {
-    var spName = $(".spName-sh").text();
+function showRatingModal(sId, firstname, lastname) {
     $("#Ratesp").html(`<div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <div class="modal-header">
@@ -882,7 +917,7 @@ function showRatingModal(sId) {
                     <img src="assets/images/cap.png" alt="">
                 </div>
                 <div>
-                    <span class="text-start">${spName}</span>
+                    <span class="text-start">${firstname} ${lastname}</span>
                     <span>
                     <img src="assets/images/yellow-small-star.png" alt="">
                     <img src="assets/images/yellow-small-star.png" alt="">

@@ -20,12 +20,15 @@
     </footer>
 </div>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/static.js"></script>
 <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCal3HUs19xboI8xjnalOWg7vOQFJ_Iq54"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js "></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
+<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js
+"></script>
 
 </body>
 

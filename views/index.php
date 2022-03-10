@@ -51,6 +51,7 @@ if (isset($_COOKIE['siteCookie'])) {
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
+                        <input type="hidden" id="userType" value="<?php echo $_SESSION['userType'];?>">
                         <?php if (isset($_SESSION['islogin']) && isset($_SESSION['expire']) && isset($_SESSION['userType'])) {
                             if ($_SESSION['userType'] == 1) {
                                 $now = time();
@@ -59,8 +60,6 @@ if (isset($_COOKIE['siteCookie'])) {
                                     unset($_SESSION['islogin']);
                                     echo "<script>window.location.href='$arr[base_url]';</script>";
                                 }
-
-
                         ?>
                                 <li class=" nav-item rounded-btn">
                                     <a class="nav-link active " aria-current="page " href="<?php echo $arr['base_url'] . '?controller=home&function=bookService'; ?>" target="blank">Book a Cleaner</a>
@@ -128,7 +127,7 @@ if (isset($_COOKIE['siteCookie'])) {
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item"  href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Dashboard</a>
 
-                                            <a class="dropdown-item"   href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"   onclick="removeActive(event)">My Setting</a>
+                                            <a class="dropdown-item" href="#"  id="s-pills-my-setting">My Setting</a>
                                             <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal" id="btn-logout">Logout</a>
                                         </div>
                                     </div>
@@ -499,6 +498,7 @@ if (isset($_COOKIE['siteCookie'])) {
     <!--********* Footer Section end ************-->
 
     <script src="assets/js/main.js" type="text/javascript"></script>
+    <script src="assets/js/static.js" type="text/javascript"></script>
     <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js "></script>
@@ -506,5 +506,18 @@ if (isset($_COOKIE['siteCookie'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js "></script>
 
 </body>
+
+<script>
+    document.addEventListener("scroll", () => {
+    var logo = document.getElementById("logo");
+    if (window.scrollY > 10 || window.screen.width < 600) {
+        logo.src = "assets/images/logo-small.png";
+        document.getElementById("navbar").style.background = "rgba(0,0,0,0.8)";
+    } else {
+        logo.src = "assets/images/white-logo-transparent-background.png";
+        document.getElementById("navbar").style.background = "none";
+    }
+});
+</script>
 
 </html>

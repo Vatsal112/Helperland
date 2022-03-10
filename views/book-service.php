@@ -72,7 +72,7 @@ include 'views/sidebar.php';
                                 <div class="form-group mt-2">
                                     <input type="number" class="form-control" id="input-postalCode" placeholder="Postal Code">
                                     <div class="btn-availability">
-                                        <button type="submit" id="postalCode-btn" value="<?php $_SESSION['userType'] ?>">Check Availability</button>
+                                        <button type="button" id="postalCode-btn" value="<?php $_SESSION['userType'] ?>">Check Availability</button>
                                     </div>
                                 </div>
                             </div>

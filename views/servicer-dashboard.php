@@ -1,22 +1,29 @@
+    <?php
+    $toggle = "";
+    if (isset($_GET['parameter'])) {
+        $toggle = $_GET['parameter'];
+    }
+    ?>
     <!--customer screen banner start-->
     <?php
-    if(isset($_SESSION['islogin'])==false){
+    if (isset($_SESSION['islogin']) == false) {
         echo "<script>alert('you must have to login first before accessing this page.');</script>";
         echo "<script>window.location.href='$arr[base_url]';</script>";
     }
-?>
+    ?>
     <!--service provider screen banner section end-->
 
     <!--service provider sidebar for mobile view start-->
-<?php
+    <?php
     include 'views/sidebar.php';
-?>
+    ?>
     <!--service provider sidebar for mobile view end-->
 
     <!--service provider screen welcome text area start-->
     <section class="welcome-user">
         <div class="welcome-text">
-            <h2>Welcome,  <?php echo $_SESSION['userName']; ?></h2>
+            <input type="hidden" value="<?php echo $toggle; ?>" id="servicer-toggle-id">
+            <h2>Welcome, <?php echo $_SESSION['userName']; ?></h2>
         </div>
     </section>
     <!--service provider screen welcome text area end-->
@@ -31,7 +38,7 @@
                     <div class="nav flex-column nav-tab v-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
                         <a class="nav-link" id="v-pills-new-service-req-tab" data-toggle="pill" href="#v-pills-new-service-req" role="tab" aria-controls="v-pills-new-service-req" aria-selected="true">New Service Request</a>
-                        <a class="nav-link active" id="v-pills-upcoming-ser-tab" data-toggle="pill" href="#v-pills-upcoming-ser" role="tab" aria-controls="v-pills-upcoming-ser" aria-selected="false">Upcoming Services</a>
+                        <a class="nav-link" id="v-pills-upcoming-ser-tab" data-toggle="pill" href="#v-pills-upcoming-ser" role="tab" aria-controls="v-pills-upcoming-ser" aria-selected="false">Upcoming Services</a>
                         <a class="nav-link" id="v-pills-service-sche-tab" data-toggle="pill" href="#v-pills-service-sche" role="tab" aria-controls="v-pills-service-sche" aria-selected="false">Service Schedule</a>
                         <a class="nav-link" id="v-pills-service-history-tab" data-toggle="pill" href="#v-pills-service-history" role="tab" aria-controls="v-pills-service-history" aria-selected="false">Service History</a>
                         <a class="nav-link" id="v-pills-my-rating-tab" data-toggle="pill" href="#v-pills-my-rating" role="tab" aria-controls="v-pills-my-rating" aria-selected="false">My Ratings</a>
@@ -62,9 +69,9 @@
                                         <div class="shown-records">
                                             <span>Service Area</span>
                                             <select name=" " id=" ">
-                                                <option value=" " selected>25 km</option>
+                                                <option value=" " selected>10 km</option>
                                                 <option value=" ">20 km</option>
-                                                <option value=" ">10 km</option>
+                                                <option value=" ">25 km</option>
                                             </select>
                                             <div class="form-check">
                                                 <input class=" form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
@@ -75,6 +82,9 @@
                                 </div>
                                 <!--service provider screen new service content table start-->
                                 <table class="table">
+                                    <div class="response-text">
+                                        <p id="response-service-accept" class="text-danger"></p>
+                                    </div>
                                     <thead class="table-header">
                                         <tr>
                                             <th scope="col"><a href=" ">Service Id <img src="assets/images/sort.png" alt=" "></a></th>
@@ -85,274 +95,8 @@
                                             <th scope="col"><a href=" ">Actions</a></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
+                                    <tbody id="new-service-req-table">
 
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <!--service provider screen new service content modal start-->
-                                                        <div class="modal fade" id="service-info-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-part">
-                                                                        <div class="modal-header d-block">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                     <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                            <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                        </div>
-
-                                                                        <div class="modal-body">
-                                                                            <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                            <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                            <span class="body-text"><b>Total Payment:</b> <span class="payment">60,75 &euro;</span></span>
-
-                                                                            <div class="customer-details">
-                                                                                <span class="body-text"><b>Customer Name:</b> First Customer</span>
-                                                                                <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-                                                                                <span class="body-text"><b>Distance:</b> unable to calculate the distance</span>
-                                                                            </div>
-
-                                                                            <div class="customer-details">
-                                                                                <b>Comments</b>
-                                                                                <p class="mb-0">hello</p>
-
-                                                                                <div class="pets">
-                                                                                    <img src="assets/images/included.png" alt=" ">
-                                                                                    <p>I have Pets at home.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-modal-accept"><img src="assets/images/ic-check.png" alt=""> Accept</button>
-                                                                            <!-- <button type="button" class="btn btn-modal-close" data-dismiss="modal">Close</button> -->
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="googleMap">
-                                                                        <div id="map"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--service provider screen new service content modal end-->
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel">
-                                                <button type="button" data-toggle="modal" data-target="#service-info-modal2">Accept</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel">
-                                                <button type="button ">Accept</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel">
-                                                <button type="button">Accept</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Accept</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Accept</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal2">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="" data-toggle="modal" data-target="#service-info-modal2">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,35 &euro;</td>
-                                            <td></td>
-                                            <td class="btn-cancel">
-                                                <button type="button ">Accept</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 <!--service provider screen new service content table end-->
@@ -363,12 +107,12 @@
                                 <div class="col-md-6 col-sm-12 col-lg-6">
                                     <div class="shown-records">
                                         <span>Show</span>
-                                        <select name=" " id=" ">
-                                            <option value=" ">10</option>
-                                            <option value=" ">20</option>
-                                            <option value=" ">30</option>
+                                        <select name=" " id="new-service-table-rows-per-page" onchange="changeRowsPerPage(); getNewServices()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
                                         </select>
-                                        <span>entries total record: <span>1</span></span>
+                                        <span>entries total record: <span id="new-services-total-count">1</span></span>
                                     </div>
                                 </div>
 
@@ -401,7 +145,7 @@
                         <!--service provider screen new service content area end-->
 
                         <!--service provider screen upcoming service content start-->
-                        <div class="tab-pane fade show active upcoming-service" id="v-pills-upcoming-ser" role="tabpanel" aria-labelledby="v-pills-upcoming-ser-tab">
+                        <div class="tab-pane fade upcoming-service" id="v-pills-upcoming-ser" role="tabpanel" aria-labelledby="v-pills-upcoming-ser-tab">
                             <div class="tab-label">
                                 <h5>Upcoming Service</h5>
                                 <a href="#"><img src="assets/images/filter.png" alt=""></a>
@@ -438,7 +182,7 @@
                                                                             <div class="d-flex align-items-center">
                                                                                 <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
                                                                                 <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                     <span aria-hidden="true" class="close-btn">&times;</span>
+                                                                                    <span aria-hidden="true" class="close-btn">&times;</span>
                                                                                 </button>
                                                                             </div>
                                                                             <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
@@ -470,7 +214,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-modal-accept">
-                                                                               <img src="assets/images/ic-check.png" alt=""> Accept</button>
+                                                                                <img src="assets/images/ic-check.png" alt=""> Accept</button>
                                                                             <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
                                                                         </div>
                                                                     </div>
@@ -902,7 +646,7 @@
                                                                             <div class="d-flex align-items-center">
                                                                                 <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
                                                                                 <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                     <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
+                                                                                    <span aria-hidden="true" class="close-btn" data-dismiss="modal">&times;</span>
                                                                                 </button>
                                                                             </div>
                                                                             <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
@@ -934,7 +678,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-modal-accept">
-                                                                               <img src="assets/images/ic-check.png" alt=""> Accept</button>
+                                                                                <img src="assets/images/ic-check.png" alt=""> Accept</button>
                                                                             <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
                                                                         </div>
                                                                     </div>
@@ -1221,7 +965,7 @@
                         <!--service provider screen block customer tab content start-->
 
                         <!--service provider screen dropdown my setting content start-->
-                        <div class="tab-pane fade my-setting" id="v-pills-my-setting" role="tabpanel" aria-labelledby="pills-settings-tab">
+                        <div class="tab-pane fade my-setting" id="s-pills-my-setting" role="tabpanel" aria-labelledby="s-pills-settings-tab">
                             <nav>
                                 <!--service provider screen dropdown my setting tabs-->
                                 <div class="nav nav-tabs" id="nav-tab" role="tablistd">
@@ -1294,102 +1038,102 @@
                                                     <form action=" " class="day ">
                                                         <div class="form-group ">
                                                             <select class="form-control-lg date-select " id="date ">
-                                                                        <option>01</option>
-                                                                        <option>02</option>
-                                                                        <option>03</option>
-                                                                        <option>04</option>
-                                                                        <option>05</option>
-                                                                        <option>06</option>
-                                                                        <option>07</option>
-                                                                        <option>08</option>
-                                                                        <option>09</option>
-                                                                        <option>10</option>
-                                                                        <option>11</option>
-                                                                        <option>12</option>
-                                                                        <option>13</option>
-                                                                        <option>14</option>
-                                                                        <option>15</option>
-                                                                        <option>16</option>
-                                                                        <option>17</option>
-                                                                        <option>18</option>
-                                                                        <option>19</option>
-                                                                        <option>20</option>
-                                                                        <option>21</option>
-                                                                        <option>22</option>
-                                                                        <option>23</option>
-                                                                        <option>24</option>
-                                                                        <option>25</option>
-                                                                        <option>26</option>
-                                                                        <option>27</option>
-                                                                        <option>28</option>
-                                                                        <option>29</option>
-                                                                        <option>30</option>
-                                                                        <option>31</option>
-                                                                </select>
+                                                                <option>01</option>
+                                                                <option>02</option>
+                                                                <option>03</option>
+                                                                <option>04</option>
+                                                                <option>05</option>
+                                                                <option>06</option>
+                                                                <option>07</option>
+                                                                <option>08</option>
+                                                                <option>09</option>
+                                                                <option>10</option>
+                                                                <option>11</option>
+                                                                <option>12</option>
+                                                                <option>13</option>
+                                                                <option>14</option>
+                                                                <option>15</option>
+                                                                <option>16</option>
+                                                                <option>17</option>
+                                                                <option>18</option>
+                                                                <option>19</option>
+                                                                <option>20</option>
+                                                                <option>21</option>
+                                                                <option>22</option>
+                                                                <option>23</option>
+                                                                <option>24</option>
+                                                                <option>25</option>
+                                                                <option>26</option>
+                                                                <option>27</option>
+                                                                <option>28</option>
+                                                                <option>29</option>
+                                                                <option>30</option>
+                                                                <option>31</option>
+                                                            </select>
                                                         </div>
                                                     </form>
                                                     <form action=" " class="month ">
                                                         <div class="form-group ">
                                                             <select class="form-control-lg " id="month ">
-                                                                    <option>January</option>
-                                                                    <option>February</option>
-                                                                    <option>March</option>
-                                                                    <option>April</option>
-                                                                    <option>May</option>
-                                                                    <option>June</option>
-                                                                    <option>July</option>
-                                                                    <option>August</option>
-                                                                    <option>September</option>
-                                                                    <option>October</option>
-                                                                    <option>November</option>
-                                                                    <option>December</option>
-                                                                  </select>
+                                                                <option>January</option>
+                                                                <option>February</option>
+                                                                <option>March</option>
+                                                                <option>April</option>
+                                                                <option>May</option>
+                                                                <option>June</option>
+                                                                <option>July</option>
+                                                                <option>August</option>
+                                                                <option>September</option>
+                                                                <option>October</option>
+                                                                <option>November</option>
+                                                                <option>December</option>
+                                                            </select>
                                                         </div>
                                                     </form>
                                                     <form action=" " class="year">
                                                         <div class="form-group">
                                                             <select class="form-control-lg" id="year">
-                                                                    <option>1982</option>
-                                                                    <option>1983</option>
-                                                                    <option>1984</option>
-                                                                    <option>1985</option>
-                                                                    <option>1986</option>
-                                                                    <option>1987</option>
-                                                                    <option>1988</option>
-                                                                    <option>1989</option>
-                                                                    <option>1990</option>
-                                                                    <option>1991</option>
-                                                                    <option>1992</option>
-                                                                    <option>1993</option>
-                                                                    <option>1994</option>
-                                                                    <option>1995</option>
-                                                                    <option>1996</option>
-                                                                    <option>1997</option>
-                                                                    <option>1998</option>
-                                                                    <option>1999</option>
-                                                                    <option>2000</option>
-                                                                    <option>2001</option>
-                                                                    <option>2002</option>
-                                                                    <option>2003</option>
-                                                                    <option>2004</option>
-                                                                    <option>2005</option>
-                                                                    <option>2006</option>
-                                                                    <option>2007</option>
-                                                                    <option>2008</option>
-                                                                    <option>2009</option>
-                                                                    <option>2010</option>
-                                                                    <option>2011</option>
-                                                                    <option>2012</option>
-                                                                    <option>2013</option>
-                                                                    <option>2014</option>
-                                                                    <option>2015</option>
-                                                                    <option>2016</option>
-                                                                    <option>2017</option>
-                                                                    <option>2018</option>
-                                                                    <option>2019</option>
-                                                                    <option>2020</option>
-                                                                    <option>2021</option>
-                                                                    <option>2022</option>  
+                                                                <option>1982</option>
+                                                                <option>1983</option>
+                                                                <option>1984</option>
+                                                                <option>1985</option>
+                                                                <option>1986</option>
+                                                                <option>1987</option>
+                                                                <option>1988</option>
+                                                                <option>1989</option>
+                                                                <option>1990</option>
+                                                                <option>1991</option>
+                                                                <option>1992</option>
+                                                                <option>1993</option>
+                                                                <option>1994</option>
+                                                                <option>1995</option>
+                                                                <option>1996</option>
+                                                                <option>1997</option>
+                                                                <option>1998</option>
+                                                                <option>1999</option>
+                                                                <option>2000</option>
+                                                                <option>2001</option>
+                                                                <option>2002</option>
+                                                                <option>2003</option>
+                                                                <option>2004</option>
+                                                                <option>2005</option>
+                                                                <option>2006</option>
+                                                                <option>2007</option>
+                                                                <option>2008</option>
+                                                                <option>2009</option>
+                                                                <option>2010</option>
+                                                                <option>2011</option>
+                                                                <option>2012</option>
+                                                                <option>2013</option>
+                                                                <option>2014</option>
+                                                                <option>2015</option>
+                                                                <option>2016</option>
+                                                                <option>2017</option>
+                                                                <option>2018</option>
+                                                                <option>2019</option>
+                                                                <option>2020</option>
+                                                                <option>2021</option>
+                                                                <option>2022</option>
                                                             </select>
                                                         </div>
                                                     </form>
@@ -1560,6 +1304,7 @@
     <!--service provider screen tabs and its content end-->
 
     <!--service provider screen footer start-->
-<?php
+    <script src="assets/js/servicerDashboard.js"></script>
+    <?php
     include 'views/footer.php';
-?>
+    ?>

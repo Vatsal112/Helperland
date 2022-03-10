@@ -5,7 +5,7 @@ class userModel{
     function __construct(){
         try{
         //  $this->conn = new PDO("mysql:host=localhost:3306;dbname=event_mgt","root","");
-            $servername = "localhost:5050";
+            $servername = "localhost:3307";
             $username = "root";
             $password = "";
 

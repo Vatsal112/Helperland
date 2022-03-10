@@ -68,7 +68,7 @@ class homeController {
         $title='Servicer Dashboard';
         include 'common.php';
         include 'views/header.php';
-        include 'views/upcoming-service.php';
+        include 'views/servicer-dashboard.php';
     }
     
 }

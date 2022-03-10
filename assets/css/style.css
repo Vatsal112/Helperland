@@ -2086,6 +2086,13 @@ body {
     border-radius: 20px;
 }
 
+.reschedule-msg {
+    padding-left: 3rem;
+    display: block;
+    width: 15rem;
+    text-align: justify;
+}
+
 .current-service-req-table .modal-content {
     display: block;
     text-align: left;

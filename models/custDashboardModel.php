@@ -7,7 +7,7 @@ class custDashboardModel
     {
         try {
             //  $this->conn = new PDO("mysql:host=localhost:3306;dbname=event_mgt","root","");
-            $servername = "localhost:5050";
+            $servername = "localhost:3307";
             $username = "root";
             $password = "";
 
@@ -48,7 +48,7 @@ class custDashboardModel
     }
 
     function getPendingServiceRequests($userId){
-        $stmt = $this->conn->prepare("SELECT * FROM `servicerequest` where UserId = ? AND (Status=1 OR Status=2 OR Status=3)");
+        $stmt = $this->conn->prepare("SELECT * FROM `servicerequest` where UserId = ? AND (Status=1 OR Status=2 OR Status=3 OR Status=7)");
         $stmt->execute([$userId]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
@@ -56,7 +56,7 @@ class custDashboardModel
 
     function getPendingServicesTotalCount($table, $userId)
     {
-        $stmt = $this->conn->prepare("SELECT COUNT(UserId = ?) AS 'count' FROM $table where (Status=1 OR Status=2 OR Status=3)
+        $stmt = $this->conn->prepare("SELECT COUNT(UserId = ?) AS 'count' FROM $table where (Status=1 OR Status=2 OR Status=3 OR Status=7)
         ");
         $stmt->execute([$userId]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -136,7 +136,7 @@ class custDashboardModel
 
     function rescheduleService($table, $userId, $date, $sId)
     {
-        $sql = "UPDATE $table SET ServiceStartDate = ?, ModifiedDate=?,ModifiedBy = ? WHERE ServiceId = ?";
+        $sql = "UPDATE $table SET ServiceStartDate = ?, ModifiedDate=?,ModifiedBy = ?, Status=7 WHERE ServiceId = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$date, $date, $userId, $sId]);
         return true;

@@ -30,7 +30,7 @@
         <header>
             <nav class="faq-nav navbar navbar-expand-lg fixed-top">
 
-                <a class="navbar-brand" href="index.php"><img src="assets/images/logo-small.png" alt="" class="logo" id="faq-nav"></a>
+                <a class="navbar-brand" href="index.php"><img src="assets/images/logo-small.png"  alt="" class="logo" id="logo-spReg"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" id="toggle-icon" onclick="openSideBar()" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"> <i class="fa fa-navicon"></i></span>
                 </button>
@@ -194,6 +194,16 @@
     </script>
 
     <script>
+        document.addEventListener("scroll", () => {
+            var logo = document.getElementById("logo-spReg");
+            if (window.scrollY > 10 || window.screen.width < 600) {
+                logo.src = "assets/images/logo-small.png";
+                document.getElementById("navbar").style.background = "rgba(0,0,0,0.8)";
+            } else {
+                logo.src = "assets/images/white-logo-transparent-background.png";
+                document.getElementById("navbar").style.background = "none";               
+            }
+        });
         $(document).ready(function() {
             $('#register').click(function(e) {
                 var fname = $('#fname').val();

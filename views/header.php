@@ -159,8 +159,8 @@ session_start();
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" id="v-pills-dashboard-tab" href="<?php echo $arr['base_url'] . '?controller=home&function=servicerDashboard'; ?>"  onclick="removeActive(event)">My Dashborad</a>
 
-                                            <a class="dropdown-item" id="pills-settings-tab" data-toggle="pill" href="#v-pills-my-setting" role="tab" aria-controls="v-pills-my-setting-tab" aria-selected="false" onclick="removeActive(event)">My Setting</a>
-                                            <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logout-modal">Logout</a>
+                                            <a class="dropdown-item" id="s-pills-settings-tab" data-toggle="pill" href="#s-pills-my-setting" role="tab" aria-controls="s-pills-my-setting-tab" aria-selected="false" >My Setting</a>
+                                            <a class="dropdown-item" href="index.php" data-toggle="modal" data-target="#logout-modal">Logout</a>
                                         </div>
                                     </div>
                                 </div>

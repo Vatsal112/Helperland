@@ -1,6 +1,4 @@
 <?php
-
-// header("Content-Type: application/json");
 require 'phpmailer/mail.php';
 
 if(!isset($_SESSION)) { 
@@ -228,8 +226,6 @@ class custDashboardController
         $newStartTime = $newStartTime[0] + floor(($newStartTime[1] / 60) * 100) / 100;
         $newEndTime = explode(":", $currentSTime['endTime']);
         $newEndTime = $newEndTime[0] + floor(($newEndTime[1] / 60) * 100) / 100;
-
-
 
         if ($service['ServiceProviderId'] == null) {
       
