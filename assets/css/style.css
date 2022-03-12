@@ -1651,7 +1651,6 @@ body {
     color: white;
 }
 
-.service-datetime-icons #service-info-modal2 .modal-content,
 .service-datetime-icons #service-info-modal .modal-content,
 #service-info-modal3 .modal-content {
     display: flex;

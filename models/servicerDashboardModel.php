@@ -71,7 +71,7 @@ class servicerDashboardModel
         return $data;
     }
 
-    function getSpAssignedServices($table,$date,$sId,$spId){
+    function getSpAssignedServices($table,$spId,$date,$sId){
         $stmt = $this->conn->prepare("SELECT * FROM $table where ServiceProviderId = ? AND ServiceStartDate LIKE '%$date%' AND ServiceRequestId NOT IN ('$sId')");
         $stmt->execute([$spId]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);        

@@ -37,7 +37,8 @@
                     <!--service provider screen v-tabs-->
                     <div class="nav flex-column nav-tab v-tabs" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
-                        <a class="nav-link" id="v-pills-new-service-req-tab" data-toggle="pill" href="#v-pills-new-service-req" role="tab" aria-controls="v-pills-new-service-req" aria-selected="true">New Service Request</a>
+                        <a class="nav-link" id="v-pills-new-service-req-tab" data-toggle="pill" href="#v-pills-new-service-req" role="tab" aria-controls="v-pills-new-service-req" aria-selected="true" 
+                        onclick="fillNewServiceTable()">New Service Request</a>
                         <a class="nav-link" id="v-pills-upcoming-ser-tab" data-toggle="pill" href="#v-pills-upcoming-ser" role="tab" aria-controls="v-pills-upcoming-ser" aria-selected="false">Upcoming Services</a>
                         <a class="nav-link" id="v-pills-service-sche-tab" data-toggle="pill" href="#v-pills-service-sche" role="tab" aria-controls="v-pills-service-sche" aria-selected="false">Service Schedule</a>
                         <a class="nav-link" id="v-pills-service-history-tab" data-toggle="pill" href="#v-pills-service-history" role="tab" aria-controls="v-pills-service-history" aria-selected="false">Service History</a>
@@ -74,7 +75,7 @@
                                                 <option value=" ">25 km</option>
                                             </select>
                                             <div class="form-check">
-                                                <input class=" form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
+                                                <input class=" form-check-input" type="checkbox" id="checkHasPets" value="1" checked onchange="fillNewServiceTable()">
                                                 <label class="form-check-label" for="inlineCheckbox1">Include pet at home</label>
                                             </div>
                                         </div>

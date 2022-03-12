@@ -26,40 +26,47 @@ let startIndex = 0;
 let endIndex = newServiceRowsPerPage;
 let pendingRequestTotalRecords = 0;
 let pageCount = 1;
+let newServices = [];
 
 $(document).ready(function() {
     getNewServices();
 });
 
+function getFilteredNewServices(hasPets) {
+    return newServices.filter(service => service.HasPets === (hasPets ? "1" : "0"));
+}
+
 function getNewServices() {
-    $('#new-service-req-table').html("");
-    $.ajax({
+    return $.ajax({
         type: "POST",
         url: "http://localhost/Helperland/?controller=servicerDashboard&function=getNewServices",
         data: {
             startIndex,
-            endIndex,
+            endIndex
         },
         dataType: "JSON",
         success: function(response) {
-            let data = response.slice(startIndex, endIndex);
-
-            fillNewServiceTable(data);
+            newServices = [...response];
+            // newServices.push(...response.slice(startIndex, endIndex));
         },
     });
 }
 
-function fillNewServiceTable(data) {
+function fillNewServiceTable() {
+    const hasPets = document.getElementById('checkHasPets').checked;
+    const data = getFilteredNewServices(hasPets);
+
+    $('#new-service-req-table').html("");
+
     for (var i = 0; i < data.length; i++) {
-        console.log(data[i]);
-        $("#new-service-req-table").append(`
+        $('#new-service-req-table').append(`
         <tr>
         <td>${data[i].ServiceId}</td>
         <td>
             <div class="service-info" onclick="serviceInfo(${data[i].ServiceRequestId});">
                 <div class="service-datetime-icons">
-                    <a href="#"><img src="assets/images/calender-icon.png" alt=" "></a>
-                    <a href="#"><img src="assets/images/sp-timericon.png" alt=" "></a>
+                    <a ><img src="assets/images/calender-icon.png" alt=" "></a>
+                    <a ><img src="assets/images/sp-timericon.png" alt=" "></a>
                     <!--service provider screen new service content modal start-->
                     <div class="modal fade" id="service-info-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
@@ -171,9 +178,6 @@ function serviceInfo(sId) {
                         <!-- <button type="button" class="btn btn-modal-close" data-dismiss="modal">Close</button> -->
                     </div>
                 </div>
-                <div class="googleMap">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d185920.1358143786!2d10.443064982202559!3d50.95929179850134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1641187206744!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
-                </div>
             </div>
         </div>`);
 
@@ -221,7 +225,7 @@ function getExtraServices(ServiceExtraId) {
     return label;
 }
 
-function acceptServiceReq(sId) {
+function acceptServiceReq(sId, ) {
     if ($('.response-text').css('display', 'block')) {
         $('.response-text').css('display', 'none')
     }
@@ -239,9 +243,10 @@ function acceptServiceReq(sId) {
             if (res == "Success") {
                 $('#btn-accept-service').attr('disabled', 'disabled');
                 $('#btn-accept-service').css('cursor', 'not-allowed');
-                console.log(res);
                 alert("Service Accepted Successfully.");
-                getNewServices();
+                getNewServices().then(response => {
+                    fillNewServiceTable();
+                });
             } else {
                 $('.response-text').css('display', 'block');
                 $('#response-service-accept').html(res);
