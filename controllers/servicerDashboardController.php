@@ -7,7 +7,6 @@ class servicerDashboardController
     {
         include 'models/servicerDashboardModel.php';
         include 'models/serviceModel.php';
-
         $this->model = new servicerDashboardModel();
         $this->serviceObj = new serviceModel();
         $this->Err = '';
@@ -116,7 +115,7 @@ class servicerDashboardController
                 }
 
                 for($i=0; $i<sizeof($oldStartTime); $i++){
-                    if($sTimeEndTime[$i]['serviceDate']==$currentSTime['serviceDate']){
+                    if($sTimeEndTime[$i]['serviceDate']==$currentSTime['serviceDate']){                 
                         if ($newEndTime < $oldStartTime[$i] || $oldEndTime[$i] < $newStartTime) {
                             $this->findSpByPostalCode($findSpByPostalCode,$_POST['sId'],$isAccepted);
                         }else{
@@ -124,6 +123,7 @@ class servicerDashboardController
                             echo json_encode($this->Err);
                         }
                     }else{
+
                         $this->findSpByPostalCode($findSpByPostalCode,$_POST['sId'],$isAccepted);
                     }
                 }
@@ -147,14 +147,62 @@ class servicerDashboardController
 
     function findSpByPostalCode($findSpByPostalCode,$sId,$isAccepted){
         $emails=[];
-        foreach ($findSpByPostalCode as $sp) {
-            if ($sp['UserId'] != $_SESSION['userId']) {
-                $acceptService = $this->model->acceptServiceRequest('servicerequest', $sId, $_SESSION['userId']);
-                array_push($emails, $sp['Email']);
+        if(sizeof($findSpByPostalCode)==0){
+            $acceptService = $this->model->acceptServiceRequest('servicerequest', $sId, $_SESSION['userId']);
                 $body = "this service request " . $isAccepted['ServiceId'] . " has already been accepted by someone and is no more available to you";
-                sendmail($emails, "Service Request", $body, "");
+                sendmail([$_SESSION['userEmail']], "Service Request", $body, "");
                 echo json_encode('Success');
+        }
+        else{
+            foreach ($findSpByPostalCode as $sp) {
+                if ($sp['UserId'] != $_SESSION['userId']) {
+                    
+                    $acceptService = $this->model->acceptServiceRequest('servicerequest', $sId, $_SESSION['userId']);
+                    array_push($emails, $sp['Email']);
+                    $body = "this service request " . $isAccepted['ServiceId'] . " has already been accepted by someone and is no more available to you";
+                    sendmail($emails, "Service Request", $body, "");
+                    echo json_encode('Success');
+                }
             }
+        }
+    }
+
+    function getUpcomingService(){
+        $data = $this->model->getUpcomingService('servicerequest');
+        $array = [];
+        $response = [];
+
+        for ($i = 0; $i < sizeof($data); $i++) {
+            $datetime = new DateTime($data[$i]['ServiceStartDate']);
+            $array[$i]['StartDate'] = $datetime->format('Y-m-d');
+            $array[$i]['StartTime'] = $datetime->format('H:i');
+            $array[$i]['ServiceHours'] = $data[$i]['ServiceHours'];
+            $time = (strtotime($array[$i]['StartTime']) + (60 * 60 * $array[$i]['ServiceHours']));
+            $array[$i]['EndTime'] = date('H:i', $time);
+            $array[$i]['Patment'] = $data[$i]['TotalCost'];
+            $array[$i]['Comments'] = $data[$i]['Comments'];
+            $array[$i]['Pets'] = $data[$i]['HasPets'];
+            $array[$i]['custData'] =  $this->model->getUserData('user', $data[$i]['UserId']);
+            $array[$i]['custAddress'] = $this->model->getAddress('servicerequestaddress', $data[$i]['ServiceRequestId']);
+            $response[$i] = array_merge($data[$i], $array[$i]);
+        }
+        echo json_encode($response);
+    }
+
+    function completeServiceRequest(){
+        $completeReq = $this->model->completeServiceRequest('servicerequest',$_POST['sId']);
+        $data= $this->model->getDashboardData('servicerequest',$_POST['sId']);
+        $addToFav = $this->model->addToFav('favoriteandblocked',$data['UserId'],$_SESSION['userId']);
+        if($completeReq && $addToFav){
+            echo json_encode("Success");
+        }
+    }
+
+    function cancelServiceRequest(){
+        $cancelReq = $this->model->cancelServiceRequest('servicerequest',$_POST['sId']);
+
+        if($cancelReq){
+            echo json_encode("Success");
         }
     }
 }

@@ -39,7 +39,7 @@
                         <a class="nav-link" id="v-pills-dashboard-tab" data-toggle="pill" href="#v-pills-dashboard" role="tab" aria-controls="v-pills-dashboard" aria-selected="true">Dashboard</a>
                         <a class="nav-link" id="v-pills-new-service-req-tab" data-toggle="pill" href="#v-pills-new-service-req" role="tab" aria-controls="v-pills-new-service-req" aria-selected="true" 
                         onclick="fillNewServiceTable()">New Service Request</a>
-                        <a class="nav-link" id="v-pills-upcoming-ser-tab" data-toggle="pill" href="#v-pills-upcoming-ser" role="tab" aria-controls="v-pills-upcoming-ser" aria-selected="false">Upcoming Services</a>
+                        <a class="nav-link" id="v-pills-upcoming-ser-tab" data-toggle="pill" href="#v-pills-upcoming-ser" role="tab" aria-controls="v-pills-upcoming-ser" aria-selected="false" >Upcoming Services</a>
                         <a class="nav-link" id="v-pills-service-sche-tab" data-toggle="pill" href="#v-pills-service-sche" role="tab" aria-controls="v-pills-service-sche" aria-selected="false">Service Schedule</a>
                         <a class="nav-link" id="v-pills-service-history-tab" data-toggle="pill" href="#v-pills-service-history" role="tab" aria-controls="v-pills-service-history" aria-selected="false">Service History</a>
                         <a class="nav-link" id="v-pills-my-rating-tab" data-toggle="pill" href="#v-pills-my-rating" role="tab" aria-controls="v-pills-my-rating" aria-selected="false">My Ratings</a>
@@ -75,7 +75,7 @@
                                                 <option value=" ">25 km</option>
                                             </select>
                                             <div class="form-check">
-                                                <input class=" form-check-input" type="checkbox" id="checkHasPets" value="1" checked onchange="fillNewServiceTable()">
+                                                <input class=" form-check-input" type="checkbox" id="checkHasPets"  checked onchange="fillNewServiceTable()">
                                                 <label class="form-check-label" for="inlineCheckbox1">Include pet at home</label>
                                             </div>
                                         </div>
@@ -88,7 +88,7 @@
                                     </div>
                                     <thead class="table-header">
                                         <tr>
-                                            <th scope="col"><a href=" ">Service Id <img src="assets/images/sort.png" alt=" "></a></th>
+                                            <th scope="col"><a href=" ">Service Id</a></th>
                                             <th scope="col"><a href=" ">Service Date</a></th>
                                             <th scope="col"><a href=" ">Customer Details </a></th>
                                             <th scope="col"><a href=" ">Payment</a></th>
@@ -108,7 +108,7 @@
                                 <div class="col-md-6 col-sm-12 col-lg-6">
                                     <div class="shown-records">
                                         <span>Show</span>
-                                        <select name=" " id="new-service-table-rows-per-page" onchange="changeRowsPerPage(); getNewServices()">
+                                        <select name=" " id="new-service-table-rows-per-page" onchange="changeRowsPerPageNewService(this.value); getNewServices()">
                                             <option value="5">5</option>
                                             <option value="10">10</option>
                                             <option value="25">25</option>
@@ -122,16 +122,16 @@
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination ">
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Previous ">
-                                                        <span aria-hidden="true "><img src="assets/images/first-page.png" alt=""></span>
-                                                        <span class="sr-only ">Previous</span>
+                                                    <a class="page-link " href="#" aria-label="Previous" id="newRequestFirstPage" >
+                                                        <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
+                                                        <span class="sr-only">Previous</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                <li class="page-item "><a class="page-link active " href="# ">1</a></li>
-                                                <li class="page-item "><a class="page-link " href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item"><a class="page-link" href="#" id="newServicePrevBtn"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item"><a class="page-link active" href="#" id="currentPage">1</a></li>
+                                                <li class="page-item" ><a class="page-link " href="#" id="newServiceNextBtn"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Next ">
+                                                    <a class="page-link " href="# " aria-label="Next " id="newRequestLastPage">
                                                         <span aria-hidden="true " class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
                                                         <span class="sr-only ">Next</span>
                                                     </a>
@@ -164,385 +164,7 @@
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                        <!--service provider screen upcoming service content modal start-->
-                                                        <div class="modal fade" id="service-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-part">
-                                                                        <div class="modal-header d-block">
-                                                                            <div class="d-flex align-items-center">
-                                                                                <h4 class="modal-title" id="exampleModalLongTitle">Service Details</h4>
-                                                                                <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true" class="close-btn">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <p class="modal-datetime">26/12/2021 08:30 - 12:30</p>
-                                                                            <span class="modal-duration"><b>Duration: </b>4.5 Hrs</span>
-                                                                        </div>
-
-                                                                        <div class="modal-body">
-                                                                            <span class="body-text"><b>Service Id:</b> 8803.</span>
-                                                                            <span class="body-text"><b>Extras:</b> Inside oven, Laundry wash & dry</span>
-                                                                            <span class="body-text"><b>Total Payment:</b> <span class="payment">60,75 &euro;</span></span>
-
-                                                                            <div class="customer-details">
-                                                                                <span class="body-text"><b>Customer Name:</b> First Customer</span>
-                                                                                <span class="body-text"><b>Service Address:</b> Street 54, 53844 Troisdoff</span>
-                                                                                <span class="body-text"><b>Phone:</b> +41 2244889910</span>
-                                                                                <span class="body-text"><b>Email:</b> cust001@yopmail.com</span>
-                                                                                <span class="body-text"><b>Distance:</b> unable to calculate the distance</span>
-                                                                            </div>
-
-                                                                            <div class="customer-details">
-                                                                                <b>Comments</b>
-                                                                                <p class="mb-0 ">hello</p>
-
-                                                                                <div class="pets">
-                                                                                    <img src="assets/images/included.png" alt=" ">
-                                                                                    <p>I have Pets at home.</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button" class="btn btn-modal-accept">
-                                                                                <img src="assets/images/ic-check.png" alt=""> Accept</button>
-                                                                            <button type="button" class="btn btn-modal-close" data-dismiss="modal"><i class='fa fa-close'></i>Cancel</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="googleMap">
-                                                                        <!-- <div id="map"></div> -->
-                                                                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d185920.1358143786!2d10.443064982202559!3d50.95929179850134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1641187206744!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--service provider screen upcoming service content modal end-->
-                                                    </div>
-                                                    <div class="service-datetime-texts">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel">
-                                                <button type="button" data-toggle="modal" data-target="#service-info-modal">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel">
-                                                <button type="button">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info">
-                                                    <div class="service-datetime-icons">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>123456</td>
-                                            <td>
-                                                <div class="service-info ">
-                                                    <div class="service-datetime-icons ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/calender-icon.png" alt=" "></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><img src="assets/images/sp-timericon.png" alt=" "></a>
-                                                    </div>
-                                                    <div class="service-datetime-texts ">
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal"><strong>09/04/2018</strong></a>
-                                                        <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                            <p>12:00 - 18:00</p>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="td-address">
-                                                <a href="#" data-toggle="modal" data-target="#service-info-modal">
-                                                    <p>David Bough</p>
-                                                    <div class="service-info">
-                                                        <div class="service-home-icon">
-                                                            <img src="assets/images/home-icon.png" alt=" ">
-                                                        </div>
-                                                        <div class="service-address-texts">
-                                                            <p>Musterstrabe 5,12345 Bonn</p>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </td>
-                                            <td>56,25 &euro;</td>
-                                            <td>296 km</td>
-                                            <td class="btn-cancel ">
-                                                <button type="button ">Cancel</button>
-                                            </td>
-                                        </tr>
+                                    <tbody id="upcoming-service-table">
 
                                     </tbody>
                                 </table>
@@ -554,12 +176,12 @@
                                 <div class="col-md-6 col-sm-12 col-lg-6">
                                     <div class="shown-records">
                                         <span>Show</span>
-                                        <select name=" " id=" ">
-                                            <option value=" ">10</option>
-                                            <option value=" ">20</option>
-                                            <option value=" ">30</option>
+                                        <select name=" " id="upcoming-service-table-rows-per-page" onchange="changeRowsPerPageUpcomingService(this.value); getUpcomingService()">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
                                         </select>
-                                        <span>entries total record: <span>1</span></span>
+                                        <span>entries total record: <span id="upcoming-service-total-count">1</span></span>
                                     </div>
                                 </div>
 
@@ -568,18 +190,18 @@
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination ">
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Previous ">
-                                                        <span aria-hidden="true "><img src="assets/images/first-page.png" alt=""></span>
-                                                        <span class="sr-only ">Previous</span>
+                                                    <a class="page-link" href="#" aria-label="Previous" id="upcomingServiceFirstPage">
+                                                        <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
+                                                        <span class="sr-only">Previous</span>
                                                     </a>
                                                 </li>
-                                                <li class="page-item "><a class="page-link " href="# "><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                <li class="page-item "><a class="page-link active " href="# ">1</a></li>
-                                                <li class="page-item "><a class="page-link " href="# "><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
-                                                <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Next ">
-                                                        <span aria-hidden="true " class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
-                                                        <span class="sr-only ">Next</span>
+                                                <li class="page-item"><a class="page-link" href="#" id="upcomingServicePrevBtn"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item"><a class="page-link active" href="#" id="upcomingServiceCurrentPage">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#" id="upcomingServiceNextBtn"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next" id="upcomingServiceLastPage">
+                                                        <span aria-hidden="true" class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
+                                                        <span class="sr-only">Next</span>
                                                     </a>
                                                 </li>
                                             </ul>

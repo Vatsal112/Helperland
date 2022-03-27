@@ -1,18 +1,17 @@
-let settingTab = document.getElementById('toggle-id').value;
-let dashboardContent = document.getElementById('v-pills-dashboard');
-let tabContent = document.getElementById('v-pills-my-setting');
-let publicDashboardHeader = document.getElementById('v-pills-dashboard-tab');
+let settingTab = document.getElementById("toggle-id").value;
+let dashboardContent = document.getElementById("v-pills-dashboard");
+let tabContent = document.getElementById("v-pills-my-setting");
+let publicDashboardHeader = document.getElementById("v-pills-dashboard-tab");
 
 if (settingTab != undefined) {
-    tabContent.classList.add('show', 'active');
-    dashboardContent.classList.remove('show', 'active');
+    tabContent.classList.add("show", "active");
+    dashboardContent.classList.remove("show", "active");
 }
 
-publicDashboardHeader.addEventListener('click', function() {
-    tabContent.classList.remove('show', 'active');
-    dashboardContent.classList.add('show', 'active');
+publicDashboardHeader.addEventListener("click", function() {
+    tabContent.classList.remove("show", "active");
+    dashboardContent.classList.add("show", "active");
 });
-
 
 let serviceRequestRowsPerPage = document.getElementById(
     "dashboard-table-rows-per-page"
@@ -34,6 +33,8 @@ let serviceHistoryLastRecordIndex = 0;
 
 let serviceHistoryCurrentPage = 1;
 let serviceHistoryPageCount = 1;
+let serviceHistoryStartIndex = 0;
+let serviceHistoryLastIndex = serviceHistoryRowsPerPage;
 let serviceHistoryNextPage = 0;
 let serviceHistoryIsNext = 0;
 let serviceHistoryPreviousPage = 0;
@@ -45,6 +46,7 @@ var qualityRating = 0;
 $(document).ready(function() {
     getPendingServiceRequests();
     getServiceHistoryData();
+    getFavProsData();
 });
 
 function getPendingServiceRequests() {
@@ -52,27 +54,22 @@ function getPendingServiceRequests() {
         type: "POST",
         url: "http://localhost/Helperland/?controller=custDashboard&function=getPendingServiceRequests",
         dataType: "json",
-        data: {
-            startIndex,
-            endIndex,
-        },
         success: function(response) {
-            var action = '';
+            var action = "";
             pendingRequestTotalRecords = response.length;
             let data = response.slice(startIndex, endIndex);
 
             $("#tbody").html("");
 
             for (let i = 0; i < data.length; i++) {
-
                 if (data[i].Status == 7 && data[i].ServiceProviderId != null) {
-                    action = `<div class="reschedule-msg"><p class='text-success mb-0' >You have rescheduled service request. Your SP will accept it soon.</p></div>`
+                    action = `<div class="reschedule-msg"><p class='text-success mb-0' >You have rescheduled service request. Your SP will accept it soon.</p></div>`;
                 } else {
                     action = `<div class="action-buttons">
                     <button class="btn-reschedule" data-toggle="modal" onclick="rescheduleService(${data[i].ServiceId})">Reschedule</button>
                     <div class="modal fade" id="reschedule-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     </div>
-                    <button class="btn-cancel" onclick='cancelServiceRequestModal${data[i].ServiceId})'>Cancel</button>
+                    <button class="btn-cancel" onclick='cancelServiceRequestModal(${data[i].ServiceId})'>Cancel</button>
                     <div class="modal fade" id="cancel-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> 
                     </div>
                 </div>`;
@@ -155,11 +152,11 @@ function serviceInfo(sId) {
         },
         dataType: "JSON",
         success: function(response) {
-            var status = '';
+            var status = "";
             var include = "";
 
             if (response.Status == 7 && response.ServiceProviderId != null) {
-                status = '';
+                status = "";
             } else {
                 status = `<button type="button" class="btn btn-modal-accept" data-toggle="modal" onclick="rescheduleService(${response.ServiceId})">
                 <img src="assets/images/reschedule-icon-small.png" alt="" ">Reschedule</button>
@@ -349,9 +346,9 @@ function getServiceHistoryData() {
             count = Object.keys(response).length;
 
             for (i = 0; i < count - 4; i++) {
-                let spcontent = '';
+                let spcontent = "";
                 var isDisable = "";
-                var stars = '';
+                var stars = "";
                 // data.push(response[i].ServiceRequestId);
                 if (response[i].ServiceProviderId === null) {
                     spcontent = "";
@@ -444,7 +441,7 @@ function getServiceHistoryData() {
 }
 
 function showRatings(spRating) {
-    var ratingStars = '';
+    var ratingStars = "";
     var k = 0;
     if (spRating !== false) {
         let roundValue = Math.floor(spRating.Ratings);
@@ -711,7 +708,7 @@ $("#serviceHistory-btnNext").click(function(e) {
     serviceHistoryIsNext = 0;
 
     if (serviceHistoryCurrentPage > serviceHistoryPageCount) {
-        // console.log("cant next");
+        console.log("cant next");
     } else {
         $("#cust-service-history").html("");
         getServiceHistoryData();
@@ -725,11 +722,31 @@ $("#serviceHistory-btnPrevious").click(function(e) {
     serviceHistoryIsNext = 1;
 
     if (serviceHistoryCurrentPage <= 0) {
-        // console.log("cant prev");
+        console.log("cant prev");
     } else {
         $("#cust-service-history").html("");
         getServiceHistoryData();
     }
+});
+$("#serviceHistoryFirstPageBtn").click(function(e) {
+    e.preventDefault();
+
+    serviceHistoryCurrentPage = 1;
+    serviceHistoryStartIndex = 0;
+    serviceHistoryLastIndex =
+        serviceHistoryRowsPerPage < serviceRequestTotalRecordsValue ?
+        serviceHistoryRowsPerPage :
+        serviceRequestTotalRecordsValue;
+    getServiceHistoryData();
+});
+
+$("#serviceHistoryLastPageBtn").click(function(e) {
+    e.preventDefault();
+    serviceHistoryCurrentPage = serviceHistoryPageCount;
+    serviceHistoryLastIndex = serviceRequestTotalRecordsValue;
+    serviceHistoryStartIndex =
+        (serviceHistoryCurrentPage - 1) * serviceHistoryRowsPerPage;
+    getServiceHistoryData();
 });
 
 function rescheduleService(sId) {
@@ -826,8 +843,8 @@ function reschedule(sId) {
         },
         dataType: "json",
         success: function(response) {
-            $('#btn-reschedule-service').attr('disabled', 'true');
-            $('btn-reschedule-service').css('cursor', 'not-allowed');
+            $("#btn-reschedule-service").attr("disabled", "true");
+            $("btn-reschedule-service").css("cursor", "not-allowed");
             res = JSON.parse(JSON.stringify(response));
             if (res == "Success") {
                 $(".text-success").html("Service Rescheduled Successfully");
@@ -1488,8 +1505,8 @@ function downloadCSV(csv, filename) {
     var csvFile;
     var downloadLink;
 
-    //define the file type to text/csv  
-    csvFile = new Blob([csv], { type: 'text/csv' });
+    //define the file type to text/csv
+    csvFile = new Blob([csv], { type: "text/csv" });
     downloadLink = document.createElement("a");
     downloadLink.download = filename;
     downloadLink.href = window.URL.createObjectURL(csvFile);
@@ -1500,18 +1517,78 @@ function downloadCSV(csv, filename) {
 }
 
 function exportTableToCSV(filename) {
-    //declare a JavaScript variable of array type  
+    //declare a JavaScript variable of array type
     var csv = [];
     var rows = document.querySelectorAll(".cust-service-history-table table tr");
 
-    //merge the whole data in tabular form   
+    //merge the whole data in tabular form
     for (var i = 0; i < rows.length; i++) {
         var row = [],
             cols = rows[i].querySelectorAll("td, th");
-        for (var j = 0; j < cols.length; j++)
-            row.push(cols[j].innerText);
+        for (var j = 0; j < cols.length; j++) row.push(cols[j].innerText);
         csv.push(row.join(","));
     }
-    //call the function to download the CSV file  
+    //call the function to download the CSV file
     downloadCSV(csv.join("\n"), filename);
+}
+
+function getFavProsData() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/Helperland/?controller=custDashboard&function=getFavSp",
+        dataType: "JSON",
+        success: function(response) {
+            var isFav = "";
+            var isBlock = "";
+            var cleaning = 0;
+            for (var i = 0; i < response.length; i++) {
+
+                if (response[i].IsFavorite == 1) {
+                    isFav = `<div class="btn-remove">
+                    <button type="submit" id="btn-remove-from-favsp" class="remove-favsp" onclick="removeFromFav()">Unfavourite</button>
+                </div>`;
+                } else {
+                    isFav = ` <div class="btn-favourite">
+                   <button type="submit" id="btn-add-favsp" onclick="addFavSp()" class="add-favsp">Favourite</button>
+               </div>`;
+                }
+
+                if (response[i].IsBlocked == 1) {
+                    isBlock = `<div class="btn-remove">
+                    <button type="submit" id="btn-remove-from-favsp" class="remove-favsp" onclick="removeFromFav()">Unfavourite</button>
+                </div>`;
+                } else {
+                    isBlock = `<div class="btn-block">
+                    <button type="button" id="btn-block-favsp" onclick="blockSp()">Block</button>
+                </div>`;
+                }
+
+                // if (response.favSpInfo[i].TargetUserId == response.totalCleaning.ServiceProviderId) {
+                //     cleaning = response.totalCleaning[i].totalCount;
+                // } else {
+                //     cleaning = 0;
+                // }
+
+                $(".favourite-sp").append(`
+                <div class="card">
+                <div class="card-image">
+                    <img src="assets/images/avatar-hat.png" alt="">
+                </div>
+                <h5>${response[i].FirstName} ${response[i].LastName}</h5>
+                <div class="rating-stars">
+
+                    <div class = "showAvgRating">
+                        <span>${response[i].AvgRatings}</span>    
+                    </div>
+                </div>
+                <p class="text-center">${response[i].TotalCleaning} cleaning</p>
+                <div class="favourite-pro-btns">
+                    ${isFav}
+                    ${isBlock}
+                </div>
+            </div> 
+                `);
+            }
+        },
+    });
 }

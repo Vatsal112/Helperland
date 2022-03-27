@@ -436,7 +436,7 @@ $(document).ready(function() {
                 address: address,
                 spId: spId
             };
-
+            $.LoadingOverlay("show");
             $.ajax({
                 type: "POST",
                 url: "http://localhost/Helperland/?controller=service&function=submitServiceReq",
@@ -451,6 +451,9 @@ $(document).ready(function() {
                         $('#service-id').html(response['ServiceId']);
                         console.log('service booked');
                     }
+                },
+                complete: function(data) {
+                    $.LoadingOverlay("hide");
                 }
             });
         }

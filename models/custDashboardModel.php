@@ -144,7 +144,7 @@ class custDashboardModel
 
     function cancelService($table, $sId, $message)
     {
-        $sql = "UPDATE $table SET Status =4 , HasIssue = ? WHERE ServiceId = ?";
+        $sql = "UPDATE $table SET Status =5 , HasIssue = ? WHERE ServiceId = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$message, $sId]);
         return true;
@@ -163,6 +163,7 @@ class custDashboardModel
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
+
 
     function updateCustomerDetails($table,$userId,$data){
         $sql = "UPDATE $table SET FirstName = ?, LastName = ?, Mobile = ?, DateOfBirth = ?, LanguageId = ? WHERE UserId = ?";
@@ -205,7 +206,14 @@ class custDashboardModel
     }
 
     function getFavSpRatings($userId){
-        $stmt = $this->conn->prepare("SELECT * FROM servicerequest INNER JOIN rating ON rating.ServiceRequestId = servicerequest.ServiceRequestId where servicerequest.UserId = ?");
+        $stmt = $this->conn->prepare("select avgRating.*, count(s.ServiceProviderId) as 'TotalCleaning', u.* from ( select SUM(r.Ratings)/count(*) as 'AvgRatings', r.RatingTo,f.* from favoriteandblocked f join rating r on f.TargetUserId = r.RatingTo where UserId = ? AND IsFavorite = 1 GROUP BY r.RatingTo) as avgRating join user u on u.UserId = avgRating.RatingTo join servicerequest s on s.ServiceProviderId = avgRating.RatingTo where s.Status = 4 group by s.ServiceProviderId");
+        $stmt->execute([$userId]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+  
+    function getTotalCleanings($table,$userId){
+        $stmt = $this->conn->prepare("SELECT count(*) as totalCount,servicerequest.ServiceProviderId FROM $table INNER JOIN favoriteandblocked on servicerequest.ServiceProviderId = favoriteandblocked.TargetUserId AND servicerequest.UserId = ? where servicerequest.Status = 4");
         $stmt->execute([$userId]);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;

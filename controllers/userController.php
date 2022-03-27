@@ -217,7 +217,7 @@ class userController
                 $_SESSION['userType'] = $records['UserTypeId'];
                 $_SESSION['userEmail'] = $records['Email'];
                 $_SESSION['start'] = time();
-                $_SESSION['expire'] = $_SESSION['start'] + (30 * 60);
+                $_SESSION['expire'] = $_SESSION['start'] + (60 * 60);
                 $res["status"] = true;
                 $res["message"] = "Successfully Login.";
                 $res["loginToken"] = session_id();

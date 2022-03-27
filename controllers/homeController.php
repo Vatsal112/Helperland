@@ -62,8 +62,7 @@ class homeController {
         include 'views/header.php';
         include 'views/customer-dashboard.php';
     }
-
-    
+   
     function servicerDashboard(){
         $title='Servicer Dashboard';
         include 'common.php';

@@ -493,14 +493,21 @@ class custDashboardController
     }
 
     function getFavSp(){
-        $result = $this->model->getFavSp($_SESSION['userId']);
-        return $result;
+      
+        $result = $this->model->getFavSpRatings($_SESSION['userId']);
+
+        echo json_encode( $result);
+
     }
 
-    function getFavSpRatings(){
-        $ratings = $this->model->getFavSpRatings($_SESSION['userId']);
-        return $ratings;
-    }
+    // function getFavSpRatings(){
+       
+    //     echo json_encode( $ratings);
+    // }
+    // function getTotalCleanings(){
+       
+    //     echo json_encode( $totalCleaning);
+    // }
 
     function removeFromFav(){
         $remove = $this->model->removeFromFav('favoriteandblocked',$_SESSION['userId']);

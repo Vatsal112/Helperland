@@ -84,4 +84,32 @@ class servicerDashboardModel
         $stmt->execute([$spId,$sId]);
         return true;
     }
+
+    function addToFav($table,$userId,$spId){
+        $sql = "INSERT INTO $table (UserId, TargetUserId, IsFavorite, IsBlocked) values(?,?,1,0)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$userId,$spId]);
+        return $this->conn->lastInsertId();
+    }
+
+    function getUpcomingService($table){
+        $stmt = $this->conn->prepare("SELECT * FROM $table where (Status=3)");
+        $stmt->execute();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data; 
+    }
+
+    function completeServiceRequest($table,$sId){
+        $sql = "UPDATE $table SET  Status=4 where ServiceRequestId = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$sId]);
+        return true;
+    }
+
+    function cancelServiceRequest($table,$sId){
+        $sql = "UPDATE $table SET  Status=1, ServiceProviderId = NULL, RecordVersion = NULL where ServiceRequestId = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$sId]);
+        return true;
+    }
 }

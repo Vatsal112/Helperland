@@ -1631,7 +1631,6 @@ body {
 }
 
 .upcoming-service-table .service-datetime-icons .modal-footer .btn-modal-accept {
-    width: 100px;
     display: flex;
     background-color: #1D7A8C;
     color: white;
@@ -1651,7 +1650,6 @@ body {
     color: white;
 }
 
-.service-datetime-icons #service-info-modal .modal-content,
 #service-info-modal3 .modal-content {
     display: flex;
     flex-direction: row;

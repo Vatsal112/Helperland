@@ -1,8 +1,8 @@
-    <?php 
-        $toggle="";
-        if(isset($_GET['parameter'])){
-            $toggle =$_GET['parameter'];
-        }
+    <?php
+    $toggle = "";
+    if (isset($_GET['parameter'])) {
+        $toggle = $_GET['parameter'];
+    }
     ?>
 
     <?php
@@ -15,15 +15,11 @@
 
     <!--customer screen sidebar for mobile view start-->
     <?php
-    $j = 0;
-    $spStar = "";
+    include 'views/sidebar.php';
     include 'controllers/custDashboardController.php';
     $dashboard = new custDashboardController();
     $customerData = $dashboard->loadCustomerData();
     $customerAddress = $dashboard->loadCustomerAddress();
-    $getFavSp = $dashboard->getFavSp();
-    $ratings = $dashboard->getFavSpRatings();
-    include 'views/sidebar.php';
     ?>
 
     <!--customer screen sidebar for mobile view end-->
@@ -32,7 +28,7 @@
 
     <section class="welcome-user">
         <div class="welcome-text">
-            <input type="hidden" value="<?php echo $toggle;?>" id="toggle-id">
+            <input type="hidden" value="<?php echo $toggle; ?>" id="toggle-id">
             <h2>Welcome, <?php echo $_SESSION['userName']; ?></h2>
         </div>
     </section>
@@ -104,7 +100,7 @@
                                                             <span class="sr-only">Previous</span>
                                                         </a>
                                                     </li>
-                                                    <li class="page-item "><a class="page-link " href="# " id="btn-previous"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
+                                                    <li class="page-item "><a class="page-link" href="# " id="btn-previous"><span><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                     <li class="page-item "><a class="page-link active" href="# " id="currentPage">1</a></li>
                                                     <li class="page-item "><a class="page-link" id="btn-next" href="#"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                     <li class="page-item">
@@ -181,7 +177,7 @@
                                         <nav aria-label="Page navigation example">
                                             <ul class="pagination ">
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Previous">
+                                                    <a class="page-link " href="# " aria-label="Previous" id="serviceHistoryFirstPageBtn">
                                                         <span aria-hidden="true"><img src="assets/images/first-page.png" alt=""></span>
                                                         <span class="sr-only">Previous</span>
                                                     </a>
@@ -190,7 +186,7 @@
                                                 <li class="page-item "><a class="page-link active " href="# " id="service-history-pageno">1</a></li>
                                                 <li class="page-item "><a class="page-link " href="# " id="serviceHistory-btnNext"><span class="next-icon"><img src="assets/images/keyboard-right-arrow-button-copy.png" alt=""></span></a></li>
                                                 <li class="page-item ">
-                                                    <a class="page-link " href="# " aria-label="Next ">
+                                                    <a class="page-link " href="# " aria-label="Next" id="serviceHistoryLastPageBtn">
                                                         <span aria-hidden="true " class="next-icon"><img src="assets/images/first-page.png" alt=""></span>
                                                         <span class="sr-only ">Next</span>
                                                     </a>
@@ -216,64 +212,26 @@
                             </div>
                             <div class="favourite-sp">
                                 <?php
-                                foreach ($getFavSp as $favsp) {
-                                    $totalCleaning = 0;
-                                    foreach ($ratings as $favSpRating) {
-                                        if($favSpRating['Status']==4){
-                                            $totalCleaning++;
-                                        }
-                                        $rating = $favSpRating['Ratings'];
-                                        for ($i = 0; $i < floor($rating); $i++) {
-                                            $j++;
-                                            $spStar .= "<i class='fa fa-star checked'></i>";
-                                        }
-                                        if (floor($rating) < $favSpRating['Ratings']) {
-                                            $j++;
-                                            $spStar .= "<i class='fa fa-star-half-o checked'></i>";
-                                        }
-                                        if ($j < 5) {
-                                            for ($k = 0; $k < 5 - $j; $k++) {
-                                                $spStar .= "<i class='fa fa-star-o'></i>";
-                                            }
-                                        }
+                                // foreach ($getFavSp as $favsp) {
 
+                                //     $totalCleaning = 0;
+                                // foreach ($ratings as $favSpRating) {
+                                //     $rating = $favSpRating['AvgRatings'];
+                                //     for ($i = 0; $i < floor($rating); $i++) {
+                                //         $j++;
+                                //         $spStar .= "<i class='fa fa-star checked'></i>";
+                                //     }
+                                //     if (floor($rating) < $favSpRating['AvgRatings']) {
+                                //         $j++;
+                                //         $spStar .= "<i class='fa fa-star-half-o checked'></i>";
+                                //     }
+                                //     if ($j < 5) {
+                                //         for ($k = 0; $k < 5 - $j; $k++) {
+                                //             $spStar .= "<i class='fa fa-star-o'></i>";
+                                //         }
+                                //     }
                                 ?>
-                                        <div class="card">
-                                            <div class="card-image">
-                                                <img src="assets/images/avatar-hat.png" alt="">
-                                            </div>
-                                            <h5><?php echo $favsp['FirstName'] . " " . $favsp['LastName'] ?></h5>
-                                            <div class="rating-stars">
-
-                                                <span><?php echo $favSpRating['Ratings']; ?></span>
-                                            </div>
-                                            <p class="text-center"><?php echo $totalCleaning;?> cleaning</p>
-                                            <div class="favourite-pro-btns">
-                                                <?php
-                                                if ($favsp['IsFavorite'] == 1) {
-                                                ?>
-                                                    <div class="btn-remove">
-                                                        <button type="submit" id="btn-remove-from-favsp" class="remove-favsp" onclick="removeFromFav()">Unfavourite</button>
-                                                    </div>
-                                                <?php }else{?>
-                                                    <div class="btn-favourite">
-                                                        <button type="submit" id="btn-add-favsp" onclick="addFavSp()" class="add-favsp">Favourite</button>
-                                                    </div>
-                                                <?php } ?>
-
-                                                <?php if($favsp['IsBlocked']==1){?>
-                                                    <div class="btn-unblock">
-                                                        <button type="button" id="btn-unblock-favsp" onclick="unblockSp()">Unblock</button>
-                                                    </div>
-                                                <?php }else{?>
-                                                    <div class="btn-block">
-                                                        <button type="button" id="btn-block-favsp" onclick="blockSp()">Block</button>
-                                                    </div>
-                                                <?php }?>
-                                            </div>
-                                        </div>
-                                <?php }
-                                } ?>
+                            
                             </div>
                             <div class="row total-records">
                                 <div class="col-md-6 col-sm-12 col-lg-6">
@@ -839,9 +797,6 @@
     </section>
     <!--footer start-->
     <script src="assets/js/custDashboard.js"></script>
-    <script>
-        $('.favourite-sp .rating-stars').prepend("<?php echo $spStar; ?>");
-    </script>
     <script>
         function editAddress(address) {
             var addressLine = address['AddressLine1'].substr(0, address['AddressLine1'].indexOf(","));
